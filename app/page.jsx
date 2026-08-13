@@ -24,6 +24,10 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [viewMode, setViewMode] = useState("redline"); // redline | clean
 
+  // Edit options
+  const [level, setLevel] = useState("medium"); // light | medium | full
+  const [addTypo, setAddTypo] = useState(false); // sprinkle one human typo
+
   // Free-edit metering state
   const [meter, setMeter] = useState(null); // {tier, used, remaining, limit, gate, email}
   const [gate, setGate] = useState(false); // true once the current tier is exhausted
@@ -130,7 +134,7 @@ export default function Home() {
       const res = await fetch("/api/unslop", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ text: draft }),
+        body: JSON.stringify({ text: draft, level, addTypo }),
       });
       const data = await res.json();
       // Server says the current tier is exhausted (signup gate or paywall).
@@ -245,6 +249,41 @@ export default function Home() {
               <div className="panel-foot">
                 <span className="count">{words} words</span>
                 <span className="count">Drafts are processed, not stored</span>
+              </div>
+            </div>
+
+            <div className="options">
+              <div className="opt-group">
+                <span className="opt-label">Edit strength</span>
+                <div className="seg" role="tablist" aria-label="Edit strength">
+                  {[
+                    ["light", "Light touch"],
+                    ["medium", "Medium touch"],
+                    ["full", "Full rewrite"],
+                  ].map(([val, label]) => (
+                    <button
+                      key={val}
+                      type="button"
+                      className={level === val ? "on" : ""}
+                      aria-pressed={level === val}
+                      onClick={() => setLevel(val)}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="opt-group">
+                <span className="opt-label">Human touch</span>
+                <button
+                  type="button"
+                  className={`toggle-pill ${addTypo ? "on" : ""}`}
+                  aria-pressed={addTypo}
+                  onClick={() => setAddTypo((v) => !v)}
+                  title="Slip in one natural typo so it reads as human-written"
+                >
+                  {addTypo ? "✓ Typo on" : "Add a typo"}
+                </button>
               </div>
             </div>
 

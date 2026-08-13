@@ -73,6 +73,12 @@
     font-family:'IBM Plex Serif',serif;font-size:20px;font-weight:600;padding:18px 22px;
   }
   .go-sub{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:400;opacity:.75;letter-spacing:.04em}
+  .options{display:flex;flex-wrap:wrap;gap:20px 28px;align-items:flex-end;margin-bottom:16px}
+  .opt-group{display:flex;flex-direction:column;gap:7px}
+  .opt-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .toggle-pill{background:none;border:1px solid var(--line);border-radius:6px;padding:6px 14px;font-size:13px;color:var(--muted)}
+  .toggle-pill:hover{border-color:var(--ink);color:var(--ink)}
+  .toggle-pill.on{background:var(--red);border-color:var(--red);color:#fff}
   .modes{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:56px}
   .mode{
     text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:10px;

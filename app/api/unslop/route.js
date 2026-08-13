@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { SLOP_SYSTEM_PROMPT } from "../../../lib/slop-prompt";
+import { buildSystemPrompt } from "../../../lib/slop-prompt";
+import { injectTypo } from "../../../lib/typo";
 import {
   FREE_ANON_LIMIT,
   METER_COOKIE,
@@ -22,7 +23,7 @@ function wordCount(t) {
   return m ? m.length : 0;
 }
 
-async function callClaude(text) {
+async function callClaude(text, system) {
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -33,7 +34,7 @@ async function callClaude(text) {
     body: JSON.stringify({
       model: MODEL,
       max_tokens: 4000,
-      system: SLOP_SYSTEM_PROMPT,
+      system,
       messages: [{ role: "user", content: `TEXT TO UNSLOP:\n\n${text}` }],
     }),
   });
@@ -67,6 +68,9 @@ export async function POST(request) {
   }
 
   const text = typeof body?.text === "string" ? body.text : "";
+  const level = typeof body?.level === "string" ? body.level : undefined;
+  const addTypo = body?.addTypo === true;
+  const system = buildSystemPrompt({ level }); // validates level internally
   const words = wordCount(text);
   if (words === 0) {
     return Response.json({ error: "No text provided." }, { status: 400 });
@@ -135,10 +139,10 @@ export async function POST(request) {
   try {
     let result;
     try {
-      result = await callClaude(text);
+      result = await callClaude(text, system);
     } catch (firstErr) {
       if (firstErr instanceof SyntaxError) {
-        result = await callClaude(text);
+        result = await callClaude(text, system);
       } else {
         throw firstErr;
       }
@@ -162,7 +166,7 @@ export async function POST(request) {
     }
 
     return Response.json({
-      rewritten: result.rewritten,
+      rewritten: addTypo ? injectTypo(result.rewritten) : result.rewritten,
       changes: Array.isArray(result.changes) ? result.changes.slice(0, 8) : [],
       words,
       tier,
