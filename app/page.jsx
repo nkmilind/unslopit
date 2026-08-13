@@ -199,9 +199,14 @@ export default function Home() {
     <>
       <header>
         <div className="wrap head-inner">
-          <div className="wordmark">
+          <button
+            type="button"
+            className="wordmark"
+            onClick={() => setView("home")}
+            aria-label="UnSlopIt.ai — go to homepage"
+          >
             Un<span className="slop">Slop</span>It.ai
-          </div>
+          </button>
           <div className="head-note">
             {user ? (
               <span className="auth-state">
