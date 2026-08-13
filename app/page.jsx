@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { wordDiff } from "../lib/diff";
 
 const SAMPLE =
@@ -22,6 +22,22 @@ export default function Home() {
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
   const [viewMode, setViewMode] = useState("redline"); // redline | clean
+
+  // Free-edit metering state
+  const [meter, setMeter] = useState(null); // {used, remaining, limit}
+  const [gate, setGate] = useState(false); // true once free edits are exhausted
+  const [signupClicked, setSignupClicked] = useState(false);
+
+  // Load the anonymous free-edit count on mount so the counter is honest.
+  useEffect(() => {
+    fetch("/api/meter")
+      .then((r) => r.json())
+      .then((d) => {
+        setMeter(d);
+        if (d.gate === "signup") setGate(true);
+      })
+      .catch(() => {});
+  }, []);
 
   const diffOps = useMemo(
     () => (result ? wordDiff(draft, result.rewritten) : []),
@@ -46,6 +62,11 @@ export default function Home() {
 
   async function runAiPass() {
     if (!requireDraft()) return;
+    // Already out of free edits — go straight to the gate, don't spend a call.
+    if (gate) {
+      setView("gate");
+      return;
+    }
     setView("ai");
     setResult(null);
     setError("");
@@ -57,8 +78,19 @@ export default function Home() {
         body: JSON.stringify({ text: draft }),
       });
       const data = await res.json();
+      // Server says the free tier is exhausted.
+      if (res.status === 402 && data.gate === "signup") {
+        setMeter({ used: data.used, remaining: 0, limit: data.limit });
+        setGate(true);
+        setView("gate");
+        return;
+      }
       if (!res.ok) throw new Error(data.error || "Request failed");
       setResult(data);
+      if (typeof data.remaining === "number") {
+        setMeter({ used: data.used, remaining: data.remaining, limit: data.limit });
+        if (data.remaining <= 0) setGate(true);
+      }
     } catch (err) {
       setError(err.message);
     } finally {
@@ -121,8 +153,8 @@ export default function Home() {
                 <span className="fix">says</span> what you mean.
               </h1>
               <p>
-                Paste anything an AI wrote, then UnSlopIt. Instant by default —
-                or hand it to a human editor and get it back in an hour.
+                Paste anything an AI wrote, then UnSlopIt. Instant AI edit by
+                default — human editing is on the way.
               </p>
             </div>
 
@@ -148,7 +180,13 @@ export default function Home() {
             <div className="go">
               <button className="primary go-btn" type="button" onClick={runAiPass}>
                 ⚡ UnSlopIt now
-                <span className="go-sub">Instant AI edit — free in prototype</span>
+                <span className="go-sub">
+                  {meter && typeof meter.remaining === "number"
+                    ? `${meter.remaining} of ${meter.limit} free edit${
+                        meter.limit === 1 ? "" : "s"
+                      } left`
+                    : "Instant AI edit — free in prototype"}
+                </span>
               </button>
             </div>
 
@@ -321,6 +359,40 @@ export default function Home() {
                 </p>
               </div>
             )}
+          </section>
+        )}
+
+        {view === "gate" && (
+          <section className="stage active">
+            <button className="back" type="button" onClick={() => setView("home")}>
+              ← Back to draft
+            </button>
+            <h2>You&apos;ve used your {meter?.limit ?? 3} free edits</h2>
+            <p className="sub">
+              Create a free account and get {meter?.limit ?? 3} more on the house —
+              no card required.
+            </p>
+            <div className="form-grid">
+              <div>
+                <button
+                  className="primary"
+                  type="button"
+                  onClick={() => setSignupClicked(true)}
+                >
+                  Create a free account
+                </button>
+                {signupClicked ? (
+                  <p className="demo-note">
+                    🚧 Account signup ships in the next update — this button will
+                    start it then.
+                  </p>
+                ) : (
+                  <p className="demo-note">
+                    Already have an account? Signing in restores your remaining edits.
+                  </p>
+                )}
+              </div>
+            </div>
           </section>
         )}
       </main>

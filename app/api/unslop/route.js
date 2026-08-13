@@ -1,4 +1,12 @@
+import { NextResponse } from "next/server";
 import { SLOP_SYSTEM_PROMPT } from "../../../lib/slop-prompt";
+import {
+  FREE_ANON_LIMIT,
+  METER_COOKIE,
+  readCount,
+  serializeCount,
+  meterCookieOptions,
+} from "../../../lib/meter";
 
 // POST /api/unslop  { text: string } -> { rewritten: string, changes: [{was, why}] }
 // The Anthropic key lives ONLY here, server-side, as an env var. Never in the browser.
@@ -67,6 +75,22 @@ export async function POST(request) {
     );
   }
 
+  // Free-edit gate: block the request that would exceed the anonymous limit,
+  // before spending a Claude call. Only successful edits below consume a credit.
+  const used = readCount(request.cookies.get(METER_COOKIE)?.value);
+  if (used >= FREE_ANON_LIMIT) {
+    return NextResponse.json(
+      {
+        gate: "signup",
+        used,
+        remaining: 0,
+        limit: FREE_ANON_LIMIT,
+        error: `You've used your ${FREE_ANON_LIMIT} free edits.`,
+      },
+      { status: 402 }
+    );
+  }
+
   // One retry: LLMs occasionally break the JSON contract.
   try {
     let result;
@@ -83,11 +107,19 @@ export async function POST(request) {
     if (typeof result?.rewritten !== "string") {
       throw new Error("Model response missing 'rewritten' field.");
     }
-    return Response.json({
+
+    // Successful edit — consume one credit and persist the signed count.
+    const newUsed = used + 1;
+    const response = NextResponse.json({
       rewritten: result.rewritten,
       changes: Array.isArray(result.changes) ? result.changes.slice(0, 8) : [],
       words,
+      used: newUsed,
+      remaining: Math.max(0, FREE_ANON_LIMIT - newUsed),
+      limit: FREE_ANON_LIMIT,
     });
+    response.cookies.set(METER_COOKIE, serializeCount(newUsed), meterCookieOptions());
+    return response;
   } catch (err) {
     console.error("unslop error:", err);
     return Response.json(
