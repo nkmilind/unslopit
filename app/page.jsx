@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { wordDiff } from "../lib/diff";
+import { createClient } from "../lib/supabase-browser";
 
 const SAMPLE =
   "In today's fast-paced digital landscape, it's important to note that content creation isn't just about writing\u2014it's about crafting a narrative. Let's delve into how leveraging cutting-edge AI tools can unlock unprecedented synergies, streamline your workflow, and elevate your brand. Whether you're a seasoned professional or just starting your journey, these game-changing insights will empower you to take your content to the next level.";
@@ -24,20 +25,74 @@ export default function Home() {
   const [viewMode, setViewMode] = useState("redline"); // redline | clean
 
   // Free-edit metering state
-  const [meter, setMeter] = useState(null); // {used, remaining, limit}
-  const [gate, setGate] = useState(false); // true once free edits are exhausted
-  const [signupClicked, setSignupClicked] = useState(false);
+  const [meter, setMeter] = useState(null); // {tier, used, remaining, limit, gate, email}
+  const [gate, setGate] = useState(false); // true once the current tier is exhausted
+  const [gateType, setGateType] = useState(null); // "signup" | "paywall"
 
-  // Load the anonymous free-edit count on mount so the counter is honest.
+  // Auth state — the browser client is built in an effect (client-only) so it
+  // never runs during static prerender, where NEXT_PUBLIC_* env isn't present.
+  const [supabase, setSupabase] = useState(null);
+  const [user, setUser] = useState(null); // {email} once signed in
+  const [authEmail, setAuthEmail] = useState("");
+  const [authStatus, setAuthStatus] = useState("idle"); // idle | sending | sent | error
+  const [authError, setAuthError] = useState("");
+
+  // Pull the current tier + count from the server (honest counter on load,
+  // and after sign-in/out the tier changes).
+  async function refreshMeter() {
+    try {
+      const d = await fetch("/api/meter").then((r) => r.json());
+      setMeter(d);
+      setGate(Boolean(d.gate));
+      setGateType(d.gate || null);
+    } catch {}
+  }
+
   useEffect(() => {
-    fetch("/api/meter")
-      .then((r) => r.json())
-      .then((d) => {
-        setMeter(d);
-        if (d.gate === "signup") setGate(true);
-      })
-      .catch(() => {});
+    refreshMeter();
+    let client;
+    try {
+      client = createClient();
+    } catch {
+      client = null; // NEXT_PUBLIC_SUPABASE_* not configured — auth simply unavailable.
+    }
+    setSupabase(client);
+    if (!client) return;
+
+    // Track auth session; re-read the meter whenever it changes.
+    client.auth.getUser().then(({ data }) => setUser(data.user ?? null));
+    const {
+      data: { subscription },
+    } = client.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      refreshMeter();
+    });
+    return () => subscription.unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  async function sendMagicLink() {
+    if (!supabase || !authEmail.includes("@") || authStatus === "sending") return;
+    setAuthStatus("sending");
+    setAuthError("");
+    const { error: err } = await supabase.auth.signInWithOtp({
+      email: authEmail,
+      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+    });
+    if (err) {
+      setAuthError(err.message);
+      setAuthStatus("error");
+    } else {
+      setAuthStatus("sent");
+    }
+  }
+
+  async function signOut() {
+    if (supabase) await supabase.auth.signOut();
+    setUser(null);
+    setView("home");
+    refreshMeter();
+  }
 
   const diffOps = useMemo(
     () => (result ? wordDiff(draft, result.rewritten) : []),
@@ -78,18 +133,23 @@ export default function Home() {
         body: JSON.stringify({ text: draft }),
       });
       const data = await res.json();
-      // Server says the free tier is exhausted.
-      if (res.status === 402 && data.gate === "signup") {
-        setMeter({ used: data.used, remaining: 0, limit: data.limit });
+      // Server says the current tier is exhausted (signup gate or paywall).
+      if (res.status === 402 && data.gate) {
+        setMeter(data);
         setGate(true);
+        setGateType(data.gate);
         setView("gate");
         return;
       }
       if (!res.ok) throw new Error(data.error || "Request failed");
       setResult(data);
       if (typeof data.remaining === "number") {
-        setMeter({ used: data.used, remaining: data.remaining, limit: data.limit });
-        if (data.remaining <= 0) setGate(true);
+        setMeter(data);
+        if (data.remaining <= 0) {
+          setGate(true);
+          // Anon exhaustion → prompt signup; account exhaustion → paywall.
+          setGateType(data.tier === "account" ? "paywall" : "signup");
+        }
       }
     } catch (err) {
       setError(err.message);
@@ -138,7 +198,18 @@ export default function Home() {
           <div className="wordmark">
             Un<span className="slop">Slop</span>It.ai
           </div>
-          <div className="head-note">prototype v0.2</div>
+          <div className="head-note">
+            {user ? (
+              <span className="auth-state">
+                {user.email}
+                <button className="link-btn" type="button" onClick={signOut}>
+                  Sign out
+                </button>
+              </span>
+            ) : (
+              "prototype v0.2"
+            )}
+          </div>
         </div>
       </header>
 
@@ -367,32 +438,72 @@ export default function Home() {
             <button className="back" type="button" onClick={() => setView("home")}>
               ← Back to draft
             </button>
-            <h2>You&apos;ve used your {meter?.limit ?? 3} free edits</h2>
-            <p className="sub">
-              Create a free account and get {meter?.limit ?? 3} more on the house —
-              no card required.
-            </p>
-            <div className="form-grid">
-              <div>
-                <button
-                  className="primary"
-                  type="button"
-                  onClick={() => setSignupClicked(true)}
-                >
-                  Create a free account
-                </button>
-                {signupClicked ? (
-                  <p className="demo-note">
-                    🚧 Account signup ships in the next update — this button will
-                    start it then.
-                  </p>
-                ) : (
-                  <p className="demo-note">
-                    Already have an account? Signing in restores your remaining edits.
-                  </p>
-                )}
+
+            {gateType === "paywall" ? (
+              <>
+                <h2>You&apos;ve used all your free edits</h2>
+                <p className="sub">
+                  That&apos;s the full free allowance for <strong>{user?.email}</strong>.
+                  Paid packages and subscriptions are coming next.
+                </p>
+                <div className="form-grid">
+                  <div>
+                    <button className="primary" type="button" disabled>
+                      See plans
+                    </button>
+                    <p className="demo-note">
+                      🚧 Checkout ships in the next update.
+                    </p>
+                  </div>
+                </div>
+              </>
+            ) : authStatus === "sent" ? (
+              <div className="confirm">
+                <span className="stamp">Check your inbox</span>
+                <h2 style={{ fontSize: 20 }}>Magic link sent.</h2>
+                <p style={{ marginTop: 10, fontSize: 14 }}>
+                  We emailed a sign-in link to <strong>{authEmail}</strong>. Click it and
+                  you&apos;ll come back with {meter?.limit ?? 3} more free edits.
+                </p>
               </div>
-            </div>
+            ) : (
+              <>
+                <h2>You&apos;ve used your {meter?.limit ?? 3} free edits</h2>
+                <p className="sub">
+                  Create a free account for {meter?.limit ?? 3} more — no password, no
+                  card. We&apos;ll email you a one-tap sign-in link.
+                </p>
+                <div className="form-grid">
+                  <div className="field">
+                    <label htmlFor="auth-email">Email</label>
+                    <input
+                      id="auth-email"
+                      type="email"
+                      autoComplete="email"
+                      placeholder="you@company.com"
+                      value={authEmail}
+                      onChange={(e) => setAuthEmail(e.target.value)}
+                    />
+                  </div>
+                  {authStatus === "error" && (
+                    <div className="error-box">{authError}</div>
+                  )}
+                  <div>
+                    <button
+                      className="primary"
+                      type="button"
+                      onClick={sendMagicLink}
+                      disabled={authStatus === "sending" || !authEmail.includes("@")}
+                    >
+                      {authStatus === "sending" ? "Sending…" : "Email me a magic link"}
+                    </button>
+                    <p className="demo-note">
+                      Already have an account? The same link signs you back in.
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
           </section>
         )}
       </main>

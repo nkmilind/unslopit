@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { SLOP_SYSTEM_PROMPT } from "../../../lib/slop-prompt";
 import {
   FREE_ANON_LIMIT,
@@ -7,6 +8,8 @@ import {
   serializeCount,
   meterCookieOptions,
 } from "../../../lib/meter";
+import { createClient } from "../../../lib/supabase-server";
+import { FREE_ACCOUNT_LIMIT, getAccountUsage, setAccountUsage } from "../../../lib/usage";
 
 // POST /api/unslop  { text: string } -> { rewritten: string, changes: [{was, why}] }
 // The Anthropic key lives ONLY here, server-side, as an env var. Never in the browser.
@@ -75,20 +78,57 @@ export async function POST(request) {
     );
   }
 
-  // Free-edit gate: block the request that would exceed the anonymous limit,
-  // before spending a Claude call. Only successful edits below consume a credit.
-  const used = readCount(request.cookies.get(METER_COOKIE)?.value);
-  if (used >= FREE_ANON_LIMIT) {
-    return NextResponse.json(
-      {
-        gate: "signup",
-        used,
-        remaining: 0,
-        limit: FREE_ANON_LIMIT,
-        error: `You've used your ${FREE_ANON_LIMIT} free edits.`,
-      },
-      { status: 402 }
-    );
+  // Who is this? Signed-in users are metered per account (edits 4–6); everyone
+  // else by the anonymous cookie (edits 1–3). Gate BEFORE spending a Claude call.
+  const cookieStore = await cookies();
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
+
+  let tier, limit, used;
+  if (user) {
+    tier = "account";
+    limit = FREE_ACCOUNT_LIMIT;
+    try {
+      used = await getAccountUsage(user.id);
+    } catch (e) {
+      console.error("usage read error:", e);
+      return Response.json(
+        { error: "Couldn't check your edit balance. Try again in a moment." },
+        { status: 502 }
+      );
+    }
+    if (used >= limit) {
+      return NextResponse.json(
+        {
+          gate: "paywall",
+          tier,
+          used,
+          remaining: 0,
+          limit,
+          error: "You've used all your free account edits.",
+        },
+        { status: 402 }
+      );
+    }
+  } else {
+    tier = "anon";
+    limit = FREE_ANON_LIMIT;
+    used = readCount(cookieStore.get(METER_COOKIE)?.value);
+    if (used >= limit) {
+      return NextResponse.json(
+        {
+          gate: "signup",
+          tier,
+          used,
+          remaining: 0,
+          limit,
+          error: `You've used your ${FREE_ANON_LIMIT} free edits.`,
+        },
+        { status: 402 }
+      );
+    }
   }
 
   // One retry: LLMs occasionally break the JSON contract.
@@ -108,18 +148,28 @@ export async function POST(request) {
       throw new Error("Model response missing 'rewritten' field.");
     }
 
-    // Successful edit — consume one credit and persist the signed count.
+    // Successful edit — consume one credit on the appropriate tier.
     const newUsed = used + 1;
-    const response = NextResponse.json({
+    if (tier === "account") {
+      try {
+        await setAccountUsage(user.id, newUsed);
+      } catch (e) {
+        // The user already got their edit; log the miss rather than fail.
+        console.error("usage write error:", e);
+      }
+    } else {
+      cookieStore.set(METER_COOKIE, serializeCount(newUsed), meterCookieOptions());
+    }
+
+    return Response.json({
       rewritten: result.rewritten,
       changes: Array.isArray(result.changes) ? result.changes.slice(0, 8) : [],
       words,
+      tier,
       used: newUsed,
-      remaining: Math.max(0, FREE_ANON_LIMIT - newUsed),
-      limit: FREE_ANON_LIMIT,
+      remaining: Math.max(0, limit - newUsed),
+      limit,
     });
-    response.cookies.set(METER_COOKIE, serializeCount(newUsed), meterCookieOptions());
-    return response;
   } catch (err) {
     console.error("unslop error:", err);
     return Response.json(
