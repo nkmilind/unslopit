@@ -6,10 +6,6 @@ import { wordDiff } from "../lib/diff";
 const SAMPLE =
   "In today's fast-paced digital landscape, it's important to note that content creation isn't just about writing\u2014it's about crafting a narrative. Let's delve into how leveraging cutting-edge AI tools can unlock unprecedented synergies, streamline your workflow, and elevate your brand. Whether you're a seasoned professional or just starting your journey, these game-changing insights will empower you to take your content to the next level.";
 
-const PAGE_WORDS = 300; // ≈ one page, Times New Roman 11pt
-const PAGE_RATE = 10; // $ per page
-const TURNAROUND_MS = 60 * 60 * 1000; // 1 hour
-
 function wordCount(t) {
   const m = t.trim().match(/\S+/g);
   return m ? m.length : 0;
@@ -32,14 +28,13 @@ export default function Home() {
     [draft, result]
   );
 
-  // Human pass state
+  // Interest capture state
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
-  const [order, setOrder] = useState(null); // {id, words, pages, price, eta, email}
+  const [interestStatus, setInterestStatus] = useState("idle"); // idle | loading | done | error
+  const [interestError, setInterestError] = useState("");
 
   const words = useMemo(() => wordCount(draft), [draft]);
-  const pages = Math.max(1, Math.ceil(words / PAGE_WORDS));
-  const price = pages * PAGE_RATE;
 
   function requireDraft() {
     if (words === 0) {
@@ -71,23 +66,29 @@ export default function Home() {
     }
   }
 
-  function openHumanPass() {
-    if (!requireDraft()) return;
-    setOrder(null);
+  function openInterest() {
+    setInterestStatus("idle");
+    setInterestError("");
     setView("human");
   }
 
-  function submitOrder() {
-    if (!email.includes("@")) return;
-    // TODO(production): POST to /api/order → Stripe Checkout → DB → editor notification.
-    setOrder({
-      id: "USI-" + Math.random().toString(36).slice(2, 8).toUpperCase(),
-      words,
-      pages,
-      price,
-      eta: new Date(Date.now() + TURNAROUND_MS),
-      email,
-    });
+  async function submitInterest() {
+    if (!email.includes("@") || interestStatus === "loading") return;
+    setInterestStatus("loading");
+    setInterestError("");
+    try {
+      const res = await fetch("/api/interest", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email, notes, words }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Couldn't register your interest.");
+      setInterestStatus("done");
+    } catch (err) {
+      setInterestError(err.message);
+      setInterestStatus("error");
+    }
   }
 
   async function copyResult() {
@@ -97,10 +98,6 @@ export default function Home() {
       setTimeout(() => setCopied(false), 1500);
     } catch {}
   }
-
-  const etaLabel = (d) =>
-    d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) +
-    (d.getDate() !== new Date().getDate() ? " tomorrow" : " today");
 
   return (
     <>
@@ -156,15 +153,15 @@ export default function Home() {
             </div>
 
             <div className="modes">
-              <button className="mode" type="button" onClick={openHumanPass}>
+              <button className="mode" type="button" onClick={openInterest}>
                 <span className="tag">Prefer a person?</span>
-                <h3>Request human editor</h3>
+                <h3>Want a human editor?</h3>
                 <p>
                   A real editor rewrites it in your voice, flags anything
-                  unclear, and returns a tracked-changes summary.
+                  unclear, and returns a tracked-changes summary. We&apos;re
+                  lining up editors now.
                 </p>
-                <span className="meta">✍️ 1-hour turnaround · $10/page*</span>
-                <span className="meta fine">*Times New Roman, 11 pt font, approx. 300 words</span>
+                <span className="meta">✍️ Human editing — register your interest</span>
               </button>
             </div>
           </section>
@@ -266,26 +263,16 @@ export default function Home() {
             <button className="back" type="button" onClick={() => setView("home")}>
               ← Back to draft
             </button>
-            <h2>Human pass</h2>
-            <p className="sub">An editor takes it from here. You&apos;ll have it back within 1 hour.</p>
+            <h2>Human editing — coming soon</h2>
+            <p className="sub">
+              Real editors, your voice, tracked changes. Interested? Leave your email
+              and we&apos;ll tell you the moment it&apos;s live.
+            </p>
 
-            {!order ? (
+            {interestStatus !== "done" ? (
               <div className="form-grid">
-                <div className="quote">
-                  <span>
-                    <strong>
-                      {words} words · {pages} {pages === 1 ? "page" : "pages"}
-                    </strong>
-                  </span>
-                  <span>
-                    Est. <strong>${price.toFixed(2)}</strong>
-                  </span>
-                  <span>
-                    Due by <strong>{etaLabel(new Date(Date.now() + TURNAROUND_MS))}</strong>
-                  </span>
-                </div>
                 <div className="field">
-                  <label htmlFor="h-email">Email for delivery</label>
+                  <label htmlFor="h-email">Email</label>
                   <input
                     id="h-email"
                     type="email"
@@ -297,51 +284,40 @@ export default function Home() {
                 </div>
                 <div className="field">
                   <label htmlFor="h-notes">
-                    Voice &amp; tone notes <span style={{ textTransform: "none", letterSpacing: 0 }}>(optional)</span>
+                    What would you use it for?{" "}
+                    <span style={{ textTransform: "none", letterSpacing: 0 }}>(optional)</span>
                   </label>
                   <textarea
                     id="h-notes"
-                    placeholder="e.g. Casual but sharp. First person. It's a LinkedIn post for founders."
+                    placeholder="e.g. LinkedIn posts, cold emails, blog intros…"
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                   />
                 </div>
+                {interestStatus === "error" && (
+                  <div className="error-box">{interestError}</div>
+                )}
                 <div>
-                  <button className="primary" type="button" onClick={submitOrder}>
-                    Send to an editor
+                  <button
+                    className="primary"
+                    type="button"
+                    onClick={submitInterest}
+                    disabled={interestStatus === "loading" || !email.includes("@")}
+                  >
+                    {interestStatus === "loading" ? "Registering…" : "Register interest"}
                   </button>
                   <p className="demo-note">
-                    Prototype only — this creates a mock order and sends nothing anywhere.
+                    No spam — just one email when human editing goes live.
                   </p>
                 </div>
               </div>
             ) : (
               <div className="confirm">
-                <span className="stamp">In the queue</span>
-                <h2 style={{ fontSize: 20 }}>Your editor has it.</h2>
-                <dl>
-                  <dt>Order</dt>
-                  <dd>{order.id}</dd>
-                  <dt>Words</dt>
-                  <dd>
-                    {order.words} ({order.pages} {order.pages === 1 ? "page" : "pages"})
-                  </dd>
-                  <dt>Price</dt>
-                  <dd>${order.price.toFixed(2)}</dd>
-                  <dt>Delivery by</dt>
-                  <dd>
-                    {order.eta.toLocaleString([], {
-                      weekday: "short",
-                      hour: "numeric",
-                      minute: "2-digit",
-                    })}
-                  </dd>
-                  <dt>Sent to</dt>
-                  <dd>{order.email}</dd>
-                </dl>
-                <p className="demo-note">
-                  In production: order hits the editor queue, payment is captured, and the
-                  finished edit lands in your inbox with a change summary.
+                <span className="stamp">You&apos;re on the list</span>
+                <h2 style={{ fontSize: 20 }}>Thanks — we&apos;ll be in touch.</h2>
+                <p style={{ marginTop: 10, fontSize: 14 }}>
+                  We&apos;ll email <strong>{email}</strong> the moment human editing
+                  is available.
                 </p>
               </div>
             )}
