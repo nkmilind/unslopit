@@ -223,13 +223,14 @@ export default function Home() {
             <div className="hero">
               <div className="eyebrow">Human-sounding text, on demand</div>
               <h1>
-                Your draft{" "}
-                <span className="strike">leverages synergies to delve into</span>{" "}
-                <span className="fix">says</span> what you mean.
+                <span className="strike">
+                  Let&apos;s delve into what makes your content truly resonate
+                </span>{" "}
+                <span className="fix">Here&apos;s the point</span>
               </h1>
               <p>
-                Paste anything an AI wrote, then UnSlopIt. Instant AI edit by
-                default — human editing is on the way.
+                Your readers can smell it. Strip AI tells from your draft
+                before you hit publish.
               </p>
             </div>
 
@@ -274,15 +275,19 @@ export default function Home() {
                 </div>
               </div>
               <div className="opt-group">
-                <span className="opt-label">Human touch</span>
+                <span className="opt-label">Add a typo</span>
                 <button
                   type="button"
-                  className={`toggle-pill ${addTypo ? "on" : ""}`}
-                  aria-pressed={addTypo}
+                  role="switch"
+                  aria-checked={addTypo}
+                  aria-label="Add a typo"
+                  className={`switch ${addTypo ? "on" : ""}`}
                   onClick={() => setAddTypo((v) => !v)}
                   title="Slip in one natural typo so it reads as human-written"
                 >
-                  {addTypo ? "✓ Typo on" : "Add a typo"}
+                  <span className="switch-track">
+                    <span className="switch-knob" />
+                  </span>
                 </button>
               </div>
             </div>
