@@ -37,6 +37,9 @@
     height:2.5px;background:var(--red);transform:rotate(-4deg);border-radius:2px;
   }
   .head-note{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted)}
+  .auth-state{display:inline-flex;align-items:center;gap:10px}
+  .link-btn{background:none;border:none;padding:0;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--red);cursor:pointer;text-decoration:underline}
+  .link-btn:hover{color:var(--ink)}
 
   /* ---------- hero ---------- */
   .hero{padding:56px 0 36px}
