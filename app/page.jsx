@@ -226,7 +226,6 @@ export default function Home() {
         {view === "home" && (
           <section className="stage active">
             <div className="hero">
-              <div className="eyebrow">Human-sounding text, on demand</div>
               <h1>
                 <span className="strike">
                   Let&apos;s delve into what makes your content truly resonate
