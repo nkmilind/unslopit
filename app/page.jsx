@@ -354,15 +354,17 @@ export default function Home() {
             <button className="back" type="button" onClick={() => setView("home")}>
               ← Back to draft
             </button>
-            <h2>Unslopped.</h2>
             {result && (
-              <p className="sub">
-                {result.changes.length > 0
-                  ? `${result.changes.length} AI tell${
-                      result.changes.length === 1 ? "" : "s"
-                    } struck with your meaning intact`
-                  : "Surprisingly clean — only light touch-ups needed."}
-              </p>
+              <>
+                <h2>Unslopped.</h2>
+                <p className="sub">
+                  {result.changes.length > 0
+                    ? `${result.changes.length} AI tell${
+                        result.changes.length === 1 ? "" : "s"
+                      } struck with your meaning intact`
+                    : "Surprisingly clean — only light touch-ups needed."}
+                </p>
+              </>
             )}
 
             {loading && (
