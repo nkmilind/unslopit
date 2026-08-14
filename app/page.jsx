@@ -226,17 +226,25 @@ export default function Home() {
         {view === "home" && (
           <section className="stage active">
             <div className="hero">
-              <div className="eyebrow">Human-sounding text, on demand</div>
-              <h1>
-                <span className="strike">
-                  Let&apos;s delve into what makes your content truly resonate
-                </span>{" "}
-                <span className="fix">Here&apos;s the point</span>
-              </h1>
-              <p>
-                Your readers can smell it. Strip AI tells from your draft
-                before you hit publish.
-              </p>
+              <div className="hero-copy">
+                <h1>
+                  <span className="strike">
+                    Let&apos;s delve into what makes your content truly resonate
+                  </span>{" "}
+                  <span className="fix">Here&apos;s the point</span>
+                </h1>
+                <p>
+                  Your readers can smell it. Strip AI tells from your draft
+                  before you hit publish.
+                </p>
+              </div>
+              <img
+                className="hero-art"
+                src="/typewriter.svg"
+                alt="A typewriter typing a page, with a red correction appearing"
+                width="340"
+                height="320"
+              />
             </div>
 
             <div className="panel">
@@ -295,31 +303,29 @@ export default function Home() {
                   </span>
                 </button>
               </div>
-            </div>
-
-            <div className="go">
-              <button className="primary go-btn" type="button" onClick={runAiPass}>
-                ⚡ UnSlopIt now
-                <span className="go-sub">
+              <div className="go">
+                <button className="primary go-btn" type="button" onClick={runAiPass}>
+                  UnSlopIt now
+                </button>
+                <span className="go-meta">
                   {meter && typeof meter.remaining === "number"
                     ? `${meter.remaining} of ${meter.limit} free edit${
                         meter.limit === 1 ? "" : "s"
                       } left`
                     : "Instant AI edit — free in prototype"}
                 </span>
-              </button>
+              </div>
             </div>
 
-            <div className="modes">
-              <button className="mode" type="button" onClick={openInterest}>
-                <span className="tag">Prefer a person?</span>
-                <h3>Want a human editor?</h3>
-                <p>
-                  A real editor rewrites it in your voice, flags anything
-                  unclear, and returns a tracked-changes summary. We&apos;re
-                  lining up editors now.
-                </p>
-                <span className="meta">✍️ Human editing — register your interest</span>
+            <div className="aside">
+              <h3>Prefer a person?</h3>
+              <p>
+                A real editor rewrites it in your voice, flags anything unclear,
+                and returns a tracked-changes summary. We&apos;re lining up editors
+                now.
+              </p>
+              <button className="text-link" type="button" onClick={openInterest}>
+                Register your interest →
               </button>
             </div>
           </section>
@@ -335,8 +341,13 @@ export default function Home() {
 
             {loading && (
               <div className="working">
-                <span className="pen" />
-                Applying the red pen…
+                <img
+                  className="working-art"
+                  src="/typewriter.svg"
+                  alt=""
+                  aria-hidden="true"
+                />
+                <span>Applying the red pen…</span>
               </div>
             )}
             {error && <div className="error-box">The edit didn&apos;t come back: {error}</div>}
@@ -501,7 +512,7 @@ export default function Home() {
                       See plans
                     </button>
                     <p className="demo-note">
-                      🚧 Checkout ships in the next update.
+                      Checkout ships in the next update.
                     </p>
                   </div>
                 </div>
