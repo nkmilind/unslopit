@@ -8,6 +8,7 @@ import {
   readCount,
   serializeCount,
   meterCookieOptions,
+  meteringDisabled,
 } from "../../../lib/meter";
 import { createClient } from "../../../lib/supabase-server";
 import { FREE_ACCOUNT_LIMIT, getAccountUsage, setAccountUsage } from "../../../lib/usage";
@@ -90,8 +91,13 @@ export async function POST(request) {
     data: { user },
   } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
 
+  const bypass = meteringDisabled();
   let tier, limit, used;
-  if (user) {
+  if (bypass) {
+    tier = "dev";
+    limit = Infinity;
+    used = 0;
+  } else if (user) {
     tier = "account";
     limit = FREE_ACCOUNT_LIMIT;
     try {
@@ -154,7 +160,9 @@ export async function POST(request) {
 
     // Successful edit — consume one credit on the appropriate tier.
     const newUsed = used + 1;
-    if (tier === "account") {
+    if (bypass) {
+      // dev bypass: no gate, no counting
+    } else if (tier === "account") {
       try {
         await setAccountUsage(user.id, newUsed);
       } catch (e) {
@@ -180,9 +188,9 @@ export async function POST(request) {
       changes: Array.isArray(result.changes) ? result.changes.slice(0, 8) : [],
       words,
       tier,
-      used: newUsed,
-      remaining: Math.max(0, limit - newUsed),
-      limit,
+      used: bypass ? 0 : newUsed,
+      remaining: bypass ? null : Math.max(0, limit - newUsed),
+      limit: bypass ? null : limit,
       typo,
     });
   } catch (err) {
