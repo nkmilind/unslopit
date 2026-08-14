@@ -109,6 +109,7 @@
   .result-grid{display:grid;grid-template-columns:1fr;gap:20px}
   .out-panel{background:var(--card);border:1px solid var(--line);border-radius:2px}
   .out-body{padding:20px;font-family:'Newsreader',Georgia,serif;font-size:18px;line-height:1.7;white-space:pre-wrap}
+  .typo-mark{text-decoration:underline wavy var(--red);text-decoration-skip-ink:none;text-underline-offset:3px;cursor:help}
   .changes{list-style:none}
   .changes li{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border-bottom:1px solid var(--line);font-size:14px}
   .changes li:last-child{border-bottom:none}

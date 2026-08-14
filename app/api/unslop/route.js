@@ -165,14 +165,25 @@ export async function POST(request) {
       cookieStore.set(METER_COOKIE, serializeCount(newUsed), meterCookieOptions());
     }
 
+    // Optional human typo — applied here, with its location returned so the
+    // client can mark it (rather than hiding it in the text).
+    let rewritten = result.rewritten;
+    let typo = null;
+    if (addTypo) {
+      const t = injectTypo(rewritten);
+      rewritten = t.text;
+      if (t.index >= 0) typo = { word: t.word, index: t.index };
+    }
+
     return Response.json({
-      rewritten: addTypo ? injectTypo(result.rewritten) : result.rewritten,
+      rewritten,
       changes: Array.isArray(result.changes) ? result.changes.slice(0, 8) : [],
       words,
       tier,
       used: newUsed,
       remaining: Math.max(0, limit - newUsed),
       limit,
+      typo,
     });
   } catch (err) {
     console.error("unslop error:", err);
