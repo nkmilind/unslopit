@@ -226,16 +226,25 @@ export default function Home() {
         {view === "home" && (
           <section className="stage active">
             <div className="hero">
-              <h1>
-                <span className="strike">
-                  Let&apos;s delve into what makes your content truly resonate
-                </span>{" "}
-                <span className="fix">Here&apos;s the point</span>
-              </h1>
-              <p>
-                Your readers can smell it. Strip AI tells from your draft
-                before you hit publish.
-              </p>
+              <div className="hero-copy">
+                <h1>
+                  <span className="strike">
+                    Let&apos;s delve into what makes your content truly resonate
+                  </span>{" "}
+                  <span className="fix">Here&apos;s the point</span>
+                </h1>
+                <p>
+                  Your readers can smell it. Strip AI tells from your draft
+                  before you hit publish.
+                </p>
+              </div>
+              <img
+                className="hero-art"
+                src="/typewriter.svg"
+                alt="A typewriter typing a page, with a red correction appearing"
+                width="340"
+                height="320"
+              />
             </div>
 
             <div className="panel">

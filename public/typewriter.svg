@@ -1,0 +1,80 @@
+<svg viewBox="42 0 340 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A typewriter typing a page, with a red correction appearing">
+  <style>
+    :root{
+      --ink:#1C1E26; --red:#C92B2B; --line:#E6E3DA; --muted:#6C6F7C; --paper:#FCFBF8;
+    }
+    .o{stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+    .fill{fill:var(--paper)}
+    .txt{stroke:var(--line);stroke-width:4;stroke-linecap:round}
+    .k{stroke:var(--ink);stroke-width:2;fill:var(--paper)}
+    .press{animation:press 2.8s ease-in-out infinite}
+    @keyframes press{0%,7%,100%{transform:translateY(0)}3.5%{transform:translateY(4px)}}
+    .d1{animation-delay:0s}.d2{animation-delay:.28s}.d3{animation-delay:.5s}
+    .d4{animation-delay:.82s}.d5{animation-delay:1.05s}.d6{animation-delay:1.3s}
+    .d7{animation-delay:1.62s}.d8{animation-delay:1.85s}.d9{animation-delay:2.1s}
+    .d10{animation-delay:2.38s}
+    .strike{stroke:var(--red);stroke-width:3;stroke-linecap:round;
+      stroke-dasharray:100;stroke-dashoffset:100;animation:draw 7s ease-in-out infinite}
+    @keyframes draw{
+      0%,18%{stroke-dashoffset:100;opacity:1}
+      42%,80%{stroke-dashoffset:0;opacity:1}
+      92%,100%{stroke-dashoffset:100;opacity:0}
+    }
+    .fix{stroke:var(--red);stroke-width:4;stroke-linecap:round;opacity:0;animation:fixin 7s ease-in-out infinite}
+    @keyframes fixin{0%,44%{opacity:0}56%,84%{opacity:1}94%,100%{opacity:0}}
+    @media (prefers-reduced-motion:reduce){
+      .press,.strike,.fix{animation:none}
+      .strike{stroke-dashoffset:0}
+      .fix{opacity:1}
+    }
+  </style>
+
+  <!-- desk -->
+  <line class="o" x1="62" y1="292" x2="362" y2="292"/>
+
+  <!-- paper in the platen -->
+  <rect class="o fill" x="150" y="28" width="122" height="96" rx="2"/>
+  <line class="txt" x1="164" y1="50" x2="252" y2="50"/>
+  <line class="txt" x1="164" y1="68" x2="258" y2="68"/>
+  <line class="txt" x1="164" y1="86" x2="236" y2="86"/>
+  <!-- the red pen strikes a line, then the fix appears -->
+  <line class="strike" x1="160" y1="67" x2="260" y2="65"/>
+  <line class="fix" x1="164" y1="104" x2="204" y2="104"/>
+
+  <!-- platen and knobs -->
+  <rect class="o fill" x="118" y="122" width="186" height="18" rx="9"/>
+  <circle class="o fill" cx="108" cy="131" r="8"/>
+  <circle class="o fill" cx="314" cy="131" r="8"/>
+
+  <!-- typewriter body -->
+  <path class="o fill" d="M116 146 L306 146 L330 244 Q330 252 322 252 L100 252 Q92 252 92 244 Z"/>
+
+  <!-- keys: three rows, a scattered subset animates like typing -->
+  <g>
+    <circle class="k press d3" cx="140" cy="176" r="7"/>
+    <circle class="k" cx="162" cy="176" r="7"/>
+    <circle class="k press d7" cx="184" cy="176" r="7"/>
+    <circle class="k" cx="206" cy="176" r="7"/>
+    <circle class="k press d1" cx="228" cy="176" r="7"/>
+    <circle class="k" cx="250" cy="176" r="7"/>
+    <circle class="k press d9" cx="272" cy="176" r="7"/>
+    <circle class="k" cx="294" cy="176" r="7"/>
+
+    <circle class="k" cx="150" cy="200" r="7"/>
+    <circle class="k press d5" cx="172" cy="200" r="7"/>
+    <circle class="k" cx="194" cy="200" r="7"/>
+    <circle class="k press d2" cx="216" cy="200" r="7"/>
+    <circle class="k" cx="238" cy="200" r="7"/>
+    <circle class="k press d10" cx="260" cy="200" r="7"/>
+    <circle class="k" cx="282" cy="200" r="7"/>
+
+    <circle class="k press d8" cx="160" cy="224" r="7"/>
+    <circle class="k" cx="182" cy="224" r="7"/>
+    <circle class="k press d4" cx="204" cy="224" r="7"/>
+    <circle class="k" cx="226" cy="224" r="7"/>
+    <circle class="k press d6" cx="248" cy="224" r="7"/>
+    <circle class="k" cx="270" cy="224" r="7"/>
+  </g>
+  <!-- spacebar -->
+  <rect class="k press d5" x="176" y="238" width="80" height="8" rx="4"/>
+</svg>
