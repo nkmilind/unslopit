@@ -299,7 +299,7 @@ export default function Home() {
 
             <div className="go">
               <button className="primary go-btn" type="button" onClick={runAiPass}>
-                ⚡ UnSlopIt now
+                UnSlopIt now
                 <span className="go-sub">
                   {meter && typeof meter.remaining === "number"
                     ? `${meter.remaining} of ${meter.limit} free edit${
@@ -319,7 +319,7 @@ export default function Home() {
                   unclear, and returns a tracked-changes summary. We&apos;re
                   lining up editors now.
                 </p>
-                <span className="meta">✍️ Human editing — register your interest</span>
+                <span className="meta">Human editing — register your interest</span>
               </button>
             </div>
           </section>
@@ -501,7 +501,7 @@ export default function Home() {
                       See plans
                     </button>
                     <p className="demo-note">
-                      🚧 Checkout ships in the next update.
+                      Checkout ships in the next update.
                     </p>
                   </div>
                 </div>
