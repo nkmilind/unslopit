@@ -1,12 +1,12 @@
   :root{
-    --paper:#FCFBF8;
-    --ink:#1C1E26;
-    --red:#C92B2B;
-    --red-soft:#FBEAE8;
-    --hi:#FFF0A3;
-    --muted:#6C6F7C;
-    --line:#E6E3DA;
-    --card:#FFFFFF;
+    --paper:#F4F1EA;   /* warm manuscript paper */
+    --ink:#23201C;     /* warm near-black */
+    --red:#C42B1C;     /* proofreader's red — strikes, fixes, links */
+    --red-soft:#F3E1DB;
+    --hi:#FBE9A8;
+    --muted:#6E6656;   /* warm taupe */
+    --line:#E4DDCC;    /* warm hairline */
+    --card:#FDFBF6;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -76,10 +76,10 @@
 
   /* ---------- mode cards ---------- */
   /* ---------- primary action + human card ---------- */
-  .go{display:flex;align-items:center;flex-wrap:wrap;gap:10px 18px;margin-bottom:8px}
-  .go-btn{font-family:'Fraunces',Georgia,serif;font-size:18px;font-weight:600;padding:14px 32px;letter-spacing:-.01em}
-  .go-meta{font-size:14px;color:var(--muted);font-style:italic}
-  .options{display:flex;flex-wrap:wrap;gap:20px 28px;align-items:flex-end;margin-bottom:16px}
+  .go{margin-left:auto;display:flex;align-items:center;gap:14px}
+  .go-btn{font-family:'Fraunces',Georgia,serif;font-size:18px;font-weight:600;padding:13px 30px;letter-spacing:-.01em}
+  .go-meta{font-size:13px;color:var(--muted);font-style:italic}
+  .options{display:flex;flex-wrap:wrap;gap:20px 28px;align-items:flex-end;margin-bottom:44px}
   .opt-group{display:flex;flex-direction:column;gap:7px}
   .opt-label{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
   .switch{display:inline-flex;align-items:center;gap:10px;background:none;border:none;padding:0;font-size:14px;color:var(--ink)}

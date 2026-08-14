@@ -303,19 +303,18 @@ export default function Home() {
                   </span>
                 </button>
               </div>
-            </div>
-
-            <div className="go">
-              <button className="primary go-btn" type="button" onClick={runAiPass}>
-                UnSlopIt now
-              </button>
-              <span className="go-meta">
-                {meter && typeof meter.remaining === "number"
-                  ? `${meter.remaining} of ${meter.limit} free edit${
-                      meter.limit === 1 ? "" : "s"
-                    } left`
-                  : "Instant AI edit — free in prototype"}
-              </span>
+              <div className="go">
+                <button className="primary go-btn" type="button" onClick={runAiPass}>
+                  UnSlopIt now
+                </button>
+                <span className="go-meta">
+                  {meter && typeof meter.remaining === "number"
+                    ? `${meter.remaining} of ${meter.limit} free edit${
+                        meter.limit === 1 ? "" : "s"
+                      } left`
+                    : "Instant AI edit — free in prototype"}
+                </span>
+              </div>
             </div>
 
             <div className="aside">

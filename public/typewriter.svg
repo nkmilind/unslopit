@@ -1,7 +1,7 @@
 <svg viewBox="42 0 340 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A typewriter typing a page, with a red correction appearing">
   <style>
     :root{
-      --ink:#1C1E26; --red:#C92B2B; --line:#E6E3DA; --muted:#6C6F7C; --paper:#FCFBF8;
+      --ink:#23201C; --red:#C42B1C; --line:#E4DDCC; --muted:#6E6656; --paper:#F4F1EA;
     }
     .o{stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
     .fill{fill:var(--paper)}
@@ -22,8 +22,10 @@
     }
     .fix{stroke:var(--red);stroke-width:4;stroke-linecap:round;opacity:0;animation:fixin 7s ease-in-out infinite}
     @keyframes fixin{0%,44%{opacity:0}56%,84%{opacity:1}94%,100%{opacity:0}}
+    .sheet{animation:crawl 7s linear infinite}
+    @keyframes crawl{0%{transform:translateY(0)}100%{transform:translateY(-36px)}}
     @media (prefers-reduced-motion:reduce){
-      .press,.strike,.fix{animation:none}
+      .press,.strike,.fix,.sheet{animation:none}
       .strike{stroke-dashoffset:0}
       .fix{opacity:1}
     }
@@ -32,19 +34,27 @@
   <!-- desk -->
   <line class="o" x1="62" y1="292" x2="362" y2="292"/>
 
-  <!-- paper in the platen -->
-  <rect class="o fill" x="150" y="28" width="122" height="96" rx="2"/>
-  <line class="txt" x1="164" y1="50" x2="252" y2="50"/>
-  <line class="txt" x1="164" y1="68" x2="258" y2="68"/>
-  <line class="txt" x1="164" y1="86" x2="236" y2="86"/>
-  <!-- the red pen strikes a line, then the fix appears -->
-  <line class="strike" x1="160" y1="67" x2="260" y2="65"/>
-  <line class="fix" x1="164" y1="104" x2="204" y2="104"/>
+  <!-- paper feeding up out of the platen; top edge runs past the frame -->
+  <g class="sheet">
+    <rect class="o fill" x="150" y="-24" width="122" height="188" rx="2"/>
+    <line class="txt" x1="164" y1="6"   x2="260" y2="6"/>
+    <line class="txt" x1="164" y1="24"  x2="236" y2="24"/>
+    <line class="txt" x1="164" y1="42"  x2="260" y2="42"/>
+    <line class="txt" x1="164" y1="60"  x2="236" y2="60"/>
+    <line class="txt" x1="164" y1="78"  x2="260" y2="78"/>
+    <line class="txt" x1="164" y1="96"  x2="236" y2="96"/>
+    <line class="txt" x1="164" y1="114" x2="260" y2="114"/>
+    <line class="txt" x1="164" y1="132" x2="236" y2="132"/>
+    <line class="txt" x1="164" y1="150" x2="260" y2="150"/>
+    <!-- the red pen strikes the freshly typed line, the fix follows on the next -->
+    <line class="strike" x1="160" y1="113" x2="260" y2="111"/>
+    <line class="fix" x1="242" y1="132" x2="264" y2="132"/>
+  </g>
 
   <!-- platen and knobs -->
-  <rect class="o fill" x="118" y="122" width="186" height="18" rx="9"/>
-  <circle class="o fill" cx="108" cy="131" r="8"/>
-  <circle class="o fill" cx="314" cy="131" r="8"/>
+  <rect class="o fill" x="118" y="122" width="186" height="26" rx="12"/>
+  <circle class="o fill" cx="108" cy="135" r="8"/>
+  <circle class="o fill" cx="314" cy="135" r="8"/>
 
   <!-- typewriter body -->
   <path class="o fill" d="M116 146 L306 146 L330 244 Q330 252 322 252 L100 252 Q92 252 92 244 Z"/>
