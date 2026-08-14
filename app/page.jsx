@@ -24,6 +24,10 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [viewMode, setViewMode] = useState("redline"); // redline | clean
 
+  // Edit options
+  const [level, setLevel] = useState("medium"); // light | medium | full
+  const [addTypo, setAddTypo] = useState(false); // sprinkle one human typo
+
   // Free-edit metering state
   const [meter, setMeter] = useState(null); // {tier, used, remaining, limit, gate, email}
   const [gate, setGate] = useState(false); // true once the current tier is exhausted
@@ -130,7 +134,7 @@ export default function Home() {
       const res = await fetch("/api/unslop", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ text: draft }),
+        body: JSON.stringify({ text: draft, level, addTypo }),
       });
       const data = await res.json();
       // Server says the current tier is exhausted (signup gate or paywall).
@@ -195,9 +199,14 @@ export default function Home() {
     <>
       <header>
         <div className="wrap head-inner">
-          <div className="wordmark">
+          <button
+            type="button"
+            className="wordmark"
+            onClick={() => setView("home")}
+            aria-label="UnSlopIt.ai — go to homepage"
+          >
             Un<span className="slop">Slop</span>It.ai
-          </div>
+          </button>
           <div className="head-note">
             {user ? (
               <span className="auth-state">
@@ -219,13 +228,14 @@ export default function Home() {
             <div className="hero">
               <div className="eyebrow">Human-sounding text, on demand</div>
               <h1>
-                Your draft{" "}
-                <span className="strike">leverages synergies to delve into</span>{" "}
-                <span className="fix">says</span> what you mean.
+                <span className="strike">
+                  Let&apos;s delve into what makes your content truly resonate
+                </span>{" "}
+                <span className="fix">Here&apos;s the point</span>
               </h1>
               <p>
-                Paste anything an AI wrote, then UnSlopIt. Instant AI edit by
-                default — human editing is on the way.
+                Your readers can smell it. Strip AI tells from your draft
+                before you hit publish.
               </p>
             </div>
 
@@ -245,6 +255,45 @@ export default function Home() {
               <div className="panel-foot">
                 <span className="count">{words} words</span>
                 <span className="count">Drafts are processed, not stored</span>
+              </div>
+            </div>
+
+            <div className="options">
+              <div className="opt-group">
+                <span className="opt-label">Edit strength</span>
+                <div className="seg" role="tablist" aria-label="Edit strength">
+                  {[
+                    ["light", "Light touch"],
+                    ["medium", "Medium touch"],
+                    ["full", "Full rewrite"],
+                  ].map(([val, label]) => (
+                    <button
+                      key={val}
+                      type="button"
+                      className={level === val ? "on" : ""}
+                      aria-pressed={level === val}
+                      onClick={() => setLevel(val)}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="opt-group">
+                <span className="opt-label">Add a typo</span>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={addTypo}
+                  aria-label="Add a typo"
+                  className={`switch ${addTypo ? "on" : ""}`}
+                  onClick={() => setAddTypo((v) => !v)}
+                  title="Slip in one natural typo so it reads as human-written"
+                >
+                  <span className="switch-track">
+                    <span className="switch-knob" />
+                  </span>
+                </button>
               </div>
             </div>
 
