@@ -12,6 +12,22 @@ function wordCount(t) {
   return m ? m.length : 0;
 }
 
+// Render the clean output, wrapping the injected human typo (if any) in a
+// spellcheck-style squiggle so the reader can see where it landed.
+function renderWithTypo(text, typo) {
+  if (!typo || typeof typo.index !== "number" || typo.index < 0) return text;
+  const end = typo.index + (typo.word ? typo.word.length : 0);
+  return (
+    <>
+      {text.slice(0, typo.index)}
+      <span className="typo-mark" title="A human typo we slipped in">
+        {text.slice(typo.index, end)}
+      </span>
+      {text.slice(end)}
+    </>
+  );
+}
+
 export default function Home() {
   const [draft, setDraft] = useState("");
   const [view, setView] = useState("home"); // home | ai | human
@@ -147,6 +163,8 @@ export default function Home() {
       }
       if (!res.ok) throw new Error(data.error || "Request failed");
       setResult(data);
+      // A human typo only shows its squiggle in the clean view — surface it.
+      if (data.typo) setViewMode("clean");
       if (typeof data.remaining === "number") {
         setMeter(data);
         if (data.remaining <= 0) {
@@ -336,8 +354,16 @@ export default function Home() {
             <button className="back" type="button" onClick={() => setView("home")}>
               ← Back to draft
             </button>
-            <h2>Machine pass</h2>
-            <p className="sub">Rewritten by AI against UnSlopIt house rules.</p>
+            <h2>Unslopped.</h2>
+            {result && (
+              <p className="sub">
+                {result.changes.length > 0
+                  ? `${result.changes.length} AI tell${
+                      result.changes.length === 1 ? "" : "s"
+                    } struck with your meaning intact`
+                  : "Surprisingly clean — only light touch-ups needed."}
+              </p>
+            )}
 
             {loading && (
               <div className="working">
@@ -401,7 +427,9 @@ export default function Home() {
                       })}
                     </div>
                   ) : (
-                    <div className="out-body">{result.rewritten}</div>
+                    <div className="out-body">
+                      {renderWithTypo(result.rewritten, result.typo)}
+                    </div>
                   )}
                 </div>
                 {viewMode === "clean" && (
