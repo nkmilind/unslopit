@@ -1,12 +1,22 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { FREE_ANON_LIMIT, METER_COOKIE, readCount } from "../../../lib/meter";
+import {
+  FREE_ANON_LIMIT,
+  METER_COOKIE,
+  readCount,
+  meteringDisabled,
+} from "../../../lib/meter";
 import { createClient } from "../../../lib/supabase-server";
 import { FREE_ACCOUNT_LIMIT, getAccountUsage } from "../../../lib/usage";
 
 // GET /api/meter -> current tier + used/remaining/limit + which gate (if any).
 // Signed-in users are metered per account; everyone else by the anon cookie.
 export async function GET() {
+  // Local dev bypass: no limits, no gate.
+  if (meteringDisabled()) {
+    return NextResponse.json({ tier: "dev", gate: null });
+  }
+
   const supabase = await createClient();
   const {
     data: { user },
