@@ -4,3 +4,4 @@ node_modules/
 .env
 .vercel
 eval/last-run.json
+.DS_Store
