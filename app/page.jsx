@@ -308,26 +308,25 @@ export default function Home() {
             <div className="go">
               <button className="primary go-btn" type="button" onClick={runAiPass}>
                 UnSlopIt now
-                <span className="go-sub">
-                  {meter && typeof meter.remaining === "number"
-                    ? `${meter.remaining} of ${meter.limit} free edit${
-                        meter.limit === 1 ? "" : "s"
-                      } left`
-                    : "Instant AI edit — free in prototype"}
-                </span>
               </button>
+              <span className="go-meta">
+                {meter && typeof meter.remaining === "number"
+                  ? `${meter.remaining} of ${meter.limit} free edit${
+                      meter.limit === 1 ? "" : "s"
+                    } left`
+                  : "Instant AI edit — free in prototype"}
+              </span>
             </div>
 
-            <div className="modes">
-              <button className="mode" type="button" onClick={openInterest}>
-                <span className="tag">Prefer a person?</span>
-                <h3>Want a human editor?</h3>
-                <p>
-                  A real editor rewrites it in your voice, flags anything
-                  unclear, and returns a tracked-changes summary. We&apos;re
-                  lining up editors now.
-                </p>
-                <span className="meta">Human editing — register your interest</span>
+            <div className="aside">
+              <h3>Prefer a person?</h3>
+              <p>
+                A real editor rewrites it in your voice, flags anything unclear,
+                and returns a tracked-changes summary. We&apos;re lining up editors
+                now.
+              </p>
+              <button className="text-link" type="button" onClick={openInterest}>
+                Register your interest →
               </button>
             </div>
           </section>
@@ -343,8 +342,13 @@ export default function Home() {
 
             {loading && (
               <div className="working">
-                <span className="pen" />
-                Applying the red pen…
+                <img
+                  className="working-art"
+                  src="/typewriter.svg"
+                  alt=""
+                  aria-hidden="true"
+                />
+                <span>Applying the red pen…</span>
               </div>
             )}
             {error && <div className="error-box">The edit didn&apos;t come back: {error}</div>}
