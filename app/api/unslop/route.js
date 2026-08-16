@@ -16,7 +16,7 @@ import { FREE_ACCOUNT_LIMIT, getAccountUsage, setAccountUsage } from "../../../l
 // POST /api/unslop  { text: string } -> { rewritten: string, changes: [{was, why}] }
 // The Anthropic key lives ONLY here, server-side, as an env var. Never in the browser.
 
-const MAX_WORDS = 3000; // per request; chunk longer drafts client-side or raise with care
+const MAX_WORDS = 1000; // per request; chunk longer drafts client-side or raise with care
 const MODEL = "claude-sonnet-4-5"; // fast + strong for rewriting; check docs.claude.com for current models
 
 function wordCount(t) {

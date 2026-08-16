@@ -29,7 +29,7 @@ const FAQ = [
   },
   {
     q: "Is there a limit?",
-    a: "In the prototype you get a few free edits, then the option to create a free account for more. Drafts are capped at 3,000 words per pass — split longer pieces by section.",
+    a: "In the prototype you get a few free edits, then the option to create a free account for more. Drafts are capped at 1,000 words per pass — split longer pieces by section.",
   },
 ];
 
