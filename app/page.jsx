@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { wordDiff } from "../lib/diff";
 import { createClient } from "../lib/supabase-browser";
+import { BEFORE_AFTER } from "../lib/taxonomy";
 
 const SAMPLE =
   "In today's fast-paced digital landscape, it's important to note that content creation isn't just about writing\u2014it's about crafting a narrative. Let's delve into how leveraging cutting-edge AI tools can unlock unprecedented synergies, streamline your workflow, and elevate your brand. Whether you're a seasoned professional or just starting your journey, these game-changing insights will empower you to take your content to the next level.";
@@ -346,6 +347,26 @@ export default function Home() {
                 Register your interest →
               </button>
             </div>
+
+            <div className="ba-home">
+              <h2 className="ba-home-title">Before &amp; after</h2>
+              <div className="ba-grid">
+                {BEFORE_AFTER.map((ex, i) => (
+                  <div className="ba" key={i}>
+                    <span className="ba-label">{ex.label}</span>
+                    <p className="ba-before">{ex.before}</p>
+                    <p className="ba-after">{ex.after}</p>
+                    <p className="ba-caught">
+                      {ex.caught.map((c, j) => (
+                        <span className="tell" key={j}>
+                          {c}
+                        </span>
+                      ))}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </section>
         )}
 
@@ -600,7 +621,8 @@ export default function Home() {
 
       <footer>
         <div className="wrap">
-          UnSlopIt.ai · Just UnSlopIt. · <a href="/learn">What is AI slop?</a>
+          UnSlopIt.ai · Just UnSlopIt. · <a href="/learn">What is AI slop?</a> ·{" "}
+          <a href="/about">About</a>
         </div>
       </footer>
     </>
