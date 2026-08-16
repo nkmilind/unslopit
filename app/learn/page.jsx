@@ -1,9 +1,9 @@
-import { TAXONOMY, BEFORE_AFTER } from "../../lib/taxonomy";
+import { TAXONOMY } from "../../lib/taxonomy";
 
 export const metadata = {
   title: "What is AI slop? — UnSlopIt.ai",
   description:
-    "AI slop is text that obviously reads like a machine wrote it. Here's what it is, the 13 tells UnSlopIt strips, an FAQ, and before/after examples.",
+    "AI slop is text that obviously reads like a machine wrote it. Here's what it is, the 13 tells UnSlopIt strips, and an FAQ.",
 };
 
 const FAQ = [
@@ -33,6 +33,22 @@ const FAQ = [
   },
 ];
 
+// Decorative cloud of tells at the top of the page.
+const CLOUD = [
+  { t: "delve", size: 48, red: true, strike: true },
+  { t: "em-dash overuse", size: 20 },
+  { t: "truly", size: 38, red: true },
+  { t: "Hope this helps!", size: 30, red: true, strike: true },
+  { t: "Nobody talks about this…", size: 26 },
+  { t: "leverage", size: 34, red: true, strike: true },
+  { t: "You don't need X. You need Y.", size: 22, italic: true },
+  { t: "tapestry", size: 22 },
+  { t: "Let that sink in.", size: 24, red: true },
+  { t: "seamless", size: 18 },
+  { t: "it's not just X, it's Y", size: 20, italic: true },
+  { t: "pivotal", size: 18 },
+];
+
 export default function Learn() {
   return (
     <>
@@ -48,21 +64,25 @@ export default function Learn() {
       </header>
 
       <main className="wrap learn">
-        {/* 1 — what UnSlopIt does */}
-        <section className="learn-hero">
-          <h1>Text that sounds like a person wrote it.</h1>
-          <p className="lede">
-            UnSlopIt takes anything an AI drafted and strips the tells that give
-            it away — the buzzwords, the stock framings, the chatbot sign-offs —
-            while keeping your meaning, your facts, and your voice. Paste a
-            draft, pick how hard to edit, and get back a clean version plus a
-            red-pen list of every change and why it was made.
-          </p>
-        </section>
+        <div className="slop-cloud" aria-hidden="true">
+          {CLOUD.map((w, i) => (
+            <span
+              key={i}
+              className={w.strike ? "sc-strike" : undefined}
+              style={{
+                fontSize: `${w.size}px`,
+                color: w.red ? "var(--red)" : "var(--muted)",
+                fontStyle: w.italic ? "italic" : "normal",
+              }}
+            >
+              {w.t}
+            </span>
+          ))}
+        </div>
 
-        {/* 2 — what is AI slop */}
-        <section id="what-is-ai-slop" className="learn-section">
-          <h2>What is AI slop?</h2>
+        {/* What is AI slop */}
+        <section id="what-is-ai-slop" className="learn-section learn-first">
+          <h1>What is AI slop?</h1>
           <p>
             &ldquo;AI slop&rdquo; is writing that reads like a machine produced
             it: fluent, confident, and strangely empty. It isn&apos;t about
@@ -79,7 +99,7 @@ export default function Learn() {
           </p>
         </section>
 
-        {/* 3 — the taxonomy */}
+        {/* The taxonomy */}
         <section id="taxonomy" className="learn-section">
           <h2>The slop taxonomy</h2>
           <p>
@@ -110,7 +130,7 @@ export default function Learn() {
           </ol>
         </section>
 
-        {/* 4 — FAQ */}
+        {/* FAQ */}
         <section id="faq" className="learn-section">
           <h2>FAQ</h2>
           <dl className="faq">
@@ -123,37 +143,17 @@ export default function Learn() {
           </dl>
         </section>
 
-        {/* 5 — before / after */}
-        <section id="examples" className="learn-section">
-          <h2>Before &amp; after</h2>
-          <div className="ba-grid">
-            {BEFORE_AFTER.map((ex, i) => (
-              <div className="ba" key={i}>
-                <span className="ba-label">{ex.label}</span>
-                <p className="ba-before">{ex.before}</p>
-                <p className="ba-after">{ex.after}</p>
-                <p className="ba-caught">
-                  {ex.caught.map((c, j) => (
-                    <span className="tell" key={j}>
-                      {c}
-                    </span>
-                  ))}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
         <section className="learn-cta">
           <a className="primary" href="/">
-            UnSlopIt your draft &rarr;
+            Unslop your draft &rarr;
           </a>
         </section>
       </main>
 
       <footer>
         <div className="wrap">
-          UnSlopIt.ai · Just UnSlopIt. · <a href="/">Home</a>
+          UnSlopIt.ai · <a href="/">Home</a> ·{" "}
+          <a href="/about">About</a>
         </div>
       </footer>
     </>
