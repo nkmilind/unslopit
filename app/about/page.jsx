@@ -1,12 +1,29 @@
+import { FAQ } from "../../lib/faq";
+
 export const metadata = {
   title: "About",
   description:
-    "UnSlopIt turns AI-drafted text into writing that sounds like a person wrote it — stripping the tells while keeping your meaning, facts, and voice.",
+    "What UnSlopIt does, how the free tier works, and answers to common questions about editing, storage, and limits.",
+};
+
+// FAQPage schema — must match the FAQ rendered on this page (same source).
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
 };
 
 export default function About() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <header>
         <div className="wrap head-inner">
           <a className="wordmark" href="/">
@@ -43,6 +60,18 @@ export default function About() {
               Read the field guide &rarr;
             </a>
           </p>
+        </section>
+
+        <section id="faq" className="learn-section">
+          <h2>FAQ</h2>
+          <dl className="faq">
+            {FAQ.map((item, i) => (
+              <div className="faq-item" key={i}>
+                <dt>{item.q}</dt>
+                <dd>{item.a}</dd>
+              </div>
+            ))}
+          </dl>
         </section>
 
         <section className="learn-cta">
