@@ -1,6 +1,8 @@
 import "./globals.css";
+import Script from "next/script";
 
 const SITE = "https://unslopit.ai";
+const ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 const DESCRIPTION =
   "Humanize AI text in seconds. UnSlopIt strips the tells — buzzwords, stock framings, chatbot sign-offs — and hands back a clean draft with a red-pen change list.";
 
@@ -65,6 +67,17 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
         />
+        {ADS_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${ADS_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="gads" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${ADS_ID}');`}
+            </Script>
+          </>
+        )}
         {children}
       </body>
     </html>

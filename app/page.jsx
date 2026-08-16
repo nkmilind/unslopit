@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { wordDiff } from "../lib/diff";
+import { useRouter } from "next/navigation";
 import { createClient } from "../lib/supabase-browser";
 import { BEFORE_AFTER, TAXONOMY } from "../lib/taxonomy";
 import { FAQ } from "../lib/faq";
+import { trackConversion } from "../lib/analytics";
 
 const SAMPLE =
   "In today's fast-paced digital landscape, it's important to note that content creation isn't just about writing\u2014it's about crafting a narrative. Let's delve into how leveraging cutting-edge AI tools can unlock unprecedented synergies, streamline your workflow, and elevate your brand. Whether you're a seasoned professional or just starting your journey, these game-changing insights will empower you to take your content to the next level.";
@@ -14,33 +15,15 @@ function wordCount(t) {
   return m ? m.length : 0;
 }
 
-// Render the clean output, wrapping the injected human typo (if any) in a
-// spellcheck-style squiggle so the reader can see where it landed.
-function renderWithTypo(text, typo) {
-  if (!typo || typeof typo.index !== "number" || typo.index < 0) return text;
-  const end = typo.index + (typo.word ? typo.word.length : 0);
-  return (
-    <>
-      {text.slice(0, typo.index)}
-      <span className="typo-mark" title="A human typo we slipped in">
-        {text.slice(typo.index, end)}
-      </span>
-      {text.slice(end)}
-    </>
-  );
-}
-
 export default function Home() {
+  const router = useRouter();
   const [draft, setDraft] = useState("");
-  const [view, setView] = useState("home"); // home | ai | human
+  const [view, setView] = useState("home"); // home | working | human | gate
   const [placeholder, setPlaceholder] = useState("Paste your AI-generated text here…");
 
   // AI pass state
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState(null); // {rewritten, changes}
   const [error, setError] = useState("");
-  const [copied, setCopied] = useState(false);
-  const [viewMode, setViewMode] = useState("redline"); // redline | clean
 
   // Edit options
   const [level, setLevel] = useState("medium"); // light | medium | full
@@ -71,6 +54,11 @@ export default function Home() {
   }
 
   useEffect(() => {
+    // /result's "register" CTA links back with ?register=1 → open the form.
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("register") === "1") setView("human");
+    }
     refreshMeter();
     let client;
     try {
@@ -106,6 +94,7 @@ export default function Home() {
       setAuthStatus("error");
     } else {
       setAuthStatus("sent");
+      trackConversion("register"); // primary conversion — email submitted for signup
     }
   }
 
@@ -115,11 +104,6 @@ export default function Home() {
     setView("home");
     refreshMeter();
   }
-
-  const diffOps = useMemo(
-    () => (result ? wordDiff(draft, result.rewritten) : []),
-    [draft, result]
-  );
 
   // Interest capture state
   const [email, setEmail] = useState("");
@@ -144,8 +128,7 @@ export default function Home() {
       setView("gate");
       return;
     }
-    setView("ai");
-    setResult(null);
+    setView("working");
     setError("");
     setLoading(true);
     try {
@@ -164,9 +147,6 @@ export default function Home() {
         return;
       }
       if (!res.ok) throw new Error(data.error || "Request failed");
-      setResult(data);
-      // A human typo only shows its squiggle in the clean view — surface it.
-      if (data.typo) setViewMode("clean");
       if (typeof data.remaining === "number") {
         setMeter(data);
         if (data.remaining <= 0) {
@@ -175,9 +155,12 @@ export default function Home() {
           setGateType(data.tier === "account" ? "paywall" : "signup");
         }
       }
+      // Hand the result to /result via sessionStorage (no server storage — keeps
+      // the "drafts aren't stored" promise) and navigate to the result page.
+      sessionStorage.setItem("usi_result", JSON.stringify({ ...data, draft }));
+      router.push("/result");
     } catch (err) {
       setError(err.message);
-    } finally {
       setLoading(false);
     }
   }
@@ -201,18 +184,11 @@ export default function Home() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Couldn't register your interest.");
       setInterestStatus("done");
+      trackConversion("register"); // primary conversion — email captured
     } catch (err) {
       setInterestError(err.message);
       setInterestStatus("error");
     }
-  }
-
-  async function copyResult() {
-    try {
-      await navigator.clipboard.writeText(result?.rewritten || "");
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {}
   }
 
   return (
@@ -400,24 +376,11 @@ export default function Home() {
           </section>
         )}
 
-        {view === "ai" && (
+        {view === "working" && (
           <section className="stage active">
             <button className="back" type="button" onClick={() => setView("home")}>
               ← Back to draft
             </button>
-            {result && (
-              <>
-                <h2>Unslopped.</h2>
-                <p className="sub">
-                  {result.changes.length > 0
-                    ? `${result.changes.length} AI tell${
-                        result.changes.length === 1 ? "" : "s"
-                      } struck with your meaning intact`
-                    : "Surprisingly clean — only light touch-ups needed."}
-                </p>
-              </>
-            )}
-
             {loading && (
               <div className="working">
                 <img
@@ -429,81 +392,8 @@ export default function Home() {
                 <span>Applying the red pen…</span>
               </div>
             )}
-            {error && <div className="error-box">The edit didn&apos;t come back: {error}</div>}
-
-            {result && (
-              <div className="result-grid">
-                <div className="out-panel">
-                  <div className="panel-bar">
-                    <span className="label">
-                      {viewMode === "redline" ? "Redline" : "Unslopped"}
-                    </span>
-                    <div className="bar-tools">
-                      <div className="seg" role="tablist" aria-label="Output view">
-                        <button
-                          type="button"
-                          className={viewMode === "redline" ? "on" : ""}
-                          onClick={() => setViewMode("redline")}
-                        >
-                          Redline
-                        </button>
-                        <button
-                          type="button"
-                          className={viewMode === "clean" ? "on" : ""}
-                          onClick={() => setViewMode("clean")}
-                        >
-                          Clean
-                        </button>
-                      </div>
-                      <button className="ghost-btn" type="button" onClick={copyResult}>
-                        {copied ? "Copied" : "Copy"}
-                      </button>
-                    </div>
-                  </div>
-                  {viewMode === "redline" ? (
-                    <div className="out-body">
-                      {diffOps.map((op, i) => {
-                        if (op.type === "break") return <br key={i} />;
-                        if (op.type === "del")
-                          return (
-                            <span key={i} className="rl-del">
-                              {op.text}{" "}
-                            </span>
-                          );
-                        if (op.type === "ins")
-                          return (
-                            <span key={i} className="rl-ins">
-                              {op.text}{" "}
-                            </span>
-                          );
-                        return <span key={i}>{op.text} </span>;
-                      })}
-                    </div>
-                  ) : (
-                    <div className="out-body">
-                      {renderWithTypo(result.rewritten, result.typo)}
-                    </div>
-                  )}
-                </div>
-                {viewMode === "clean" && (
-                  <div className="out-panel">
-                    <div className="panel-bar">
-                      <span className="label">What the red pen caught</span>
-                    </div>
-                    <ul className="changes">
-                      {result.changes.length === 0 && (
-                        <li>Surprisingly clean — only light touch-ups needed.</li>
-                      )}
-                      {result.changes.map((c, i) => (
-                        <li key={i}>
-                          <span className="was">{c.was}</span>
-                          <span className="why">{c.why}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
+            {error && (
+              <div className="error-box">The edit didn&apos;t come back: {error}</div>
             )}
           </section>
         )}
