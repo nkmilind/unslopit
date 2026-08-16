@@ -5,8 +5,8 @@
 ## Pages
 
 - [Home](https://unslopit.ai/): Paste an AI draft and get a de-slopped version. Choose edit strength (light, medium, full), optionally add a natural human typo, and see both a redline and a clean result with a change list.
-- [What is AI slop?](https://unslopit.ai/learn): Defines AI slop and lists the full taxonomy of tells the editor removes — 13 categories, each with examples — plus an FAQ.
-- [About](https://unslopit.ai/about): What UnSlopIt does, and how the free tier works.
+- [What is AI slop?](https://unslopit.ai/learn): Defines AI slop and lists the full taxonomy of tells the editor removes — 13 categories, each with examples.
+- [About](https://unslopit.ai/about): What UnSlopIt does, how the free tier works, and an FAQ.
 
 ## Notes
 

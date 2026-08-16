@@ -1,21 +1,9 @@
 import { TAXONOMY } from "../../lib/taxonomy";
-import { FAQ } from "../../lib/faq";
 
 export const metadata = {
   title: "What is AI slop?",
   description:
-    "AI slop is text that obviously reads like AI wrote it. Here's what it is, the 13 tells UnSlopIt strips, and an FAQ.",
-};
-
-// FAQPage schema — must match the FAQ rendered on this page (same source).
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: FAQ.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
+    "AI slop is text that obviously reads like AI wrote it. Here's what it is and the 13 tells UnSlopIt strips.",
 };
 
 // Decorative cloud of tells at the top of the page.
@@ -37,10 +25,6 @@ const CLOUD = [
 export default function Learn() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
       <header>
         <div className="wrap head-inner">
           <a className="wordmark" href="/">
@@ -118,19 +102,6 @@ export default function Learn() {
               </li>
             ))}
           </ol>
-        </section>
-
-        {/* FAQ */}
-        <section id="faq" className="learn-section">
-          <h2>FAQ</h2>
-          <dl className="faq">
-            {FAQ.map((item, i) => (
-              <div className="faq-item" key={i}>
-                <dt>{item.q}</dt>
-                <dd>{item.a}</dd>
-              </div>
-            ))}
-          </dl>
         </section>
 
         <section className="learn-cta">

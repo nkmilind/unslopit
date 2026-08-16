@@ -394,7 +394,7 @@ export default function Home() {
                 ))}
               </dl>
               <p className="home-block-sub" style={{ marginTop: 16, marginBottom: 0 }}>
-                <a href="/learn#faq">More questions →</a>
+                <a href="/about#faq">More questions →</a>
               </p>
             </div>
           </section>
