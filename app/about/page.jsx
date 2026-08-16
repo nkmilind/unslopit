@@ -54,7 +54,7 @@ export default function About() {
 
       <footer>
         <div className="wrap">
-          UnSlopIt.ai · Just UnSlopIt. · <a href="/">Home</a> ·{" "}
+          UnSlopIt.ai · <a href="/">Home</a> ·{" "}
           <a href="/learn">What is AI slop?</a>
         </div>
       </footer>

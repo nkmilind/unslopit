@@ -340,8 +340,7 @@ export default function Home() {
               <h3>Prefer a person?</h3>
               <p>
                 A real editor rewrites it in your voice, flags anything unclear,
-                and returns a tracked-changes summary. We&apos;re lining up editors
-                now.
+                and returns a tracked-changes summary.
               </p>
               <button className="text-link" type="button" onClick={openInterest}>
                 Register your interest →
@@ -621,7 +620,7 @@ export default function Home() {
 
       <footer>
         <div className="wrap">
-          UnSlopIt.ai · Just UnSlopIt. · <a href="/learn">What is AI slop?</a> ·{" "}
+          UnSlopIt.ai · <a href="/learn">What is AI slop?</a> ·{" "}
           <a href="/about">About</a>
         </div>
       </footer>

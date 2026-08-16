@@ -152,7 +152,7 @@ export default function Learn() {
 
       <footer>
         <div className="wrap">
-          UnSlopIt.ai · Just UnSlopIt. · <a href="/">Home</a> ·{" "}
+          UnSlopIt.ai · <a href="/">Home</a> ·{" "}
           <a href="/about">About</a>
         </div>
       </footer>
