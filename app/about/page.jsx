@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "About — UnSlopIt.ai",
+  title: "About",
   description:
     "UnSlopIt turns AI-drafted text into writing that sounds like a person wrote it — stripping the tells while keeping your meaning, facts, and voice.",
 };

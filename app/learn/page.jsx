@@ -1,37 +1,22 @@
 import { TAXONOMY } from "../../lib/taxonomy";
+import { FAQ } from "../../lib/faq";
 
 export const metadata = {
-  title: "What is AI slop? — UnSlopIt.ai",
+  title: "What is AI slop?",
   description:
     "AI slop is text that obviously reads like AI wrote it. Here's what it is, the 13 tells UnSlopIt strips, and an FAQ.",
 };
 
-const FAQ = [
-  {
-    q: "Is my text stored?",
-    a: "No. Drafts are processed to produce the edit and are not saved. The browser never talks to the AI directly — your text goes to our server, which holds the API key and returns the rewrite.",
-  },
-  {
-    q: "Will it change what I meant?",
-    a: "No. The editor preserves your meaning, facts, claims, and roughly your length — it never invents new claims or statistics. You choose how hard it edits: Light touch, Medium (default), or Full rewrite.",
-  },
-  {
-    q: "How is this different from asking an AI to “rewrite this”?",
-    a: "A general model often adds its own slop. UnSlopIt runs a purpose-built editor against a fixed taxonomy of tells (below) and shows you exactly what it changed and why — as a redline plus a clean version.",
-  },
-  {
-    q: "What's the “add a typo” option?",
-    a: "Perfectly clean text is itself a tell. Toggle it on and the editor slips in one small, natural typo so the result reads as human-written. We mark where it landed with a spellcheck-style squiggle.",
-  },
-  {
-    q: "Can a real person edit it?",
-    a: "Human editing is on the way. Register your interest on the home page and we'll email you when it's live.",
-  },
-  {
-    q: "Is there a limit?",
-    a: "In the prototype you get a few free edits, then the option to create a free account for more. Drafts are capped at 1,000 words per pass — split longer pieces by section.",
-  },
-];
+// FAQPage schema — must match the FAQ rendered on this page (same source).
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
 
 // Decorative cloud of tells at the top of the page.
 const CLOUD = [
@@ -52,6 +37,10 @@ const CLOUD = [
 export default function Learn() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <header>
         <div className="wrap head-inner">
           <a className="wordmark" href="/">
