@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { wordDiff } from "../lib/diff";
 import { createClient } from "../lib/supabase-browser";
-import { BEFORE_AFTER } from "../lib/taxonomy";
+import { BEFORE_AFTER, TAXONOMY } from "../lib/taxonomy";
+import { FAQ } from "../lib/faq";
 
 const SAMPLE =
   "In today's fast-paced digital landscape, it's important to note that content creation isn't just about writing\u2014it's about crafting a narrative. Let's delve into how leveraging cutting-edge AI tools can unlock unprecedented synergies, streamline your workflow, and elevate your brand. Whether you're a seasoned professional or just starting your journey, these game-changing insights will empower you to take your content to the next level.";
@@ -365,6 +366,36 @@ export default function Home() {
                   </div>
                 ))}
               </div>
+            </div>
+
+            <div className="home-block">
+              <h2 className="home-block-title">The AI slop taxonomy</h2>
+              <p className="home-block-sub">
+                The {TAXONOMY.length} tells the editor hunts for.{" "}
+                <a href="/learn#taxonomy">See the full guide →</a>
+              </p>
+              <ul className="home-tax-list">
+                {TAXONOMY.map((c) => (
+                  <li key={c.id}>
+                    <a href={`/learn#${c.id}`}>{c.title}</a> — {c.blurb}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="home-block">
+              <h2 className="home-block-title">FAQ</h2>
+              <dl className="faq">
+                {FAQ.slice(0, 3).map((item, i) => (
+                  <div className="faq-item" key={i}>
+                    <dt>{item.q}</dt>
+                    <dd>{item.a}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="home-block-sub" style={{ marginTop: 16, marginBottom: 0 }}>
+                <a href="/learn#faq">More questions →</a>
+              </p>
             </div>
           </section>
         )}
