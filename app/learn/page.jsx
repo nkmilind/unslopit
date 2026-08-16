@@ -3,7 +3,7 @@ import { TAXONOMY } from "../../lib/taxonomy";
 export const metadata = {
   title: "What is AI slop? — UnSlopIt.ai",
   description:
-    "AI slop is text that obviously reads like a machine wrote it. Here's what it is, the 13 tells UnSlopIt strips, and an FAQ.",
+    "AI slop is text that obviously reads like AI wrote it. Here's what it is, the 13 tells UnSlopIt strips, and an FAQ.",
 };
 
 const FAQ = [
@@ -29,7 +29,7 @@ const FAQ = [
   },
   {
     q: "Is there a limit?",
-    a: "In the prototype you get a few free edits, then the option to create a free account for more. Drafts are capped at 3,000 words per pass — split longer pieces by section.",
+    a: "In the prototype you get a few free edits, then the option to create a free account for more. Drafts are capped at 1,000 words per pass — split longer pieces by section.",
   },
 ];
 
@@ -85,17 +85,18 @@ export default function Learn() {
           <h1>What is AI slop?</h1>
           <p>
             &ldquo;AI slop&rdquo; is writing that reads like a machine produced
-            it: fluent, confident, and strangely empty. It isn&apos;t about
-            being wrong — it&apos;s about a texture. The sentences hedge and
-            balance too neatly, lean on a small set of overused words, and pad
-            every point with throat-clearing and summary.
+            it: fluent, equivocating, and strangely empty. The sentences hedge
+            and balance too neatly, lean on a small set of overused words, and
+            pad pretty much every point. And then there are the summaries that
+            assume the reader needs to be spoon-fed every takeaway.
           </p>
           <p>
             It matters because readers can feel it, even when they can&apos;t
-            name it. Slop reads as low-effort and erodes trust, and the same
-            statistical patterns that make it sound &ldquo;AI&rdquo; are exactly
-            what detection tools flag. The fix isn&apos;t more polish — it&apos;s
-            cutting the tells and letting a specific, human point stand.
+            put their finger on it. Slop signals that the writer did not put in
+            any effort to review and refine. It erodes trust. The statistical
+            patterns that make it sound &ldquo;AI&rdquo; are also the ones AI
+            detection tools flag. The fix is cutting out the tells and adding a
+            warm, human voice that values simplicity.
           </p>
         </section>
 

@@ -20,22 +20,22 @@ export default function About() {
 
       <main className="wrap learn">
         <section className="learn-hero">
-          <h1>Text that sounds like a person wrote it.</h1>
+          <h1>Text that sounds human.</h1>
           <p className="lede">
             UnSlopIt takes anything an AI drafted and strips the tells that give
-            it away — the buzzwords, the stock framings, the chatbot sign-offs —
-            while keeping your meaning, your facts, and your voice. Paste a
-            draft, pick how hard to edit, and get back a clean version plus a
-            red-pen list of every change and why it was made.
+            it away. The buzzwords, the stock framings, and the fake balance.
+            All while keeping your facts and meaning intact. Paste a draft, pick
+            how aggressively to edit, and get back a clean version plus a red-pen
+            list of every change and why it was made.
           </p>
         </section>
 
         <section className="learn-section">
           <p>
-            Instant AI editing is free while we&apos;re in prototype. Human
-            editing — a real person, in your voice, with a tracked-changes
-            summary — is on the way; you can register your interest from the
-            home page.
+            Instant AI editing is free for the first 3 drafts. You get 3 more
+            free edits once you register with your email. For human editing
+            turned around in a couple of hours, with a tracked-changes summary;
+            you can register your interest from the home page.
           </p>
           <p>
             Curious what actually counts as slop?{" "}

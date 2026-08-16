@@ -76,7 +76,7 @@ Everything that makes UnSlopIt good lives in `lib/slop-prompt.js`.
 ## Step 6 — Production hardening (before real traffic)
 
 - **Rate limiting:** the route currently trusts everyone. Add per-IP limits with Upstash Ratelimit (works on Vercel serverless) before launch, or your Anthropic bill is an open tap.
-- **Long drafts:** requests are capped at 3,000 words (`MAX_WORDS` in `route.js`). To go higher, chunk on paragraph boundaries, edit chunks in parallel, and reassemble.
+- **Long drafts:** requests are capped at 1,000 words (`MAX_WORDS` in `route.js`). To go higher, chunk on paragraph boundaries, edit chunks in parallel, and reassemble.
 - **Streaming:** for long rewrites, switch the route to Anthropic's streaming API and stream tokens to the client so the result appears as it's written.
 - **Model choice:** the model is pinned in `route.js` (`MODEL`). Check docs.claude.com for current model strings and pricing; Sonnet-class is the right speed/quality tradeoff for this workload.
 
