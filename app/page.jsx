@@ -599,7 +599,9 @@ export default function Home() {
       </main>
 
       <footer>
-        <div className="wrap">UnSlopIt.ai · Just UnSlopIt.</div>
+        <div className="wrap">
+          UnSlopIt.ai · Just UnSlopIt. · <a href="/learn">What is AI slop?</a>
+        </div>
       </footer>
     </>
   );
