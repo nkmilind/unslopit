@@ -9,7 +9,7 @@ import sharp from "sharp";
 const b64 = readFileSync("/tmp/fraunces-sub.b64", "utf8").trim();
 
 // viewBox is tightened after measuring the text bbox in a browser.
-const VB = "-8 0 380 94";
+const VB = "-20 0 405 94";
 const FS = 64;
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${VB}" role="img" aria-label="UnSlopIt.ai">
@@ -28,7 +28,7 @@ console.log("wrote public/wordmark.svg —", svg.length, "bytes");
 
 // Transparent PNG at 1200-wide for non-SVG contexts.
 const W = 1200;
-const H = Math.round((W * 94) / 380); // viewBox aspect 380x94
+const H = Math.round((W * 94) / 405); // viewBox aspect 405x94
 const pngSvg = svg.replace("<svg ", `<svg width="${W}" height="${H}" `);
 await sharp(Buffer.from(pngSvg)).png().toFile("public/wordmark.png");
 console.log(`wrote public/wordmark.png — ${W}x${H}`);
