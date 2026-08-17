@@ -46,7 +46,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" 
   <text x="90" y="150" font-family="Georgia, 'Times New Roman', serif" font-size="26" letter-spacing="5" fill="${MUTED}">UNSLOPIT.AI</text>
   <text x="84" y="300" font-family="Georgia, 'Times New Roman', serif" font-size="76" font-weight="700" fill="${INK}">Text that sounds</text>
   <text x="84" y="398" font-family="Georgia, 'Times New Roman', serif" font-size="76" font-weight="700" font-style="italic" fill="${RED}">human.</text>
-  <text x="90" y="478" font-family="Georgia, 'Times New Roman', serif" font-size="30" fill="${MUTED}">Humanize AI text — keep your meaning.</text>
+  <text x="90" y="478" font-family="Georgia, 'Times New Roman', serif" font-size="30" fill="${MUTED}">Remove AI slop — keep your meaning.</text>
   ${typewriter}
 </svg>`;
 
