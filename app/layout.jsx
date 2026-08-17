@@ -4,37 +4,37 @@ import Script from "next/script";
 const SITE = "https://unslopit.ai";
 const ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 const DESCRIPTION =
-  "Humanize AI text in seconds. UnSlopIt strips the tells — buzzwords, stock framings, chatbot sign-offs — and hands back a clean draft with a red-pen change list.";
+  "Remove AI slop in seconds. UnSlopIt strips the tells — buzzwords, stock framings, chatbot sign-offs — and hands back a clean draft with a red-pen change list.";
 
 export const metadata = {
   metadataBase: new URL(SITE),
   title: {
-    default: "UnSlopIt — humanize AI text, keep your meaning",
+    default: "UnSlopIt — remove AI slop, keep your meaning",
     template: "%s · UnSlopIt",
   },
   description: DESCRIPTION,
   applicationName: "UnSlopIt",
   keywords: [
-    "humanize AI text",
     "AI slop",
-    "make AI text sound human",
+    "remove AI slop",
     "AI writing tells",
-    "remove AI buzzwords",
+    "make AI text sound human",
+    "humanize AI text",
   ],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: "UnSlopIt",
     url: SITE,
-    title: "UnSlopIt — humanize AI text, keep your meaning",
+    title: "UnSlopIt — remove AI slop, keep your meaning",
     description: DESCRIPTION,
     images: [
-      { url: "/og.png", width: 1200, height: 630, alt: "UnSlopIt — humanize AI text" },
+      { url: "/og.png", width: 1200, height: 630, alt: "UnSlopIt — remove AI slop" },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "UnSlopIt — humanize AI text, keep your meaning",
+    title: "UnSlopIt — remove AI slop, keep your meaning",
     description: DESCRIPTION,
     images: ["/og.png"],
   },
