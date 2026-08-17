@@ -223,12 +223,13 @@ export default function Home() {
           <section className="stage active">
             <div className="hero">
               <div className="hero-copy">
-                <h1>
+                <h1>Remove AI slop.</h1>
+                <div className="hero-gag" aria-hidden="true">
                   <span className="strike">
                     Let&apos;s delve into what makes your content truly resonate
                   </span>{" "}
                   <span className="fix">Here&apos;s the point</span>
-                </h1>
+                </div>
                 <p>
                   Your readers can smell it. Strip AI tells from your draft
                   before you hit publish.
