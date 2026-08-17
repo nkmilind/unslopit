@@ -50,7 +50,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${S}" height="${S}" 
   ${typewriter}
   <text x="600" y="790" text-anchor="middle" ${ff} font-size="84" font-weight="700" fill="${INK}">Text that sounds</text>
   <text x="600" y="898" text-anchor="middle" ${ff} font-size="84" font-weight="700" font-style="italic" fill="${RED}">human.</text>
-  <text x="600" y="986" text-anchor="middle" ${ff} font-size="32" fill="${MUTED}">Humanize AI text — keep your meaning.</text>
+  <text x="600" y="986" text-anchor="middle" ${ff} font-size="32" fill="${MUTED}">Remove AI slop — keep your meaning.</text>
 </svg>`;
 
 await sharp(Buffer.from(svg)).png().toFile("public/og-square.png");
