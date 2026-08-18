@@ -228,7 +228,7 @@ export default function Home() {
                   <span className="strike">
                     Let&apos;s delve into what makes your content truly resonate
                   </span>{" "}
-                  <span className="fix">Here&apos;s the point</span>
+                  <span className="fix">Here&apos;s how to write well</span>
                 </div>
                 <p>
                   Your readers can smell it. Strip AI tells from your draft
