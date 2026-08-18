@@ -9,6 +9,26 @@ function find(id) {
   return TAXONOMY.find((c) => c.id === id);
 }
 
+// Wrap each exact substring in `marks` (a word or a phrase — the tell itself)
+// in a red mark. Case-insensitive; original casing/spacing is preserved.
+function highlight(text, marks) {
+  if (!marks || !marks.length) return text;
+  const escaped = marks
+    .slice()
+    .sort((a, b) => b.length - a.length)
+    .map((m) => m.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  const re = new RegExp(`(${escaped.join("|")})`, "gi");
+  return text.split(re).map((part, k) =>
+    marks.some((m) => m.toLowerCase() === part.toLowerCase()) ? (
+      <mark className="ex-hit" key={k}>
+        {part}
+      </mark>
+    ) : (
+      part
+    )
+  );
+}
+
 export async function generateMetadata({ params }) {
   const { category } = await params;
   const c = find(category);
@@ -64,6 +84,33 @@ export default async function Spoke({ params }) {
             ))}
           </p>
         </section>
+
+        {c.example && (
+          <section className="learn-section example">
+            <h2>In the wild</h2>
+            <p>
+              A real one, quoted verbatim —{" "}
+              {c.example.marks && c.example.marks.length
+                ? "the highlighted words are the tell."
+                : "the formatting is the tell."}
+            </p>
+            <div className="ex-item">
+              <blockquote className="ex-quote">
+                &ldquo;{highlight(c.example.quote, c.example.marks)}&rdquo;
+              </blockquote>
+              <p className="ex-cite">
+                <a
+                  href={c.example.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {c.example.who}
+                </a>{" "}
+                — {c.example.what}
+              </p>
+            </div>
+          </section>
+        )}
 
         <section className="learn-section">
           <h2>Why AI produces it</h2>
