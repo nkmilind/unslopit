@@ -91,6 +91,13 @@ export default function Learn() {
                     {c.isNew && <span className="tax-new">new</span>}
                   </h3>
                   <p>{c.blurb}</p>
+                  <p className="tax-tells">
+                    {c.tells.map((t, j) => (
+                      <span className="tell" key={j}>
+                        {t}
+                      </span>
+                    ))}
+                  </p>
                 </div>
               </li>
             ))}
