@@ -189,13 +189,25 @@
   .spoke-siblings li a{font-family:'Fraunces',Georgia,serif;font-size:18px;color:var(--red);text-decoration:none}
   .spoke-siblings li a:hover{text-decoration:underline}
 
-  /* "In the wild" — one real, attributed specimen of a tell */
-  .example .ex-item{margin-top:16px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--red);border-radius:2px;padding:16px 20px;max-width:60ch}
-  .ex-quote{font-family:'Newsreader',Georgia,serif;font-size:18px;line-height:1.5;color:var(--ink);white-space:pre-line}
-  .ex-cite{margin-top:9px;font-size:13px;color:var(--muted)}
+  /* "In the wild" — editorial clipping; the tell gets a proofreader's underline */
+  .example .ex-item{margin-top:16px;max-width:60ch}
+  .ex-quote{font-family:'Newsreader',Georgia,serif;font-size:21px;line-height:1.5;color:var(--ink);white-space:pre-line}
+  .ex-hit{text-decoration:underline;text-decoration-color:var(--red);text-decoration-thickness:2px;text-underline-offset:4px;text-decoration-skip-ink:none}
+  .ex-cite{margin-top:14px;padding-top:10px;border-top:1px solid var(--line);font-family:'Fragment Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
   .ex-cite a{color:var(--red);text-decoration:none}
   .ex-cite a:hover{text-decoration:underline}
-  .ex-hit{background:var(--red-soft);color:var(--red);border-radius:2px;padding:0 3px}
+  /* C — annotated artifact frame, for tells whose artifact is the punchline */
+  .ex-shot{margin-top:16px;max-width:60ch;background:#fff;border:1px solid #d9d4c8;border-radius:6px;overflow:hidden}
+  .ex-shot-bar{display:flex;align-items:center;gap:6px;padding:8px 12px;background:#efeadf;border-bottom:1px solid #e0dccf}
+  .ex-shot-bar .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .ex-shot-url{margin-left:8px;font-family:'Fragment Mono',ui-monospace,monospace;font-size:11px;color:#8a8477}
+  .ex-shot-body{display:flex;gap:14px;padding:16px}
+  .ex-shot-thumb{width:74px;height:74px;background:#ece7db;border:1px solid #e0dccf;border-radius:4px;flex:none}
+  .ex-shot-title{font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.4;color:#0f1111}
+  .ex-shot-price{font-family:Arial,Helvetica,sans-serif;font-size:18px;color:#0f1111;margin-top:8px}
+  .ex-shot-cap{margin-top:10px;font-family:'Fragment Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+  .ex-shot-cap a{color:var(--red);text-decoration:none}
+  .ex-shot-cap a:hover{text-decoration:underline}
 
   .tax-list{list-style:none;display:grid;gap:30px;margin-top:26px}
   .tax-item{display:grid;grid-template-columns:auto 1fr;gap:18px;scroll-margin-top:24px}

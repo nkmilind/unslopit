@@ -91,24 +91,66 @@ export default async function Spoke({ params }) {
             <p>
               A real one, quoted verbatim —{" "}
               {c.example.marks && c.example.marks.length
-                ? "the highlighted words are the tell."
+                ? "the underlined words are the tell."
                 : "the formatting is the tell."}
             </p>
-            <div className="ex-item">
-              <blockquote className="ex-quote">
-                &ldquo;{highlight(c.example.quote, c.example.marks)}&rdquo;
-              </blockquote>
-              <p className="ex-cite">
-                <a
-                  href={c.example.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {c.example.who}
-                </a>{" "}
-                — {c.example.what}
-              </p>
-            </div>
+            {c.example.artifact ? (
+              <>
+                <figure className="ex-shot">
+                  <div className="ex-shot-bar">
+                    <span className="dot" style={{ background: "#d6b0aa" }} />
+                    <span className="dot" style={{ background: "#ddd3b6" }} />
+                    <span className="dot" style={{ background: "#b9cdb2" }} />
+                    <span className="ex-shot-url">{c.example.artifact.chrome}</span>
+                  </div>
+                  <div className="ex-shot-body">
+                    {c.example.artifact.thumb && (
+                      <div className="ex-shot-thumb" aria-hidden="true" />
+                    )}
+                    <div>
+                      <p className="ex-shot-title">
+                        {highlight(c.example.quote, c.example.marks)}
+                        {c.example.artifact.tail}
+                      </p>
+                      {c.example.artifact.price && (
+                        <p className="ex-shot-price">
+                          ${c.example.artifact.price}
+                          <sup style={{ fontSize: "12px" }}>
+                            {c.example.artifact.cents}
+                          </sup>
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </figure>
+                <p className="ex-shot-cap">
+                  reconstruction ·{" "}
+                  <a
+                    href={c.example.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {c.example.who} ↗
+                  </a>
+                </p>
+              </>
+            ) : (
+              <div className="ex-item">
+                <blockquote className="ex-quote">
+                  &ldquo;{highlight(c.example.quote, c.example.marks)}&rdquo;
+                </blockquote>
+                <p className="ex-cite">
+                  <a
+                    href={c.example.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {c.example.who} ↗
+                  </a>{" "}
+                  — {c.example.what}
+                </p>
+              </div>
+            )}
           </section>
         )}
 
