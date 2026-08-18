@@ -354,7 +354,7 @@ export default function Home() {
               <ul className="home-tax-list">
                 {TAXONOMY.map((c) => (
                   <li key={c.id}>
-                    <a href={`/learn#${c.id}`}>{c.title}</a> — {c.blurb}
+                    <a href={`/learn/${c.id}`}>{c.title}</a> — {c.blurb}
                   </li>
                 ))}
               </ul>

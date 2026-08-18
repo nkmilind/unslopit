@@ -77,8 +77,8 @@ export default function Learn() {
         <section id="taxonomy" className="learn-section">
           <h2>The slop taxonomy</h2>
           <p>
-            The {TAXONOMY.length} categories of tell the editor hunts for. Each
-            has its own link — point people straight at the one they keep
+            The {TAXONOMY.length} categories of tell the editor hunts for — each
+            with its own page. Point people straight at the one they keep
             committing.
           </p>
           <ol className="tax-list">
@@ -87,17 +87,10 @@ export default function Learn() {
                 <div className="tax-n">{String(i + 1).padStart(2, "0")}</div>
                 <div className="tax-body">
                   <h3>
-                    <a href={`#${c.id}`}>{c.title}</a>
+                    <a href={`/learn/${c.id}`}>{c.title}</a>
                     {c.isNew && <span className="tax-new">new</span>}
                   </h3>
                   <p>{c.blurb}</p>
-                  <p className="tax-tells">
-                    {c.tells.map((t, j) => (
-                      <span className="tell" key={j}>
-                        {t}
-                      </span>
-                    ))}
-                  </p>
                 </div>
               </li>
             ))}
