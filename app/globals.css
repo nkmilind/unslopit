@@ -182,6 +182,12 @@
   .learn-section > p:last-of-type{margin-bottom:0}
   .inline-link{color:var(--red);text-decoration:underline;text-underline-offset:3px}
   .inline-link:hover{color:var(--ink)}
+  .spoke-crumb{padding-top:40px;font-size:14px}
+  .spoke-crumb a{color:var(--red);text-decoration:none}
+  .spoke-crumb a:hover{text-decoration:underline}
+  .spoke-siblings ul{list-style:none;display:grid;gap:9px;margin-top:6px}
+  .spoke-siblings li a{font-family:'Fraunces',Georgia,serif;font-size:18px;color:var(--red);text-decoration:none}
+  .spoke-siblings li a:hover{text-decoration:underline}
 
   .tax-list{list-style:none;display:grid;gap:30px;margin-top:26px}
   .tax-item{display:grid;grid-template-columns:auto 1fr;gap:18px;scroll-margin-top:24px}

@@ -1,12 +1,28 @@
 # UnSlopIt
 
-> UnSlopIt humanizes AI-written text. It strips the tells that give AI away — buzzwords, stock framings, chatbot sign-offs, false balance — and returns a clean draft plus a red-pen list of every change, while keeping your meaning and facts intact. Instant AI editing; a human-editing option is on the way.
+> UnSlopIt removes AI slop from writing. It strips the tells that give AI away — buzzwords, stock framings, chatbot sign-offs, false balance — and returns a clean draft plus a red-pen list of every change, while keeping your meaning and facts intact. Instant AI editing; a human-editing option is on the way.
 
 ## Pages
 
 - [Home](https://unslopit.ai/): Paste an AI draft and get a de-slopped version. Choose edit strength (light, medium, full), optionally add a natural human typo, and see both a redline and a clean result with a change list.
-- [What is AI slop?](https://unslopit.ai/learn): Defines AI slop and lists the full taxonomy of tells the editor removes — 13 categories, each with examples.
+- [What is AI slop?](https://unslopit.ai/learn): Defines AI slop and links to a page for each of the 13 taxonomy categories.
 - [About](https://unslopit.ai/about): What UnSlopIt does, how the free tier works, and an FAQ.
+
+## The AI slop taxonomy — one page per category
+
+- [Buzz verbs](https://unslopit.ai/learn/buzz-verbs): Verbs that sound like motion but describe none (delve, leverage, unlock).
+- [Stock framings](https://unslopit.ai/learn/stock-framings): Prefab openers and scaffolds that bolt onto any topic ("in today's fast-paced landscape").
+- [Structural tells](https://unslopit.ai/learn/structural-tells): Rule-of-three pileups, throat-clearing intros, restating outros.
+- [Empty intensifiers & adverbs](https://unslopit.ai/learn/empty-intensity): Words that turn up the volume without adding information (truly, quietly transforms).
+- [Fake balance](https://unslopit.ai/learn/fake-balance): Airing an "on the other hand" the author never held.
+- [Detector-bait vocabulary](https://unslopit.ai/learn/detector-bait): Words AI-detection tools flag first (intricate, pivotal, tapestry).
+- [Academic filler](https://unslopit.ai/learn/academic-filler): Journal-flavored padding and stock openers.
+- [Long-form padding](https://unslopit.ai/learn/longform-padding): Bloat that restates the premise and fills space.
+- [Engagement bait](https://unslopit.ai/learn/engagement-bait): Rhetoric engineered for the scroll ("Read that again").
+- [Staccato formatting](https://unslopit.ai/learn/staccato): Every sentence its own paragraph; two-word manifestos.
+- [False binaries & fake reversals](https://unslopit.ai/learn/false-binaries): Manufactured either/or framings and fake contrarianism.
+- [Manufactured drama](https://unslopit.ai/learn/manufactured-drama): Question chains, transformation arcs, fake-elevation reversals.
+- [Chatbot residue](https://unslopit.ai/learn/chatbot-residue): Assistant sign-offs and preambles left in from a copy-paste.
 
 ## Notes
 

@@ -1,0 +1,117 @@
+import { notFound } from "next/navigation";
+import { TAXONOMY } from "../../../lib/taxonomy";
+
+export function generateStaticParams() {
+  return TAXONOMY.map((c) => ({ category: c.id }));
+}
+
+function find(id) {
+  return TAXONOMY.find((c) => c.id === id);
+}
+
+export async function generateMetadata({ params }) {
+  const { category } = await params;
+  const c = find(category);
+  if (!c) return {};
+  return {
+    title: c.title,
+    description: `${c.blurb} Why AI produces it, and how to cut it — from the UnSlopIt slop taxonomy.`,
+    alternates: { canonical: `/learn/${c.id}` },
+  };
+}
+
+export default async function Spoke({ params }) {
+  const { category } = await params;
+  const c = find(category);
+  if (!c) notFound();
+
+  const i = TAXONOMY.findIndex((t) => t.id === c.id);
+  const n = TAXONOMY.length;
+  const prev = TAXONOMY[(i - 1 + n) % n];
+  const next = TAXONOMY[(i + 1) % n];
+
+  return (
+    <>
+      <header>
+        <div className="wrap head-inner">
+          <a className="wordmark" href="/">
+            Un<span className="slop">Slop</span>It.ai
+          </a>
+          <a className="head-link" href="/">
+            Try it &rarr;
+          </a>
+        </div>
+      </header>
+
+      <main className="wrap learn">
+        <p className="spoke-crumb">
+          <a href="/learn">← The slop taxonomy</a>
+        </p>
+
+        <section className="learn-section learn-first">
+          <h1>{c.title}</h1>
+          <p className="lede">{c.blurb}</p>
+        </section>
+
+        <section className="learn-section">
+          <h2>What it looks like</h2>
+          <p>The phrases and patterns that give it away:</p>
+          <p className="tax-tells">
+            {c.tells.map((t, j) => (
+              <span className="tell" key={j}>
+                {t}
+              </span>
+            ))}
+          </p>
+        </section>
+
+        <section className="learn-section">
+          <h2>Why AI produces it</h2>
+          <p>{c.why}</p>
+        </section>
+
+        <section className="learn-section">
+          <h2>How UnSlopIt handles it</h2>
+          <p>
+            UnSlopIt flags {c.title.toLowerCase()} and rewrites around it — cutting
+            the tell while keeping your meaning, facts, and voice. You see exactly
+            what changed, as a redline plus a clean version.
+          </p>
+          <p style={{ marginTop: 18 }}>
+            <a className="inline-link" href="/">
+              Unslop a draft &rarr;
+            </a>
+          </p>
+        </section>
+
+        <section className="learn-section spoke-siblings">
+          <h2>Related tells</h2>
+          <ul>
+            <li>
+              <a href={`/learn/${prev.id}`}>{prev.title}</a>
+            </li>
+            <li>
+              <a href={`/learn/${next.id}`}>{next.title}</a>
+            </li>
+            <li>
+              <a href="/learn">All {n} categories →</a>
+            </li>
+          </ul>
+        </section>
+
+        <section className="learn-cta">
+          <a className="primary" href="/">
+            Unslop your draft &rarr;
+          </a>
+        </section>
+      </main>
+
+      <footer>
+        <div className="wrap">
+          UnSlopIt.ai · <a href="/">Home</a> · <a href="/learn">What is AI slop?</a> ·{" "}
+          <a href="/about">About</a>
+        </div>
+      </footer>
+    </>
+  );
+}
