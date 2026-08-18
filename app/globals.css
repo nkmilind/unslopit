@@ -189,6 +189,14 @@
   .spoke-siblings li a{font-family:'Fraunces',Georgia,serif;font-size:18px;color:var(--red);text-decoration:none}
   .spoke-siblings li a:hover{text-decoration:underline}
 
+  /* "In the wild" — one real, attributed specimen of a tell */
+  .example .ex-item{margin-top:16px;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--red);border-radius:2px;padding:16px 20px;max-width:60ch}
+  .ex-quote{font-family:'Newsreader',Georgia,serif;font-size:18px;line-height:1.5;color:var(--ink);white-space:pre-line}
+  .ex-cite{margin-top:9px;font-size:13px;color:var(--muted)}
+  .ex-cite a{color:var(--red);text-decoration:none}
+  .ex-cite a:hover{text-decoration:underline}
+  .ex-hit{background:var(--red-soft);color:var(--red);border-radius:2px;padding:0 3px}
+
   .tax-list{list-style:none;display:grid;gap:30px;margin-top:26px}
   .tax-item{display:grid;grid-template-columns:auto 1fr;gap:18px;scroll-margin-top:24px}
   .tax-n{font-family:'Fragment Mono',ui-monospace,monospace;font-size:14px;color:var(--red);padding-top:6px}
