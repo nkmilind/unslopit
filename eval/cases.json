@@ -4,8 +4,15 @@
     "type": "slop",
     "label": "1 · buzz verbs",
     "input": "Let's delve into how we can leverage our platform to unlock growth and elevate your team.",
-    "mustCut": ["delve", "leverage", "unlock", "elevate"],
-    "mustKeep": ["platform"],
+    "mustCut": [
+      "delve",
+      "leverage",
+      "unlock",
+      "elevate"
+    ],
+    "mustKeep": [
+      "platform"
+    ],
     "note": "Stacked buzz verbs should all go; the subject (platform/team/growth) stays."
   },
   {
@@ -13,8 +20,15 @@
     "type": "slop",
     "label": "2 · stock framings + robust",
     "input": "In today's fast-paced digital landscape, our seamless, robust solution is a game-changer for the modern enterprise.",
-    "mustCut": ["in today's fast-paced", "seamless", "robust", "game-chang"],
-    "mustKeep": ["solution"],
+    "mustCut": [
+      "in today's fast-paced",
+      "seamless",
+      "robust",
+      "game-chang"
+    ],
+    "mustKeep": [
+      "solution"
+    ],
     "note": "Includes the newly added 'robust'."
   },
   {
@@ -22,8 +36,13 @@
     "type": "slop",
     "label": "3 · throat-clearing intro",
     "input": "It's important to note that our quarterly results improved after the pricing change.",
-    "mustCut": ["it's important to note"],
-    "mustKeep": ["results", "pricing"],
+    "mustCut": [
+      "it's important to note"
+    ],
+    "mustKeep": [
+      "results",
+      "pricing"
+    ],
     "note": "Drop the preamble, keep the fact."
   },
   {
@@ -31,8 +50,15 @@
     "type": "slop",
     "label": "4 · empty intensity + adverb abuse",
     "input": "Our tool quietly transforms workflows and truly empowers teams to effortlessly scale.",
-    "mustCut": ["quietly transforms", "truly", "effortlessly"],
-    "mustKeep": ["workflows", "teams"],
+    "mustCut": [
+      "quietly transforms",
+      "truly",
+      "effortlessly"
+    ],
+    "mustKeep": [
+      "workflows",
+      "teams"
+    ],
     "note": "Newly added decorative-adverb pattern."
   },
   {
@@ -40,8 +66,13 @@
     "type": "slop",
     "label": "4 · adverb abuse (verbs)",
     "input": "The system seamlessly runs in the background and silently scales to millions of users.",
-    "mustCut": ["seamlessly runs", "silently scales"],
-    "mustKeep": ["millions"],
+    "mustCut": [
+      "seamlessly runs",
+      "silently scales"
+    ],
+    "mustKeep": [
+      "millions"
+    ],
     "note": "Decorative adverbs bolted to plain verbs."
   },
   {
@@ -49,8 +80,17 @@
     "type": "slop",
     "label": "6 · detector-bait + crucial",
     "input": "This pivotal, multifaceted tapestry showcases a crucial, intricate framework for success.",
-    "mustCut": ["pivotal", "tapestry", "showcases", "crucial", "intricate", "multifaceted"],
-    "mustKeep": ["framework"],
+    "mustCut": [
+      "pivotal",
+      "tapestry",
+      "showcases",
+      "crucial",
+      "intricate",
+      "multifaceted"
+    ],
+    "mustKeep": [
+      "framework"
+    ],
     "note": "Includes the newly added standalone 'crucial'."
   },
   {
@@ -58,8 +98,14 @@
     "type": "slop",
     "label": "7 · academic opener",
     "input": "In recent years, there has been growing interest in delving into the intricate interplay between model scale and accuracy.",
-    "mustCut": ["in recent years, there has been growing interest", "intricate interplay"],
-    "mustKeep": ["model scale", "accuracy"],
+    "mustCut": [
+      "in recent years, there has been growing interest",
+      "intricate interplay"
+    ],
+    "mustKeep": [
+      "model scale",
+      "accuracy"
+    ],
     "note": "Cut the stock opener; keep the actual variables."
   },
   {
@@ -67,8 +113,13 @@
     "type": "slop",
     "label": "8 · long-form padding",
     "input": "Now that we've covered the basics, let's turn to advanced tactics. In conclusion, the tactics above will help you win.",
-    "mustCut": ["now that we've covered", "in conclusion"],
-    "mustKeep": ["tactics"],
+    "mustCut": [
+      "now that we've covered",
+      "in conclusion"
+    ],
+    "mustKeep": [
+      "tactics"
+    ],
     "note": "Hollow transition + restating outro."
   },
   {
@@ -76,8 +127,14 @@
     "type": "slop",
     "label": "9 · engagement bait",
     "input": "Here's the thing: nobody talks about this. Most founders ignore retention. Read that again.",
-    "mustCut": ["here's the thing", "nobody talks about this", "read that again"],
-    "mustKeep": ["retention"],
+    "mustCut": [
+      "here's the thing",
+      "nobody talks about this",
+      "read that again"
+    ],
+    "mustKeep": [
+      "retention"
+    ],
     "note": "Keep the real claim (retention), drop the bait."
   },
   {
@@ -86,7 +143,10 @@
     "label": "10 · staccato manifesto",
     "input": "Build quietly.\n\nLearn constantly.\n\nMove quickly.\n\nThat's the whole game.",
     "mustCut": [],
-    "mustKeep": ["build", "learn"],
+    "mustKeep": [
+      "build",
+      "learn"
+    ],
     "note": "Should merge one-line-per-paragraph into prose. Auto-check is weak here — eyeball the rewrite."
   },
   {
@@ -94,8 +154,13 @@
     "type": "slop",
     "label": "11 · false binary",
     "input": "Most people set goals. Winners build systems. It's not about motivation, it's about discipline.",
-    "mustCut": ["most people", "it's not about"],
-    "mustKeep": ["systems"],
+    "mustCut": [
+      "most people",
+      "it's not about"
+    ],
+    "mustKeep": [
+      "systems"
+    ],
     "note": "False binary + it's-not-X-it's-Y."
   },
   {
@@ -103,8 +168,13 @@
     "type": "slop",
     "label": "12 · fortune-cookie reversal",
     "input": "This isn't a budget. It's a statement of intent. And that changes everything.",
-    "mustCut": ["it's a statement of intent", "changes everything"],
-    "mustKeep": ["budget"],
+    "mustCut": [
+      "it's a statement of intent",
+      "changes everything"
+    ],
+    "mustKeep": [
+      "budget"
+    ],
     "note": "The exact tell from the source post."
   },
   {
@@ -112,8 +182,14 @@
     "type": "slop",
     "label": "13 · chatbot residue",
     "input": "After careful consideration, here is a summary of the Q3 numbers. Hope this helps! Let me know if you have any questions.",
-    "mustCut": ["after careful consideration", "hope this helps", "let me know if you have any questions"],
-    "mustKeep": ["Q3"],
+    "mustCut": [
+      "after careful consideration",
+      "hope this helps",
+      "let me know if you have any questions"
+    ],
+    "mustKeep": [
+      "Q3"
+    ],
     "note": "New category 13. Keep the actual content."
   },
   {
@@ -121,8 +197,15 @@
     "type": "slop",
     "label": "13 · chatbot preamble",
     "input": "Certainly! Great question. As an AI language model, I can outline three options for your rollout.",
-    "mustCut": ["certainly", "great question", "as an ai language model"],
-    "mustKeep": ["three options", "rollout"],
+    "mustCut": [
+      "certainly",
+      "great question",
+      "as an ai language model"
+    ],
+    "mustKeep": [
+      "three options",
+      "rollout"
+    ],
     "note": "Assistant filler stripped; the substance stays."
   },
   {
@@ -130,18 +213,25 @@
     "type": "slop",
     "label": "13 · quick-update preamble",
     "input": "Just wanted to provide a quick update to let you know the migration finished last night with no downtime.",
-    "mustCut": ["to provide a quick update"],
-    "mustKeep": ["migration", "no downtime"],
+    "mustCut": [
+      "to provide a quick update"
+    ],
+    "mustKeep": [
+      "migration",
+      "no downtime"
+    ],
     "note": "Drop the preamble, keep the report."
   },
-
   {
     "id": "clean-crucial",
     "type": "clean",
     "label": "FP · legit 'crucial'",
     "input": "Shutting the main valve before servicing is a crucial safety step. Skipping it has killed technicians.",
     "mustCut": [],
-    "mustKeep": ["valve", "safety"],
+    "mustKeep": [
+      "valve",
+      "safety"
+    ],
     "note": "'crucial' is warranted. A good edit keeps the meaning; REVIEW if the word is cut but sense preserved. FAIL if the fact is lost."
   },
   {
@@ -150,7 +240,10 @@
     "label": "FP · legit 'robust'",
     "input": "The effect held across all three datasets, so we treat it as a robust result rather than a fluke.",
     "mustCut": [],
-    "mustKeep": ["three datasets", "result"],
+    "mustKeep": [
+      "three datasets",
+      "result"
+    ],
     "note": "'robust' has technical meaning here. Don't gut the sentence."
   },
   {
@@ -159,7 +252,12 @@
     "label": "FP · numbers must survive",
     "input": "Revenue rose 12% to $4.2M in Q3, driven mostly by the enterprise tier.",
     "mustCut": [],
-    "mustKeep": ["12%", "$4.2M", "Q3", "enterprise"],
+    "mustKeep": [
+      "12%",
+      "$4.2M",
+      "Q3",
+      "enterprise"
+    ],
     "note": "No new/changed claims. Every figure survives exactly."
   },
   {
@@ -168,7 +266,11 @@
     "label": "FP · already clean prose",
     "input": "We shipped the feature on Tuesday. Two customers hit a bug on mobile; we patched it by Friday.",
     "mustCut": [],
-    "mustKeep": ["Tuesday", "mobile", "Friday"],
+    "mustKeep": [
+      "Tuesday",
+      "mobile",
+      "Friday"
+    ],
     "note": "Already human. Rewrite should be near-identical, not inflated."
   },
   {
@@ -177,7 +279,9 @@
     "label": "FP · single em-dash is fine",
     "input": "She read the offer twice — then signed without a word.",
     "mustCut": [],
-    "mustKeep": ["signed"],
+    "mustKeep": [
+      "signed"
+    ],
     "note": "One em-dash is legitimate; don't flag it as overuse or rewrite the voice away."
   },
   {
@@ -186,7 +290,11 @@
     "label": "FP · legal formality",
     "input": "The Party shall indemnify and hold harmless the Vendor against any third-party claims arising from the Services.",
     "mustCut": [],
-    "mustKeep": ["indemnify", "hold harmless", "Vendor"],
+    "mustKeep": [
+      "indemnify",
+      "hold harmless",
+      "Vendor"
+    ],
     "note": "Legal terms of art must survive; formal is not slop."
   },
   {
@@ -195,7 +303,10 @@
     "label": "FP · 'significantly' with a real number",
     "input": "The prescribed dose was significantly higher than the label — roughly 3x — which explains the side effects.",
     "mustCut": [],
-    "mustKeep": ["3x", "side effects"],
+    "mustKeep": [
+      "3x",
+      "side effects"
+    ],
     "note": "'significantly' may be trimmed, but the 3x fact and cause must remain."
   },
   {
@@ -204,7 +315,10 @@
     "label": "FP · casual human voice",
     "input": "honestly the demo flopped. mic died, slides froze, i lost my train of thought. we laughed it off and rebooked.",
     "mustCut": [],
-    "mustKeep": ["demo", "rebooked"],
+    "mustKeep": [
+      "demo",
+      "rebooked"
+    ],
     "note": "Keep the informal voice. Don't formalize or add polish it didn't ask for."
   },
   {
@@ -212,8 +326,33 @@
     "type": "slop",
     "label": "mix · real-world LinkedIn post",
     "input": "In today's fast-paced world, it's not just about working hard — it's about working smart. Our robust platform quietly transforms how teams ship. Here's the thing: most people never adopt new tools. Hope this helps!",
-    "mustCut": ["in today's fast-paced", "it's not just about", "robust", "quietly transforms", "here's the thing", "hope this helps"],
-    "mustKeep": ["teams", "tools"],
+    "mustCut": [
+      "in today's fast-paced",
+      "it's not just about",
+      "robust",
+      "quietly transforms",
+      "here's the thing",
+      "hope this helps"
+    ],
+    "mustKeep": [
+      "teams",
+      "tools"
+    ],
     "note": "Several tells at once, including three of the new ones. ('most people' isn't in mustCut — it's only slop in the 'Most people X / Winners Y' binary, not any use of the phrase.)"
+  },
+  {
+    "id": "insight-announcement",
+    "type": "slop",
+    "label": "13 · insight announcement",
+    "input": "The key insight is that retention beats acquisition. Why this matters: your churn is quietly eating every gain from new signups.",
+    "mustCut": [
+      "The key insight is",
+      "Why this matters:"
+    ],
+    "mustKeep": [
+      "retention",
+      "churn"
+    ],
+    "note": "The badges announcing the insight should go; the actual point (retention vs churn) stays."
   }
 ]

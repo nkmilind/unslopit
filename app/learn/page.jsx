@@ -3,7 +3,7 @@ import { TAXONOMY } from "../../lib/taxonomy";
 export const metadata = {
   title: "What is AI slop?",
   description:
-    "AI slop is text that obviously reads like AI wrote it. Here's what it is and the 13 tells UnSlopIt strips.",
+    "AI slop is text that obviously reads like AI wrote it. Here's what it is and the 14 tells UnSlopIt strips.",
 };
 
 // Decorative cloud of tells at the top of the page.
