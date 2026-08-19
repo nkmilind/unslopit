@@ -18,6 +18,12 @@ const MUTED = "#6E6656";
 const LINE = "#E4DDCC";
 const N = TAXONOMY.length;
 
+// pdfkit's built-in fonts have no emoji glyphs (they render as mojibake), so
+// strip emoji from tells for the PDF only. The website keeps them.
+const EMOJI_RE =
+  /[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE00}-\u{FE0F}\u{200D}]/gu;
+const stripEmoji = (s) => s.replace(EMOJI_RE, "").replace(/\s{2,}/g, " ").trim();
+
 mkdirSync(join(ROOT, "public"), { recursive: true });
 
 const doc = new PDFDocument({
@@ -83,7 +89,9 @@ TAXONOMY.forEach((c, i) => {
     .font("Helvetica")
     .fontSize(8)
     .fillColor(MUTED)
-    .text(c.tells.join("   ·   "), left, doc.y + 1, { width });
+    .text(c.tells.map(stripEmoji).filter(Boolean).join("   ·   "), left, doc.y + 1, {
+      width,
+    });
   doc.moveDown(0.42);
 });
 

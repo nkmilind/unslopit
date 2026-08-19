@@ -354,5 +354,21 @@
       "churn"
     ],
     "note": "The badges announcing the insight should go; the actual point (retention vs churn) stays."
+  },
+  {
+    "id": "emoji-inflation",
+    "type": "slop",
+    "label": "15 · emoji inflation",
+    "input": "🚀 Big news! Our new dashboard is here. ✅ Faster exports ✅ Dark mode ✅ Custom reports ✨ We think you will absolutely love it 🔥",
+    "mustCut": [
+      "🚀",
+      "🔥",
+      "✨"
+    ],
+    "mustKeep": [
+      "dashboard",
+      "exports"
+    ],
+    "note": "Decorative/scaffolding emoji should be cut; the real updates (dashboard, exports, dark mode) stay."
   }
 ]

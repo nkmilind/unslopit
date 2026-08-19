@@ -1,9 +1,8 @@
 import { TAXONOMY } from "../../lib/taxonomy";
 
 export const metadata = {
-  title: "What is AI slop? The 14 signs of AI writing (2026)",
-  description:
-    "What AI slop is, why it costs you reader trust, and the 14 signs of AI writing — the full taxonomy UnSlopIt uses to strip it.",
+  title: `What is AI slop? The ${TAXONOMY.length} signs of AI writing (2026)`,
+  description: `What AI slop is, why it costs you reader trust, and the ${TAXONOMY.length} signs of AI writing — the full taxonomy UnSlopIt uses to strip it.`,
   alternates: { canonical: "/learn" },
   // Next replaces (does not deep-merge) openGraph, so re-declare the image.
   openGraph: { url: "/learn", images: ["/og.png"] },
@@ -246,7 +245,7 @@ export default function Learn() {
 
         {/* The fix: the taxonomy */}
         <section id="taxonomy" className="learn-section">
-          <h2>The 14 signs of AI writing</h2>
+          <h2>The {TAXONOMY.length} signs of AI writing</h2>
           <p>
             UnSlopIt.ai delivers exactly that. As of mid-2026, these
             are the {TAXONOMY.length} categories of tell the UnSlopIt editor
