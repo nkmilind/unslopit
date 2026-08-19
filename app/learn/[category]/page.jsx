@@ -37,6 +37,8 @@ export async function generateMetadata({ params }) {
     title: c.title,
     description: `${c.blurb} Why AI produces it, and how to cut it — from the UnSlopIt slop taxonomy.`,
     alternates: { canonical: `/learn/${c.id}` },
+    // Next replaces (does not deep-merge) openGraph, so re-declare the image.
+    openGraph: { url: `/learn/${c.id}`, images: ["/og.png"] },
   };
 }
 

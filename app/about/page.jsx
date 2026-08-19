@@ -4,6 +4,9 @@ export const metadata = {
   title: "About",
   description:
     "What UnSlopIt does, how the free tier works, and answers to common questions about editing, storage, and limits.",
+  alternates: { canonical: "/about" },
+  // Next replaces (does not deep-merge) openGraph, so re-declare the image.
+  openGraph: { url: "/about", images: ["/og.png"] },
 };
 
 // FAQPage schema — must match the FAQ rendered on this page (same source).

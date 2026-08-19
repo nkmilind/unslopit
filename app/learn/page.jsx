@@ -4,6 +4,9 @@ export const metadata = {
   title: "What is AI slop?",
   description:
     "What AI slop is, how common it has become, what it costs you in reader trust, and the 14-category taxonomy UnSlopIt uses to strip it.",
+  alternates: { canonical: "/learn" },
+  // Next replaces (does not deep-merge) openGraph, so re-declare the image.
+  openGraph: { url: "/learn", images: ["/og.png"] },
 };
 
 // Decorative cloud of tells at the top of the page.
