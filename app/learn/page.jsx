@@ -1,9 +1,9 @@
 import { TAXONOMY } from "../../lib/taxonomy";
 
 export const metadata = {
-  title: "What is AI slop?",
+  title: "What is AI slop? The 14 signs of AI writing (2026)",
   description:
-    "What AI slop is, how common it has become, what it costs you in reader trust, and the 14-category taxonomy UnSlopIt uses to strip it.",
+    "What AI slop is, why it costs you reader trust, and the 14 signs of AI writing — the full taxonomy UnSlopIt uses to strip it.",
   alternates: { canonical: "/learn" },
   // Next replaces (does not deep-merge) openGraph, so re-declare the image.
   openGraph: { url: "/learn", images: ["/og.png"] },
@@ -44,6 +44,7 @@ function Src({ href, children }) {
 // unescaped-entities lint rule.
 const INTRO = [
   "“AI slop” is writing that reads like a machine produced it: fluent, equivocating, and strangely empty. The sentences hedge and balance too neatly, lean on a small set of overused words, and pad pretty much every point. And then there’s the jargon, and the summaries that spoon-feed every takeaway.",
+  "This page is about AI slop in text. The same word gets used for AI images and video; the tells there are different.",
   <>
     Of course we’re all using these tools. They have certainly helped me
     personally get past the dreaded blinking cursor on a blank page. A{" "}
@@ -122,6 +123,13 @@ const SECTIONS = [
     ],
   },
   {
+    id: "why-ai-writes-this-way",
+    h: "Why does AI write this way?",
+    paras: [
+      "Large Language Models (LLMs) produce slop by design. A language model predicts the most probable next word from an enormous body of published text, so its default output is close to the average of everything written before. Human feedback training pushes it further in the same direction: reviewers reward answers that are complete, agreeable, and unlikely to offend, so a hedge scores better than a wrong claim and a summary scores better than an abrupt ending. Repeat that across millions of examples and you get a writer that never commits and never leaves anything out.",
+    ],
+  },
+  {
     id: "why-tells-change",
     h: "Why do AI tells keep changing?",
     paras: [
@@ -139,6 +147,10 @@ const LEARN_FAQ = [
   {
     q: "Is AI writing bad?",
     a: "No. Unedited AI writing is the problem, not AI writing itself. A draft produced with AI that is thoughtfully revised with cuts, reordering, rewriting in your own cadence is indistinguishable from any other well-edited piece. What readers react against is output that was generated and published hastily with all the sloppy hedging and padding, and no evidence a human made a decision about any of it. The tells are the clearest sign that nobody cared enough to look. Why should readers care about reading it?",
+  },
+  {
+    q: "What’s the difference between AI writing and human writing?",
+    a: "Less than most people assume. Blind tests have repeatedly found readers rating AI-generated text as highly as human writing, sometimes higher. However, a human writer decides what to leave out, which claim to stand behind, and where to let a sentence sit unresolved. A model includes everything and commits to nothing, because that is what it was trained to do. Both can read well. But even good writing styles, when overused, can become tiresome.",
   },
   {
     q: "Can readers actually tell?",
@@ -234,11 +246,16 @@ export default function Learn() {
 
         {/* The fix: the taxonomy */}
         <section id="taxonomy" className="learn-section">
-          <h2>The fix: the slop taxonomy</h2>
+          <h2>The 14 signs of AI writing</h2>
           <p>
-            UnSlopIt.ai is trying to deliver exactly that. As of mid-2026, these
+            UnSlopIt.ai delivers exactly that. As of mid-2026, these
             are the {TAXONOMY.length} categories of tell the UnSlopIt editor
             hunts for — each with its own page:
+          </p>
+          <p>
+            <a className="pdf-dl" href="/signs-of-ai-writing.pdf" download>
+              ↓ Get all {TAXONOMY.length} as a one-page PDF
+            </a>
           </p>
           <ol className="tax-list">
             {TAXONOMY.map((c, i) => (
