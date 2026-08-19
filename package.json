@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "build:pdf": "node scripts/build-taxonomy-pdf.mjs",
+    "prebuild": "node scripts/build-taxonomy-pdf.mjs",
     "build": "next build",
     "start": "next start",
     "eval": "node eval/run.mjs"
@@ -14,5 +16,8 @@
     "next": "^15.4.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "pdfkit": "^0.19.1"
   }
 }

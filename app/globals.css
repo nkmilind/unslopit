@@ -209,6 +209,8 @@
   .ex-shot-cap a{color:var(--red);text-decoration:none}
   .ex-shot-cap a:hover{text-decoration:underline}
 
+  .pdf-dl{display:inline-block;margin-top:6px;font-family:'Fragment Mono',ui-monospace,monospace;font-size:13px;letter-spacing:.02em;color:var(--red);text-decoration:none;border:1px solid var(--line);border-radius:2px;padding:9px 15px;background:var(--card)}
+  .pdf-dl:hover{border-color:var(--red)}
   .tax-list{list-style:none;display:grid;gap:30px;margin-top:26px}
   .tax-item{display:grid;grid-template-columns:auto 1fr;gap:18px;scroll-margin-top:24px}
   .tax-n{font-family:'Fragment Mono',ui-monospace,monospace;font-size:14px;color:var(--red);padding-top:6px}
