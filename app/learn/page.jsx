@@ -3,7 +3,7 @@ import { TAXONOMY } from "../../lib/taxonomy";
 export const metadata = {
   title: "What is AI slop?",
   description:
-    "AI slop is text that obviously reads like AI wrote it. Here's what it is and the 14 tells UnSlopIt strips.",
+    "What AI slop is, how common it has become, what it costs you in reader trust, and the 14-category taxonomy UnSlopIt uses to strip it.",
 };
 
 // Decorative cloud of tells at the top of the page.
@@ -22,9 +22,167 @@ const CLOUD = [
   { t: "pivotal", size: 18 },
 ];
 
+// External source link (opens in a new tab). Used to cite the statistics.
+function Src({ href, children }) {
+  return (
+    <a
+      className="inline-link"
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {children}
+    </a>
+  );
+}
+
+// Body paragraphs. Plain strings render as-is; JSX fragments carry links.
+// Text uses curly quotes/apostrophes so it stays clear of the JSX
+// unescaped-entities lint rule.
+const INTRO = [
+  "“AI slop” is writing that reads like a machine produced it: fluent, equivocating, and strangely empty. The sentences hedge and balance too neatly, lean on a small set of overused words, and pad pretty much every point. And then there’s the jargon, and the summaries that spoon-feed every takeaway.",
+  <>
+    Of course we’re all using these tools. They have certainly helped me
+    personally get past the dreaded blinking cursor on a blank page. A{" "}
+    <Src href="https://ahrefs.com/blog/what-percentage-of-new-content-is-ai-generated/">
+      2025 Ahrefs study
+    </Src>{" "}
+    found 74% of newly created web pages contained AI-generated content. That’s
+    not necessarily all AI slop. It includes finishing touches that writers may
+    have applied with the help of AI. What does make some of it slop is when no
+    one reviews it and it has the telltale signs of AI writing. With LLM use on
+    the rise, readers can now feel it, even when they can’t put their finger on
+    it. Slop signals that the writer did not put in any effort to review and
+    refine. It erodes trust. The fix is always reviewing what you publish,
+    cutting out the tells, and adding a warm, human voice that values
+    simplicity.
+  </>,
+];
+
+const SECTIONS = [
+  {
+    id: "how-common",
+    h: "How common is AI-generated content?",
+    paras: [
+      <>
+        By late 2025, roughly 300,000 e-books were being released on Amazon each
+        month, up from about 100,000 before ChatGPT. In academia,{" "}
+        <Src href="https://www.pnas.org/doi/10.1073/pnas.2605754123">
+          57% of arXiv papers
+        </Src>{" "}
+        showed AI-influenced language in 2025, up from 12% in 2023. When everyone
+        has the same tools, sounding like the tools is what makes you
+        indistinguishable.
+      </>,
+    ],
+  },
+  {
+    id: "presumed-guilty",
+    h: "You’re already presumed guilty",
+    paras: [
+      <>
+        Everyone expects you to use AI. For your LinkedIn posts, for your
+        important emails, for internal memos. And even for sales and marketing
+        materials.{" "}
+        <Src href="https://www.prnewswire.com/news-releases/consumers-assume-brand-content-is-ai-generated-new-cashew-research-reveals-what-builds-trust-instead-302843128.html">
+          Cashew
+        </Src>
+        , a market research company, found in their survey of 2,149 North
+        American consumers that 87% believe brand content is at least partly
+        AI-created, while only 13% are very confident they can tell what is and
+        what isn’t.
+      </>,
+      "Readers are scanning for confirmation of a suspicion they already hold. Which is why you need to eliminate the easy-to-spot patterns.",
+    ],
+  },
+  {
+    id: "what-it-costs",
+    h: "What does AI slop cost you?",
+    paras: [
+      <>
+        A{" "}
+        <Src href="https://www.gartner.com/en/newsroom/press-releases/2026-03-16-gartner-marketing-survey-finds-50-percent-of-consumers-prefer-brands-that-avoid-using-genai-in-consumer-facing-content0">
+          Gartner survey
+        </Src>{" "}
+        of 1,539 US consumers in October 2025 found that 50% would prefer to buy
+        from brands that don’t use AI in consumer-facing content, and 68%
+        frequently wonder whether what they’re seeing is real.
+      </>,
+      <>
+        <Src href="https://www.emarketer.com/content/shoppers-aren-t-impressed-by-ai-generated-marketing">
+          Klaviyo and Datalily’s survey
+        </Src>{" "}
+        of 8,000 consumers found 31% trust a brand less when marketing content is
+        visibly AI-generated.
+      </>,
+      "Data from Skyword says that when AI-generated information conflicts with a brand’s own messaging, only 29% of consumers trust the brand and 54% go looking for third-party validation. And evidence is emerging that AI slop is getting worse uptake from consumers. The Economist reported that books that appear AI-authored draw fewer and worse reviews on Amazon.",
+    ],
+  },
+  {
+    id: "why-tells-change",
+    h: "Why do AI tells keep changing?",
+    paras: [
+      "Some 2023 giveaways have faded. “As an AI language model” is gone. The long ethical-consideration paragraph is mostly gone. But many others didn’t die. “Delve” still shows up now and then; the em-dash pileup is more discussed now than it was two years ago, and writers who used em-dashes long before ChatGPT now feel obliged to defend themselves. The list has got longer. How many times have you shaken your head at another “it’s not just this, it’s that” post on LinkedIn? A fixed blacklist will not solve the problem. What you need is a maintained taxonomy.",
+    ],
+  },
+];
+
+const TAX_CLOSING =
+  "These are the principles that will help you fix sloppy content. It is not a fixed blacklist of words. It asks you to cut out what doesn’t inform, vary your rhythm, delete announcements of importance, and above all read it before you ship it. You don’t have to prove to readers that your voice is human, you just have to not give them anything to point at.";
+
+// FAQ. `a` is the plain-text answer (used for the FAQPage schema). `aNode` is
+// an optional rich version with links, used only for display.
+const LEARN_FAQ = [
+  {
+    q: "Is AI writing bad?",
+    a: "No. Unedited AI writing is the problem, not AI writing. A draft produced with AI and then genuinely revised — cut, reordered, rewritten in your own cadence — is indistinguishable from any other well-edited piece, because that’s what editing does. What readers react against is output that was generated and shipped in the same motion: hedged, padded, and patterned, with no evidence a human made a decision about any of it. The tells aren’t a sign that AI was involved. They’re a sign that nobody looked.",
+  },
+  {
+    q: "Can readers actually tell?",
+    a: "Mostly not. Cashew’s survey of 2,149 North American consumers found 87% believe brand content is at least partly AI-created, while only 13% are very confident they can identify it. So the average reader can’t reliably prove what’s machine-written. But they suspect everything, and they penalize simply based on suspicion. And as more such content hits the internet, as is expected, and as readers get better at pattern recognition, they will be able to tell with greater success.",
+    aNode: (
+      <>
+        Mostly not.{" "}
+        <Src href="https://www.prnewswire.com/news-releases/consumers-assume-brand-content-is-ai-generated-new-cashew-research-reveals-what-builds-trust-instead-302843128.html">
+          Cashew’s survey
+        </Src>{" "}
+        of 2,149 North American consumers found 87% believe brand content is at
+        least partly AI-created, while only 13% are very confident they can
+        identify it. So the average reader can’t reliably prove what’s
+        machine-written. But they suspect everything, and they penalize simply
+        based on suspicion. And as more such content hits the internet, as is
+        expected, and as readers get better at pattern recognition, they will be
+        able to tell with greater success.
+      </>
+    ),
+  },
+  {
+    q: "Does Google penalize AI content?",
+    a: "Not for simply being AI-generated. Google’s position, stated in 2023 and unchanged since, is that it rewards quality content however it’s produced. The policy that actually bites is called scaled content abuse. Introduced in the March 2024 spam update, it targets generating many pages primarily to manipulate rankings rather than help users. It applies regardless of method: AI, human writers, scraping, or a mix. Human-written thin content is covered under this policy. On May 15, 2026 Google clarified that these same spam policies apply to AI Overviews and AI Mode. Using AI won’t necessarily hurt you, and adding a human approval step won’t automatically save you. It is necessary but not sufficient. What matters most is whether your page is worth reading.",
+  },
+  {
+    q: "If I edit AI writing myself, do I need a tool?",
+    a: "Honestly, you don’t. All power to you, good writer. The tool is for speed and for the patterns you’ve stopped noticing in your own writing. Because with every model update, the patterns become more subtle. But they are still there.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: LEARN_FAQ.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
 export default function Learn() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <header>
         <div className="wrap head-inner">
           <a className="wordmark" href="/">
@@ -56,30 +214,28 @@ export default function Learn() {
         {/* What is AI slop */}
         <section id="what-is-ai-slop" className="learn-section learn-first">
           <h1>What is AI slop?</h1>
-          <p>
-            &ldquo;AI slop&rdquo; is writing that reads like a machine produced
-            it: fluent, equivocating, and strangely empty. The sentences hedge
-            and balance too neatly, lean on a small set of overused words, and
-            pad pretty much every point. And then there are the summaries that
-            assume the reader needs to be spoon-fed every takeaway.
-          </p>
-          <p>
-            It matters because readers can feel it, even when they can&apos;t
-            put their finger on it. Slop signals that the writer did not put in
-            any effort to review and refine. It erodes trust. The statistical
-            patterns that make it sound &ldquo;AI&rdquo; are also the ones AI
-            detection tools flag. The fix is cutting out the tells and adding a
-            warm, human voice that values simplicity.
-          </p>
+          {INTRO.map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
         </section>
 
-        {/* The taxonomy */}
+        {/* Context sections */}
+        {SECTIONS.map((s) => (
+          <section id={s.id} key={s.id} className="learn-section">
+            <h2>{s.h}</h2>
+            {s.paras.map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
+          </section>
+        ))}
+
+        {/* The fix: the taxonomy */}
         <section id="taxonomy" className="learn-section">
-          <h2>The slop taxonomy</h2>
+          <h2>The fix: the slop taxonomy</h2>
           <p>
-            The {TAXONOMY.length} categories of tell the editor hunts for — each
-            with its own page. Point people straight at the one they keep
-            committing.
+            UnSlopIt.ai is trying to deliver exactly that. As of mid-2026, these
+            are the {TAXONOMY.length} categories of tell the UnSlopIt editor
+            hunts for — each with its own page:
           </p>
           <ol className="tax-list">
             {TAXONOMY.map((c, i) => (
@@ -102,6 +258,20 @@ export default function Learn() {
               </li>
             ))}
           </ol>
+          <p>{TAX_CLOSING}</p>
+        </section>
+
+        {/* FAQ */}
+        <section id="faq" className="learn-section">
+          <h2>FAQs</h2>
+          <dl className="faq">
+            {LEARN_FAQ.map((item, i) => (
+              <div className="faq-item" key={i}>
+                <dt>{item.q}</dt>
+                <dd>{item.aNode || item.a}</dd>
+              </div>
+            ))}
+          </dl>
         </section>
 
         <section className="learn-cta">
