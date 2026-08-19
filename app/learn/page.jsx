@@ -135,7 +135,7 @@ const TAX_CLOSING =
 const LEARN_FAQ = [
   {
     q: "Is AI writing bad?",
-    a: "No. Unedited AI writing is the problem, not AI writing. A draft produced with AI and then genuinely revised — cut, reordered, rewritten in your own cadence — is indistinguishable from any other well-edited piece, because that’s what editing does. What readers react against is output that was generated and shipped in the same motion: hedged, padded, and patterned, with no evidence a human made a decision about any of it. The tells aren’t a sign that AI was involved. They’re a sign that nobody looked.",
+    a: "No. Unedited AI writing is the problem, not AI writing itself. A draft produced with AI that is thoughtfully revised with cuts, reordering, rewriting in your own cadence is indistinguishable from any other well-edited piece. What readers react against is output that was generated and published hastily with all the sloppy hedging and padding, and no evidence a human made a decision about any of it. The tells are the clearest sign that nobody cared enough to look. Why should readers care about reading it?",
   },
   {
     q: "Can readers actually tell?",
