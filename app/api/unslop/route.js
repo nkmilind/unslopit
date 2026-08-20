@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { cookies } from "next/headers";
 import { buildSystemPrompt } from "../../../lib/slop-prompt";
+import { logPatternCounts } from "../../../lib/pattern-log";
 import { injectTypo } from "../../../lib/typo";
 import {
   FREE_ANON_LIMIT,
@@ -182,6 +183,13 @@ export async function POST(request) {
       rewritten = t.text;
       if (t.index >= 0) typo = { word: t.word, index: t.index };
     }
+
+    // Anonymous aggregate logging — runs after the response is sent so it never
+    // adds latency or breaks the edit. Records category ids + word count only,
+    // never the draft text (see lib/pattern-log.js and the retention note).
+    after(() =>
+      logPatternCounts({ categories: result.categories, wordCount: words })
+    );
 
     return Response.json({
       rewritten,
