@@ -241,8 +241,8 @@
   .home-block-sub{font-size:15px;color:var(--muted);margin-bottom:16px}
   .home-block-sub a{color:var(--red);text-decoration:none}
   .home-block-sub a:hover{text-decoration:underline}
-  .home-tax-list{list-style:none;display:grid;gap:11px;margin-top:6px}
-  .home-tax-list li{font-size:15px;line-height:1.5;color:var(--muted)}
+  .home-tax-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px 22px;margin-top:6px}
+  .home-tax-list li{font-size:15px;line-height:1.4}
   .home-tax-list li a{font-family:'Fraunces',Georgia,serif;font-weight:600;color:var(--ink);text-decoration:none}
   .home-tax-list li a:hover{text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:3px}
 
