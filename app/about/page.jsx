@@ -24,11 +24,8 @@ const faqSchema = {
 // apostrophes stay clear of the JSX unescaped-entities lint rule.
 const EDITOR = [
   "UnSlopIt is written and maintained by one person — me. I write this anonymously; it’s a side project and the arguments should stand without a byline. I’ve spent over a decade in B2B marketing, most of it leading teams that produce a lot of writing: product copy, thought leadership, sales material, executive communications. Reading and editing other people’s drafts for customer clarity, brand voice, and simplicity is a big part of the job. When AI tools arrived, the same handful of patterns started appearing in everything that crossed my desk, and the taxonomy on this site began as a private list of them.",
-  "I spend too much time reading LinkedIn, but I also enjoy the classics at bedtime and quality business media, which I mine for their occasional gems. A recent favorite, from an Economist article on OpenAI, Anthropic, and xAI’s race to go public:",
+  "I spend too much time reading LinkedIn, but I also enjoy the classics at bedtime and quality business media, which I mine for their occasional gems.",
 ];
-
-const ECONOMIST_QUOTE =
-  "To understand the clash between the trio, it helps to consider the personalities. These can be summed up as the mercenary (Mr Altman), the missionary (Mr Amodei) and the messianic (Mr Musk).";
 
 const TAXONOMY_BUILT = [
   "The taxonomy started from patterns observed in AI output. In the beginning, I made the rookie mistake of tracking words, but soon realized it went beyond words. Some of it was words, some of it was patterns, and some of it was the structure of the arguments. I also relied on documented community observations (choice subreddits, published research on overrepresented vocabulary).",
@@ -90,8 +87,6 @@ export default function About() {
           {EDITOR.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
-          <blockquote className="about-quote">{ECONOMIST_QUOTE}</blockquote>
-          <p className="about-quote-cite">— The Economist</p>
 
           <h3>How was the taxonomy built?</h3>
           {TAXONOMY_BUILT.map((p, i) => (
