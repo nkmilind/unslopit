@@ -1,0 +1,39 @@
+import { TAXONOMY } from "../../lib/taxonomy";
+
+const SITE = "https://unslopit.ai";
+
+// /llms.txt is generated, not hand-maintained: the taxonomy section is built
+// from lib/taxonomy.js, so adding a category updates this, the sitemap
+// (app/sitemap.js), and the /learn hub from a single edit. Static by default
+// (no request access) → prerendered at build and served from the CDN.
+export const dynamic = "force-static";
+
+export function GET() {
+  const taxonomy = TAXONOMY.map(
+    (c) => `- [${c.title}](${SITE}/learn/${c.id}): ${c.blurb}`
+  ).join("\n");
+
+  const body = `# UnSlopIt
+
+> UnSlopIt removes AI slop from writing. It strips the tells that give AI away — buzzwords, stock framings, chatbot sign-offs, false balance — and returns a clean draft plus a red-pen list of every change, while keeping your meaning and facts intact. Instant AI editing; a human-editing option is on the way.
+
+## Pages
+
+- [Home](${SITE}/): Paste an AI draft and get a de-slopped version. Choose edit strength (light, medium, full), optionally add a natural human typo, and see both a redline and a clean result with a change list.
+- [What is AI slop?](${SITE}/learn): Defines AI slop and links to a page for each of the ${TAXONOMY.length} taxonomy categories.
+- [About](${SITE}/about): What UnSlopIt does, how the free tier works, and an FAQ.
+
+## The AI slop taxonomy — one page per category
+
+${taxonomy}
+
+## Notes
+
+- Positioning: the goal is writing people want to read, not evading AI detectors.
+- This file is generated from the site's taxonomy, so new taxonomy and guide pages appear automatically.
+`;
+
+  return new Response(body, {
+    headers: { "content-type": "text/plain; charset=utf-8" },
+  });
+}
