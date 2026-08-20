@@ -33,10 +33,11 @@ export const metadata = {
     ],
   },
   twitter: {
+    // title/description/image are intentionally omitted: X falls back to the
+    // per-page og: tags, so every page (including future spokes) gets correct
+    // card text automatically, with one set of fields and no drift. `card` has
+    // no og: equivalent, so it stays.
     card: "summary_large_image",
-    title: "UnSlopIt — remove AI slop, keep your meaning",
-    description: DESCRIPTION,
-    images: ["/og.png"],
   },
 };
 
