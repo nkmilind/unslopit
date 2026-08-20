@@ -125,7 +125,7 @@ export default async function Spoke({ params }) {
           <a className="wordmark" href="/">
             Un<span className="slop">Slop</span>It.ai
           </a>
-          <a className="head-link" href="/">
+          <a className="head-link" href={`/?sample=${c.id}`}>
             Try it &rarr;
           </a>
         </div>
@@ -175,7 +175,7 @@ export default async function Spoke({ params }) {
                 see exactly what changed, as a redline plus a clean version.
               </p>
               <p style={{ marginTop: 18 }}>
-                <a className="inline-link" href="/">
+                <a className="inline-link" href={`/?sample=${c.id}`}>
                   Unslop a draft &rarr;
                 </a>
               </p>
@@ -199,7 +199,7 @@ export default async function Spoke({ params }) {
         </section>
 
         <section className="learn-cta">
-          <a className="primary" href="/">
+          <a className="primary" href={`/?sample=${c.id}`}>
             Unslop your draft &rarr;
           </a>
         </section>
