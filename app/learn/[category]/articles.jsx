@@ -195,7 +195,6 @@ function DetectorBaitArticle() {
 
       <section className="learn-section">
         <h2>What to do instead</h2>
-        <p>Three habits cover most of it.</p>
         <ol className="art-habits">
           {HABITS.map((h, k) => (
             <li key={k}>{h}</li>
