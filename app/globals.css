@@ -180,6 +180,22 @@
   .learn-section h2{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:30px;letter-spacing:-.01em;margin-bottom:16px}
   .learn-section > p{font-size:18.5px;line-height:1.75;color:var(--muted);margin-bottom:16px}
   .learn-section > p:last-of-type{margin-bottom:0}
+  .learn-section h3{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:20px;margin:26px 0 8px}
+  /* Long-form article on a spoke page */
+  .word-table{width:100%;border-collapse:collapse;margin:2px 0 6px;font-size:16px}
+  .word-table th{text-align:left;font-family:'Fragment Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:400;padding:6px 14px 6px 0;border-bottom:1px solid var(--line)}
+  .word-table td{padding:7px 14px 7px 0;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.4}
+  .word-table td:first-child{font-family:'Newsreader',Georgia,serif;color:var(--ink);width:42%}
+  .word-table td:last-child{color:var(--muted)}
+  .art-ba{display:grid;gap:6px;margin-top:6px}
+  .art-ba-col{background:var(--card);border:1px solid var(--line);border-radius:2px;padding:14px 18px}
+  .art-ba-label{display:inline-block;font-family:'Fragment Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+  .art-ba-before{color:var(--muted)}
+  .art-ba-after{color:var(--red)}
+  .art-ba-col p{font-size:17px;line-height:1.6;color:var(--ink);margin:0}
+  .art-ba-note{font-size:14px;color:var(--muted);font-style:italic;margin:0 2px 8px}
+  .art-habits{margin:8px 0 0;padding-left:22px;display:grid;gap:14px}
+  .art-habits li{font-size:18.5px;line-height:1.7;color:var(--muted)}
   .inline-link{color:var(--red);text-decoration:underline;text-underline-offset:3px}
   .inline-link:hover{color:var(--ink)}
   .spoke-crumb{padding-top:40px;font-size:14px}
@@ -241,8 +257,9 @@
   .home-block-sub{font-size:15px;color:var(--muted);margin-bottom:16px}
   .home-block-sub a{color:var(--red);text-decoration:none}
   .home-block-sub a:hover{text-decoration:underline}
-  .home-tax-list{list-style:none;display:grid;gap:11px;margin-top:6px}
-  .home-tax-list li{font-size:15px;line-height:1.5;color:var(--muted)}
+  .home-tax-list{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 24px;margin-top:6px}
+  @media(min-width:840px){.home-tax-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  .home-tax-list li{font-size:15px;line-height:1.4}
   .home-tax-list li a{font-family:'Fraunces',Georgia,serif;font-weight:600;color:var(--ink);text-decoration:none}
   .home-tax-list li a:hover{text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:3px}
 
