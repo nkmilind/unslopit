@@ -62,13 +62,8 @@ export default function About() {
             facts and meaning stay intact. Paste a draft, pick how aggressively
             to edit, and get back a clean version plus a red-pen list of every
             change and why it was made. The first three edits are free, with
-            three more once you register your email.
-          </p>
-        </section>
-
-        <section className="learn-section">
-          <p>
-            Curious what actually counts as slop?{" "}
+            three more once you register your email. Curious what actually
+            counts as slop?{" "}
             <a className="inline-link" href="/learn">
               Read the field guide &rarr;
             </a>
