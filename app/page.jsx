@@ -238,10 +238,6 @@ export default function Home() {
                   </span>{" "}
                   <span className="fix">Here&apos;s how to write well</span>
                 </div>
-                <p>
-                  Your readers can smell it. Strip AI tells from your draft
-                  before you hit publish.
-                </p>
               </div>
               <img
                 className="hero-art"
