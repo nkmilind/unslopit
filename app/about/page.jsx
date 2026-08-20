@@ -58,20 +58,15 @@ export default function About() {
           <h1>Text that sounds human.</h1>
           <p className="lede">
             UnSlopIt takes anything an AI drafted and strips the tells that give
-            it away. The buzzwords, the stock framings, and the fake balance.
-            All while keeping your facts and meaning intact. Paste a draft, pick
-            how aggressively to edit, and get back a clean version plus a red-pen
-            list of every change and why it was made.
+            it away: the buzzwords, the stock framings, the fake balance. Your
+            facts and meaning stay intact. Paste a draft, pick how aggressively
+            to edit, and get back a clean version plus a red-pen list of every
+            change and why it was made. The first three edits are free, with
+            three more once you register your email.
           </p>
         </section>
 
         <section className="learn-section">
-          <p>
-            Instant AI editing is free for the first 3 drafts. You get 3 more
-            free edits once you register with your email. For human editing
-            turned around in a couple of hours, with a tracked-changes summary;
-            you can register your interest from the home page.
-          </p>
           <p>
             Curious what actually counts as slop?{" "}
             <a className="inline-link" href="/learn">
