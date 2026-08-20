@@ -68,6 +68,7 @@
   .panel-bar .label{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
   .ghost-btn{background:none;border:1px solid var(--line);border-radius:2px;padding:6px 12px;font-size:13px;color:var(--ink)}
   .ghost-btn:hover{border-color:var(--ink)}
+  .sample-note{margin:0;padding:9px 16px;background:var(--red-soft);border-bottom:1px solid var(--line);font-size:13px;color:var(--red)}
   textarea{
     width:100%;min-height:220px;padding:18px;border:none;resize:vertical;
     background:transparent;color:var(--ink);

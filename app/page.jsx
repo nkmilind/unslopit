@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "../lib/supabase-browser";
 import { BEFORE_AFTER, TAXONOMY } from "../lib/taxonomy";
 import { FAQ } from "../lib/faq";
+import { SAMPLES } from "../lib/samples";
 import { trackConversion } from "../lib/analytics";
 
 const SAMPLE =
@@ -18,6 +19,7 @@ function wordCount(t) {
 export default function Home() {
   const router = useRouter();
   const [draft, setDraft] = useState("");
+  const [sampleNote, setSampleNote] = useState(false); // ?sample= pre-fill loaded
   const [view, setView] = useState("home"); // home | working | human | gate
   const [placeholder, setPlaceholder] = useState("Paste your AI-generated text here…");
 
@@ -58,6 +60,12 @@ export default function Home() {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       if (params.get("register") === "1") setView("human");
+      // ?sample=<category-id> pre-fills the textarea from a spoke-page CTA.
+      const slug = params.get("sample");
+      if (slug && SAMPLES[slug]) {
+        setDraft(SAMPLES[slug]);
+        setSampleNote(true);
+      }
     }
     refreshMeter();
     let client;
@@ -251,11 +259,19 @@ export default function Home() {
                   Try a sample
                 </button>
               </div>
+              {sampleNote && (
+                <p className="sample-note">
+                  Sample text loaded. Replace it with your own.
+                </p>
+              )}
               <textarea
                 aria-label="Paste your draft"
                 placeholder={placeholder}
                 value={draft}
-                onChange={(e) => setDraft(e.target.value)}
+                onChange={(e) => {
+                  setDraft(e.target.value);
+                  if (sampleNote) setSampleNote(false);
+                }}
               />
               <div className="panel-foot">
                 <span className="count">{words} words</span>
