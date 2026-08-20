@@ -54,7 +54,10 @@ doc
   .font("Times-Bold")
   .fontSize(22)
   .fillColor(INK)
-  .text(`The ${N} signs of AI writing`, { characterSpacing: -0.2 });
+  .text(`The ${N} signs of AI writing`, {
+    characterSpacing: -0.2,
+    link: "https://unslopit.ai/",
+  });
 doc
   .font("Helvetica")
   .fontSize(8.5)
