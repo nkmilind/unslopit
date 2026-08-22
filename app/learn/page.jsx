@@ -278,6 +278,12 @@ export default function Learn() {
             ))}
           </ol>
           <p>{TAX_CLOSING}</p>
+          <p>
+            Now that you can spot the tells, fix them:{" "}
+            <a className="inline-link" href="/humanize-ai-text">
+              How to humanize AI text — a 5-step method &rarr;
+            </a>
+          </p>
         </section>
 
         {/* FAQ */}

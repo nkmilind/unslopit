@@ -8,6 +8,7 @@ export default function sitemap() {
   return [
     { url: `${SITE}/`, changeFrequency: "weekly", priority: 1 },
     { url: `${SITE}/learn`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE}/humanize-ai-text`, changeFrequency: "monthly", priority: 0.8 },
     ...TAXONOMY.map((c) => ({
       url: `${SITE}/learn/${c.id}`,
       changeFrequency: "monthly",

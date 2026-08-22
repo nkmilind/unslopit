@@ -225,6 +225,9 @@ export default async function Spoke({ params }) {
             <li>
               <a href="/learn">All {n} categories →</a>
             </li>
+            <li>
+              <a href="/humanize-ai-text">How to fix them: humanize AI text →</a>
+            </li>
           </ul>
         </section>
 

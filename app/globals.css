@@ -197,6 +197,8 @@
   .art-ba-note{font-size:14px;color:var(--muted);font-style:italic;margin:0 2px 8px}
   .art-habits{margin:8px 0 0;padding-left:22px;display:grid;gap:14px}
   .art-habits li{font-size:18.5px;line-height:1.7;color:var(--muted)}
+  /* Evolving-draft snippets in the humanize guide's worked example */
+  .draft{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--red);border-radius:2px;padding:14px 18px;margin:6px 0 4px;max-width:62ch;font-family:'Newsreader',Georgia,serif;font-size:16.5px;line-height:1.6;color:var(--ink)}
   .inline-link{color:var(--red);text-decoration:underline;text-underline-offset:3px}
   .inline-link:hover{color:var(--ink)}
   .spoke-crumb{padding-top:40px;font-size:14px}
