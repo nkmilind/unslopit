@@ -2,6 +2,12 @@ import { notFound } from "next/navigation";
 import { TAXONOMY } from "../../../lib/taxonomy";
 import { ARTICLES } from "./articles";
 
+const SITE = "https://unslopit.ai";
+// Article dates for the spoke JSON-LD. The spoke pages launched together; bump
+// MODIFIED when you do a content pass (there's no CMS to derive it per page).
+const PUBLISHED = "2026-08-17";
+const MODIFIED = "2026-08-20";
+
 export function generateStaticParams() {
   return TAXONOMY.map((c) => ({ category: c.id }));
 }
@@ -118,8 +124,32 @@ export default async function Spoke({ params }) {
     </section>
   ) : null;
 
+  const description =
+    c.metaDescription ||
+    `${c.blurb} Why AI produces it, and how to cut it — from the UnSlopIt slop taxonomy.`;
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: c.metaTitle || c.title,
+    description,
+    datePublished: PUBLISHED,
+    dateModified: MODIFIED,
+    author: { "@type": "Person", name: "The Editor", url: `${SITE}/about` },
+    publisher: {
+      "@type": "Organization",
+      name: "UnSlopIt",
+      logo: { "@type": "ImageObject", url: `${SITE}/wordmark-square.png` },
+    },
+    image: `${SITE}/og.png`,
+    mainEntityOfPage: `${SITE}/learn/${c.id}`,
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <header>
         <div className="wrap head-inner">
           <a className="wordmark" href="/">
