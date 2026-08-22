@@ -370,5 +370,44 @@
       "exports"
     ],
     "note": "Decorative/scaffolding emoji should be cut; the real updates (dashboard, exports, dark mode) stay."
+  },
+  {
+    "id": "superficial-analysis",
+    "type": "slop",
+    "label": "16 · superficial analysis",
+    "input": "The company launched a new file-search feature, highlighting its unwavering commitment to customer-centric innovation.",
+    "mustCut": [
+      "highlighting its unwavering commitment"
+    ],
+    "mustKeep": [
+      "search"
+    ],
+    "note": "Cut the empty participial clause; keep the fact (a file-search feature)."
+  },
+  {
+    "id": "weasel-words",
+    "type": "slop",
+    "label": "17 · weasel words",
+    "input": "Experts agree that our new dashboard saves teams hours every week.",
+    "mustCut": [
+      "Experts agree"
+    ],
+    "mustKeep": [
+      "dashboard"
+    ],
+    "note": "Drop the unsourced authority; keep the concrete claim."
+  },
+  {
+    "id": "colon-reveal",
+    "type": "slop",
+    "label": "13 · colon reveal (insight)",
+    "input": "Here is how the grader works. The detail that makes it work: a separate agent scores every draft.",
+    "mustCut": [
+      "The detail that makes it work:"
+    ],
+    "mustKeep": [
+      "agent"
+    ],
+    "note": "Rewrite the colon-reveal as a plain sentence; keep the substance."
   }
 ]
