@@ -1,4 +1,6 @@
 import { FAQ } from "../../lib/faq";
+import SiteHeader from "../_components/SiteHeader";
+import Footer from "../_components/Footer";
 
 export const metadata = {
   title: "About",
@@ -42,16 +44,7 @@ export default function About() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <header>
-        <div className="wrap head-inner">
-          <a className="wordmark" href="/">
-            Un<span className="slop">Slop</span>It.ai
-          </a>
-          <a className="head-link" href="/">
-            Try it &rarr;
-          </a>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main className="wrap learn">
         <section className="learn-hero">
@@ -61,7 +54,12 @@ export default function About() {
             it away: the buzzwords, the stock framings, the fake balance. Your
             facts and meaning stay intact. Paste a draft, pick how aggressively
             to edit, and get back a clean version plus a red-pen list of every
-            change and why it was made. The first three edits are free, with
+            change and why it was made. The method behind it is written up in
+            full:{" "}
+            <a className="inline-link" href="/humanize-ai-text">
+              how to humanize AI text
+            </a>
+            . The first three edits are free, with
             three more once you register your email. Curious what actually
             counts as slop?{" "}
             <a className="inline-link" href="/learn">
@@ -117,12 +115,7 @@ export default function About() {
         </section>
       </main>
 
-      <footer>
-        <div className="wrap">
-          UnSlopIt.ai · <a href="/">Home</a> ·{" "}
-          <a href="/learn">What is AI slop?</a>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

@@ -1,3 +1,6 @@
+import SiteHeader from "../_components/SiteHeader";
+import Footer from "../_components/Footer";
+
 const SITE = "https://unslopit.ai";
 const PUBLISHED = "2026-08-20";
 const MODIFIED = "2026-08-20";
@@ -80,16 +83,7 @@ export default function Humanize() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <header>
-        <div className="wrap head-inner">
-          <a className="wordmark" href="/">
-            Un<span className="slop">Slop</span>It.ai
-          </a>
-          <a className="head-link" href="/">
-            Try it &rarr;
-          </a>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main className="wrap learn">
         <section className="learn-hero">
@@ -394,12 +388,7 @@ export default function Humanize() {
         </section>
       </main>
 
-      <footer>
-        <div className="wrap">
-          UnSlopIt.ai · <a href="/">Home</a> ·{" "}
-          <a href="/learn">What is AI slop?</a> · <a href="/about">About</a>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

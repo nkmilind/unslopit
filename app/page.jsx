@@ -7,6 +7,7 @@ import { BEFORE_AFTER, TAXONOMY } from "../lib/taxonomy";
 import { FAQ } from "../lib/faq";
 import { SAMPLES } from "../lib/samples";
 import { trackConversion } from "../lib/analytics";
+import Footer from "./_components/Footer";
 
 const SAMPLE =
   "In today's fast-paced digital landscape, it's important to note that content creation isn't just about writing\u2014it's about crafting a narrative. Let's delve into how leveraging cutting-edge AI tools can unlock unprecedented synergies, streamline your workflow, and elevate your brand. Whether you're a seasoned professional or just starting your journey, these game-changing insights will empower you to take your content to the next level.";
@@ -211,18 +212,24 @@ export default function Home() {
           >
             Un<span className="slop">Slop</span>It.ai
           </button>
-          <div className="head-note">
-            {user ? (
-              <span className="auth-state">
-                {user.email}
-                <button className="link-btn" type="button" onClick={signOut}>
-                  Sign out
-                </button>
-              </span>
-            ) : (
-              "prototype v0.2"
+          <nav className="head-nav">
+            <a className="head-nav-link" href="/learn">
+              Learn
+            </a>
+            <a className="head-nav-link" href="/humanize-ai-text">
+              Guide
+            </a>
+            {user && (
+              <div className="head-note">
+                <span className="auth-state">
+                  {user.email}
+                  <button className="link-btn" type="button" onClick={signOut}>
+                    Sign out
+                  </button>
+                </span>
+              </div>
             )}
-          </div>
+          </nav>
         </div>
       </header>
 
@@ -552,12 +559,7 @@ export default function Home() {
         )}
       </main>
 
-      <footer>
-        <div className="wrap">
-          UnSlopIt.ai · <a href="/learn">What is AI slop?</a> ·{" "}
-          <a href="/about">About</a>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

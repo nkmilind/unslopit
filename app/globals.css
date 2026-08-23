@@ -31,6 +31,10 @@
   header{border-bottom:1px solid var(--line)}
   .head-inner{display:flex;align-items:baseline;justify-content:space-between;padding:18px 0}
   .wordmark{font-family:'Fraunces',Georgia,serif;font-weight:700;font-size:22px;letter-spacing:-.01em;background:none;border:none;padding:0;color:var(--ink);cursor:pointer;text-decoration:none}
+  .head-nav{display:flex;align-items:baseline;gap:18px}
+  .head-nav-link{font-size:14px;color:var(--muted);text-decoration:none}
+  .head-nav-link:hover{color:var(--ink)}
+  .result-guide-note{margin-top:22px;font-size:14px;line-height:1.6;color:var(--muted)}
   .head-link{font-size:14px;color:var(--red);text-decoration:none}
   .head-link:hover{color:var(--ink)}
   .wordmark .slop{position:relative;color:var(--muted)}
