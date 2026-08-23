@@ -68,8 +68,11 @@ const SECTIONS = [
     h: "How common is AI-generated content?",
     paras: [
       <>
-        By late 2025, roughly 300,000 e-books were being released on Amazon each
-        month, up from about 100,000 before ChatGPT. In academia,{" "}
+        By late 2025,{" "}
+        <Src href="https://www.nber.org/digest/202605/how-large-language-models-are-reshaping-book-market">
+          roughly 300,000 e-books were being released on Amazon each month
+        </Src>
+        , up from about 100,000 before ChatGPT. In academia,{" "}
         <Src href="https://www.pnas.org/doi/10.1073/pnas.2605754123">
           57% of arXiv papers
         </Src>{" "}
@@ -118,7 +121,20 @@ const SECTIONS = [
         of 8,000 consumers found 31% trust a brand less when marketing content is
         visibly AI-generated.
       </>,
-      "Data from Skyword says that when AI-generated information conflicts with a brand’s own messaging, only 29% of consumers trust the brand and 54% go looking for third-party validation. And evidence is emerging that AI slop is getting worse uptake from consumers. The Economist reported that books that appear AI-authored draw fewer and worse reviews on Amazon.",
+      <>
+        <Src href="https://www.prnewswire.com/news-releases/when-ai-gets-brand-information-wrong-consumers-look-beyond-the-brand-302797363.html">
+          Data from Skyword
+        </Src>{" "}
+        says that when AI-generated information conflicts with a brand’s own
+        messaging, only 29% of consumers trust the brand and 54% go looking for
+        third-party validation. And evidence is emerging that AI slop is getting
+        worse uptake from consumers.{" "}
+        <Src href="https://www.economist.com/business/2025/10/16/sloponomics-who-wins-and-loses-in-the-ai-content-flood">
+          The Economist
+        </Src>{" "}
+        reported that books that appear AI-authored draw fewer and worse reviews
+        on Amazon.
+      </>,
     ],
   },
   {
@@ -172,7 +188,29 @@ const LEARN_FAQ = [
   },
   {
     q: "Does Google penalize AI content?",
-    a: "Not for simply being AI-generated. Google’s position, stated in 2023 and unchanged since, is that it rewards quality content however it’s produced. The policy that actually bites is called scaled content abuse. Introduced in the March 2024 spam update, it targets generating many pages primarily to manipulate rankings rather than help users. It applies regardless of method: AI, human writers, scraping, or a mix. Human-written thin content is covered under this policy. On May 15, 2026 Google clarified that these same spam policies apply to AI Overviews and AI Mode. Using AI won’t necessarily hurt you, and adding a human approval step won’t automatically save you. It is necessary but not sufficient. What matters most is whether your page is worth reading.",
+    a: "Not for simply being AI-generated. Google’s position, stated in 2023 and unchanged since, is that it rewards quality content however it’s produced. The policy that actually bites is called scaled content abuse. Introduced in the March 2024 spam update, it targets generating many pages primarily to manipulate rankings rather than help users. It applies regardless of method: AI, human writers, scraping, or a mix. Human-written thin content is covered under this policy. On May 15, 2026 Google clarified that these same spam policies also apply to generative AI responses in Search (its AI Overviews and AI Mode). Using AI won’t necessarily hurt you, and adding a human approval step won’t automatically save you. It is necessary but not sufficient. What matters most is whether your page is worth reading.",
+    aNode: (
+      <>
+        Not for simply being AI-generated. Google’s position, stated in 2023 and
+        unchanged since, is that it rewards quality content however it’s produced.
+        The policy that actually bites is called{" "}
+        <Src href="https://developers.google.com/search/docs/essentials/spam-policies">
+          scaled content abuse
+        </Src>
+        . Introduced in the March 2024 spam update, it targets generating many
+        pages primarily to manipulate rankings rather than help users. It applies
+        regardless of method: AI, human writers, scraping, or a mix.
+        Human-written thin content is covered under this policy.{" "}
+        <Src href="https://developers.google.com/search/updates">
+          On May 15, 2026 Google clarified
+        </Src>{" "}
+        that these same spam policies also apply to generative AI responses in
+        Search (its AI Overviews and AI Mode). Using AI won’t necessarily hurt
+        you, and adding a human approval step won’t automatically save you. It is
+        necessary but not sufficient. What matters most is whether your page is
+        worth reading.
+      </>
+    ),
   },
   {
     q: "If I edit AI writing myself, do I need a tool?",
