@@ -4,7 +4,7 @@ const MODIFIED = "2026-08-20";
 
 const TITLE = "How to humanize AI text: a 5-step editing method";
 const DESCRIPTION =
-  "A 5-step method to humanize AI text: cut empty claims, add specifics only you know, vary the rhythm, strip the AI tells, and read it aloud — with a before/after worked example.";
+  "A 5-step method to humanize AI text from ChatGPT, Claude, or Gemini: cut empty claims, add specifics only you know, vary the rhythm, strip the AI tells, and read it aloud — with a before/after worked example.";
 
 export const metadata = {
   title: TITLE,
@@ -95,8 +95,9 @@ export default function Humanize() {
         <section className="learn-hero">
           <h1>How to humanize AI text: a 5-step editing method</h1>
           <p className="lede">
-            Here is how you humanize AI text: cut the sentences making no claim
-            or a weak one, add the specifics — numbers, names, examples — only
+            Here is how you humanize AI text — whether ChatGPT, Claude, or
+            Gemini wrote it: cut the sentences making no claim or a weak one, add
+            the specifics — numbers, names, examples — only
             you know, vary the rhythm of the writing, remove the vocabulary AI
             overuses, and read it aloud. That’s the method in a nutshell. Read on
             for a before/after example, and where a tool can do the mechanical
@@ -124,6 +125,14 @@ export default function Humanize() {
             us suspicious of everything we read online.
           </p>
           <p>
+            Which model produced the draft barely matters. ChatGPT, Claude, and
+            Gemini share most of the same tells because they were trained on
+            overlapping text and tuned toward the same conventions. There are
+            subtle differences between models though. ChatGPT leans hardest on
+            chatbot sign-offs and emoji, Claude on the hedged both-sides
+            paragraph — but the method below applies to all of them.
+          </p>
+          <p>
             Humanizing writing is not about disguising machine output. If your
             goal is beating a detector, this guide won’t optimize for that.
             Humanizing writing is about putting the specific judgment of the
@@ -133,7 +142,10 @@ export default function Humanize() {
         </section>
 
         <section className="learn-section">
-          <h2>Step 1 — Cut what makes no claim</h2>
+          <h2>
+            Step 1 — Cut what makes no claim (the fastest way to make AI text
+            less AI)
+          </h2>
           <p>
             Read each sentence and ask what it asserts. AI drafts are full of
             sentences that make no claim — they’re pointless. For example:{" "}
@@ -176,7 +188,7 @@ export default function Humanize() {
         </section>
 
         <section className="learn-section">
-          <h2>Step 3 — Fix the rhythm</h2>
+          <h2>Step 3 — Fix the rhythm (why AI sentences all run the same length)</h2>
           <p>
             Vary the length of your sentences. AI produces monotonous,
             similar-sized sentences (unless it’s the staccato of AI slop on
@@ -199,7 +211,7 @@ export default function Humanize() {
         </section>
 
         <section className="learn-section">
-          <h2>Step 4 — Strip the tells</h2>
+          <h2>Step 4 — Strip the tells (the words ChatGPT overuses)</h2>
           <p>
             The last major editorial step is cleaning up the vocabulary. There’s
             a reason it comes last: there is no point polishing sentences you
