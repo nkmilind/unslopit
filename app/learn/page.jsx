@@ -1,4 +1,6 @@
 import { TAXONOMY } from "../../lib/taxonomy";
+import SiteHeader from "../_components/SiteHeader";
+import Footer from "../_components/Footer";
 
 export const metadata = {
   title: `What is AI slop? The ${TAXONOMY.length} signs of AI writing (2026)`,
@@ -235,16 +237,7 @@ export default function Learn() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <header>
-        <div className="wrap head-inner">
-          <a className="wordmark" href="/">
-            Un<span className="slop">Slop</span>It.ai
-          </a>
-          <a className="head-link" href="/">
-            Try it &rarr;
-          </a>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main className="wrap learn">
         <div className="slop-cloud" aria-hidden="true">
@@ -344,12 +337,7 @@ export default function Learn() {
         </section>
       </main>
 
-      <footer>
-        <div className="wrap">
-          UnSlopIt.ai · <a href="/">Home</a> ·{" "}
-          <a href="/about">About</a>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

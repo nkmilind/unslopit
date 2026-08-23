@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { wordDiff } from "../../lib/diff";
 import { trackConversion } from "../../lib/analytics";
+import SiteHeader from "../_components/SiteHeader";
+import Footer from "../_components/Footer";
 
 function renderWithTypo(text, typo) {
   if (!typo || typeof typo.index !== "number" || typo.index < 0) return text;
@@ -56,16 +58,7 @@ export default function ResultPage() {
 
   return (
     <>
-      <header>
-        <div className="wrap head-inner">
-          <a className="wordmark" href="/">
-            Un<span className="slop">Slop</span>It.ai
-          </a>
-          <a className="head-link" href="/">
-            New draft &rarr;
-          </a>
-        </div>
-      </header>
+      <SiteHeader action={{ href: "/", label: "New draft →" }} />
 
       <main className="wrap">
         <section className="stage active">
@@ -166,6 +159,15 @@ export default function ResultPage() {
                 )}
               </div>
 
+              <p className="result-guide-note">
+                Want to do this yourself?{" "}
+                <a className="inline-link" href="/humanize-ai-text">
+                  The five-step method
+                </a>{" "}
+                explains what the editor is doing and the two steps it can’t do
+                for you.
+              </p>
+
               <div className="result-cta">
                 <h3>Keep the good drafts coming.</h3>
                 <p>
@@ -181,12 +183,7 @@ export default function ResultPage() {
         </section>
       </main>
 
-      <footer>
-        <div className="wrap">
-          UnSlopIt.ai · <a href="/">Home</a> · <a href="/learn">What is AI slop?</a> ·{" "}
-          <a href="/about">About</a>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

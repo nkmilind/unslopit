@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { TAXONOMY } from "../../../lib/taxonomy";
 import { ARTICLES } from "./articles";
+import SiteHeader from "../../_components/SiteHeader";
+import Footer from "../../_components/Footer";
 
 const SITE = "https://unslopit.ai";
 // Article dates for the spoke JSON-LD. The spoke pages launched together; bump
@@ -150,16 +152,7 @@ export default async function Spoke({ params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
-      <header>
-        <div className="wrap head-inner">
-          <a className="wordmark" href="/">
-            Un<span className="slop">Slop</span>It.ai
-          </a>
-          <a className="head-link" href={`/?sample=${c.id}`}>
-            Try it &rarr;
-          </a>
-        </div>
-      </header>
+      <SiteHeader action={{ href: `/?sample=${c.id}`, label: "Try it →" }} />
 
       <main className="wrap learn">
         <p className="spoke-crumb">
@@ -225,10 +218,17 @@ export default async function Spoke({ params }) {
             <li>
               <a href="/learn">All {n} categories →</a>
             </li>
-            <li>
-              <a href="/humanize-ai-text">How to fix them: humanize AI text →</a>
-            </li>
           </ul>
+        </section>
+
+        <section className="learn-section">
+          <p>
+            Knowing the tell is half of it.{" "}
+            <a className="inline-link" href="/humanize-ai-text">
+              The five-step method
+            </a>{" "}
+            covers how to fix a whole draft, not just one pattern.
+          </p>
         </section>
 
         <section className="learn-cta">
@@ -238,12 +238,7 @@ export default async function Spoke({ params }) {
         </section>
       </main>
 
-      <footer>
-        <div className="wrap">
-          UnSlopIt.ai · <a href="/">Home</a> · <a href="/learn">What is AI slop?</a> ·{" "}
-          <a href="/about">About</a>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }
