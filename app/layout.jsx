@@ -1,5 +1,6 @@
 import "./globals.css";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 
 const SITE = "https://unslopit.ai";
 const ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
@@ -80,6 +81,7 @@ export default function RootLayout({ children }) {
           </>
         )}
         {children}
+        <Analytics />
       </body>
     </html>
   );
