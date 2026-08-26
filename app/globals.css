@@ -367,8 +367,13 @@
   .ba-grid{display:grid;gap:20px;margin-top:8px}
   .ba{border:var(--border-thin);border-radius:var(--radius);background:var(--card);padding:20px}
   .ba-label{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-label);letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--muted);margin-bottom:14px}
-  .ba-before{font-size:var(--fs-body-sm);line-height:1.6;color:var(--muted);padding-left:14px;border-left:var(--bw-strike) solid var(--red);margin-bottom:14px}
-  .ba-after{font-family:var(--font-body);font-size:var(--fs-editor);line-height:var(--lh-editor);color:var(--ink);padding-left:14px;border-left:var(--bw-strike) solid var(--ink);margin-bottom:14px}
+  .ba-slot{margin-bottom:16px}
+  .ba-tag{display:block;font-family:var(--font-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px}
+  .ba-tag-before{color:var(--red)}
+  .ba-tag-after{color:var(--ink)}
+  .ba-before{font-size:var(--fs-body-sm);line-height:1.6;color:var(--muted);padding-left:14px;border-left:var(--bw-strike) solid var(--red);margin:0}
+  .ba-cut{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;text-decoration-skip-ink:none}
+  .ba-after{font-family:var(--font-display);font-size:20px;font-weight:var(--fw-display);line-height:1.35;letter-spacing:var(--ls-tight);color:var(--ink);padding-left:14px;border-left:var(--bw-strike) solid var(--ink);margin:0}
   .ba-caught .tell{font-style:normal;font-size:var(--fs-caption);color:var(--muted)}
 
   /* Before & after — carousel (one card at a time, auto-advancing) */
