@@ -38,6 +38,10 @@ export default function Home() {
   const baGo = (d) =>
     setBaIdx((i) => (i + d + BEFORE_AFTER.length) % BEFORE_AFTER.length);
 
+  // Taxonomy table — collapsed to the first 7 rows until expanded
+  const [taxExpanded, setTaxExpanded] = useState(false);
+  const TAX_COLLAPSED = 7;
+
   // Free-edit metering state
   const [meter, setMeter] = useState(null); // {tier, used, remaining, limit, gate, email}
   const [gate, setGate] = useState(false); // true once the current tier is exhausted
@@ -356,13 +360,13 @@ export default function Home() {
 
             <div className="aside">
               <h3>Prefer a person?</h3>
-              <p>
+              <p className="aside-sub">
                 A real editor rewrites it in your voice, flags anything unclear,
-                and returns a tracked-changes summary.
+                and returns a tracked-changes summary.{" "}
+                <button className="text-link" type="button" onClick={openInterest}>
+                  Register your interest →
+                </button>
               </p>
-              <button className="text-link" type="button" onClick={openInterest}>
-                Register your interest →
-              </button>
             </div>
 
             <div className="ba-home">
@@ -443,7 +447,10 @@ export default function Home() {
                   </tr>
                 </thead>
                 <tbody>
-                  {TAXONOMY.map((c, i) => (
+                  {(taxExpanded
+                    ? TAXONOMY
+                    : TAXONOMY.slice(0, TAX_COLLAPSED)
+                  ).map((c, i) => (
                     <tr key={c.id}>
                       <td className="tt-n">{String(i + 1).padStart(2, "0")}</td>
                       <td className="tt-cat">
@@ -454,6 +461,18 @@ export default function Home() {
                   ))}
                 </tbody>
               </table>
+              {TAXONOMY.length > TAX_COLLAPSED && (
+                <button
+                  type="button"
+                  className="tax-toggle"
+                  onClick={() => setTaxExpanded((v) => !v)}
+                  aria-expanded={taxExpanded}
+                >
+                  {taxExpanded
+                    ? "Show fewer"
+                    : `Show all ${TAXONOMY.length} →`}
+                </button>
+              )}
             </div>
 
             <div className="home-block">
