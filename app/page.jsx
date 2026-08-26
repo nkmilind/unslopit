@@ -17,6 +17,25 @@ function wordCount(t) {
   return m ? m.length : 0;
 }
 
+// Render `text` with each exact phrase in `marks` struck through (the redline).
+function strikeSlop(text, marks) {
+  if (!marks || !marks.length) return text;
+  const escaped = marks
+    .slice()
+    .sort((a, b) => b.length - a.length)
+    .map((m) => m.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  const re = new RegExp(`(${escaped.join("|")})`, "g");
+  return text.split(re).map((part, k) =>
+    marks.includes(part) ? (
+      <s className="ba-cut" key={k}>
+        {part}
+      </s>
+    ) : (
+      part
+    )
+  );
+}
+
 export default function Home() {
   const router = useRouter();
   const [draft, setDraft] = useState("");
@@ -389,8 +408,19 @@ export default function Home() {
                   }`}
                 >
                   <span className="ba-label">{BEFORE_AFTER[baIdx].label}</span>
-                  <p className="ba-before">{BEFORE_AFTER[baIdx].before}</p>
-                  <p className="ba-after">{BEFORE_AFTER[baIdx].after}</p>
+                  <div className="ba-slot">
+                    <span className="ba-tag ba-tag-before">Before</span>
+                    <p className="ba-before">
+                      {strikeSlop(
+                        BEFORE_AFTER[baIdx].before,
+                        BEFORE_AFTER[baIdx].marks
+                      )}
+                    </p>
+                  </div>
+                  <div className="ba-slot">
+                    <span className="ba-tag ba-tag-after">After</span>
+                    <p className="ba-after">{BEFORE_AFTER[baIdx].after}</p>
+                  </div>
                   <p className="ba-caught">
                     {BEFORE_AFTER[baIdx].caught.map((c, j) => (
                       <span className="tell" key={j}>
