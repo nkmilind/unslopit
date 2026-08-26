@@ -32,6 +32,12 @@ export default function Home() {
   const [level, setLevel] = useState("medium"); // light | medium | full
   const [addTypo, setAddTypo] = useState(false); // sprinkle one human typo
 
+  // Before/after carousel
+  const [baIdx, setBaIdx] = useState(0);
+  const [baPaused, setBaPaused] = useState(false); // pause auto-advance on hover/focus
+  const baGo = (d) =>
+    setBaIdx((i) => (i + d + BEFORE_AFTER.length) % BEFORE_AFTER.length);
+
   // Free-edit metering state
   const [meter, setMeter] = useState(null); // {tier, used, remaining, limit, gate, email}
   const [gate, setGate] = useState(false); // true once the current tier is exhausted
@@ -89,6 +95,21 @@ export default function Home() {
     return () => subscription.unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Auto-advance the before/after carousel (pause on hover/focus; respect reduced motion).
+  useEffect(() => {
+    if (baPaused) return;
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    )
+      return;
+    const id = setInterval(
+      () => setBaIdx((i) => (i + 1) % BEFORE_AFTER.length),
+      6000
+    );
+    return () => clearInterval(id);
+  }, [baPaused]);
 
   async function sendMagicLink() {
     if (!supabase || !authEmail.includes("@") || authStatus === "sending") return;
@@ -346,21 +367,64 @@ export default function Home() {
 
             <div className="ba-home">
               <h2 className="ba-home-title">Before &amp; after</h2>
-              <div className="ba-grid">
-                {BEFORE_AFTER.map((ex, i) => (
-                  <div className="ba" key={i}>
-                    <span className="ba-label">{ex.label}</span>
-                    <p className="ba-before">{ex.before}</p>
-                    <p className="ba-after">{ex.after}</p>
-                    <p className="ba-caught">
-                      {ex.caught.map((c, j) => (
-                        <span className="tell" key={j}>
-                          {c}
-                        </span>
-                      ))}
-                    </p>
+              <div
+                className="ba-carousel"
+                onMouseEnter={() => setBaPaused(true)}
+                onMouseLeave={() => setBaPaused(false)}
+                onFocusCapture={() => setBaPaused(true)}
+                onBlurCapture={() => setBaPaused(false)}
+                aria-roledescription="carousel"
+                aria-label="Before and after examples"
+              >
+                <div
+                  className="ba"
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`${baIdx + 1} of ${BEFORE_AFTER.length}: ${
+                    BEFORE_AFTER[baIdx].label
+                  }`}
+                >
+                  <span className="ba-label">{BEFORE_AFTER[baIdx].label}</span>
+                  <p className="ba-before">{BEFORE_AFTER[baIdx].before}</p>
+                  <p className="ba-after">{BEFORE_AFTER[baIdx].after}</p>
+                  <p className="ba-caught">
+                    {BEFORE_AFTER[baIdx].caught.map((c, j) => (
+                      <span className="tell" key={j}>
+                        {c}
+                      </span>
+                    ))}
+                  </p>
+                </div>
+                <div className="ba-controls">
+                  <button
+                    className="ba-arrow"
+                    type="button"
+                    onClick={() => baGo(-1)}
+                    aria-label="Previous example"
+                  >
+                    ←
+                  </button>
+                  <div className="ba-dots">
+                    {BEFORE_AFTER.map((_, i) => (
+                      <button
+                        key={i}
+                        className={`ba-dot ${i === baIdx ? "on" : ""}`}
+                        type="button"
+                        onClick={() => setBaIdx(i)}
+                        aria-label={`Go to example ${i + 1}`}
+                        aria-current={i === baIdx}
+                      />
+                    ))}
                   </div>
-                ))}
+                  <button
+                    className="ba-arrow"
+                    type="button"
+                    onClick={() => baGo(1)}
+                    aria-label="Next example"
+                  >
+                    →
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -370,13 +434,26 @@ export default function Home() {
                 The {TAXONOMY.length} tells the editor hunts for.{" "}
                 <a href="/learn#taxonomy">See the full guide →</a>
               </p>
-              <ul className="home-tax-list">
-                {TAXONOMY.map((c) => (
-                  <li key={c.id}>
-                    <a href={`/learn/${c.id}`}>{c.title}</a>
-                  </li>
-                ))}
-              </ul>
+              <table className="tax-table">
+                <thead>
+                  <tr>
+                    <th className="tt-n"></th>
+                    <th className="tt-cat">Category</th>
+                    <th className="tt-tells">Example tells</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {TAXONOMY.map((c, i) => (
+                    <tr key={c.id}>
+                      <td className="tt-n">{String(i + 1).padStart(2, "0")}</td>
+                      <td className="tt-cat">
+                        <a href={`/learn/${c.id}`}>{c.title}</a>
+                      </td>
+                      <td className="tt-tells">{c.tells.slice(0, 3).join(" · ")}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
 
             <div className="home-block">
