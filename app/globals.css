@@ -85,6 +85,10 @@
     --border-ink:1px solid var(--ink);
     --border-mark-thin:1px solid var(--red);
     --border-dashed:1px dashed var(--line);
+    /* heavy editorial rules — thick black dividers for major sections */
+    --ink-rule:#100E0C;
+    --rule-heavy:4px solid var(--ink-rule);
+    --rule-mid:2px solid var(--ink-rule);
 
     /* ---------- radii ---------- */
     --radius:2px;
@@ -130,8 +134,9 @@
   :focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px;border-radius:var(--radius)}
 
   /* ---------- header ---------- */
-  header{border-bottom:var(--border-thin)}
-  .head-inner{display:flex;align-items:baseline;justify-content:space-between;padding:18px 0}
+  .head-inner{display:flex;align-items:baseline;justify-content:space-between;padding:18px 24px;position:relative}
+  /* thick rule contained to the content column, not edge-to-edge */
+  .head-inner::after{content:"";position:absolute;left:24px;right:24px;bottom:0;height:2px;background:var(--ink-rule)}
   .wordmark{font-family:var(--font-display);font-weight:700;font-size:var(--fs-card-title);letter-spacing:var(--ls-tight);background:none;border:none;padding:0;color:var(--ink);cursor:pointer;text-decoration:none}
   .head-nav{display:flex;align-items:baseline;gap:18px}
   .head-nav-link{font-size:var(--fs-ui-sm);color:var(--muted);text-decoration:none}
@@ -198,9 +203,12 @@
   .switch-knob{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--knob);box-shadow:var(--shadow-knob);transition:transform var(--dur) var(--ease)}
   .switch.on .switch-knob{transform:translateX(16px)}
   .switch-text{font-family:'Newsreader',serif}
-  .aside{border-top:var(--border-thin);padding-top:24px;margin-bottom:56px;max-width:var(--measure-prose)}
+  .aside{border-top:var(--rule-mid);padding-top:24px;margin-bottom:56px}
   .aside h3{font-family:var(--font-display);font-size:19px;font-weight:var(--fw-heading);margin-bottom:8px}
   .aside p{font-size:var(--fs-ui);color:var(--muted);margin-bottom:12px}
+  /* "Prefer a person?" — title + single subhead line (description + inline link) */
+  .aside-sub{margin-bottom:0}
+  .aside-sub .text-link{margin-left:2px}
   .text-link{background:none;border:none;padding:0;font-family:var(--font-display);font-size:var(--fs-ui);color:var(--red);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
   .text-link:hover{color:var(--ink)}
 
@@ -256,7 +264,10 @@
   .confirm dd{font-size:var(--fs-meta)}
 
   .demo-note{margin-top:14px;font-size:var(--fs-caption);color:var(--muted)}
-  footer{border-top:var(--border-thin);padding:20px 0 40px;color:var(--muted);font-size:var(--fs-meta);font-family:var(--font-mono)}
+  footer{padding:0 0 40px;color:var(--muted);font-size:var(--fs-meta);font-family:var(--font-mono)}
+  footer .wrap{position:relative;padding-top:20px}
+  /* thick rule contained to the content column, not edge-to-edge */
+  footer .wrap::before{content:"";position:absolute;left:24px;right:24px;top:0;height:4px;background:var(--ink-rule)}
 
   /* ---------- redline view ---------- */
   .seg{display:inline-flex;border:var(--border-thin);border-radius:var(--radius);overflow:hidden}
@@ -268,7 +279,7 @@
   .rl-ins{color:var(--red);font-style:italic}
 
   /* ---------- /result conversion CTA ---------- */
-  .result-cta{margin-top:32px;padding-top:28px;border-top:var(--border-thin);max-width:560px}
+  .result-cta{margin-top:32px;padding-top:28px;border-top:var(--rule-mid);max-width:560px}
   .result-cta h3{font-family:var(--font-display);font-size:var(--fs-card-title);font-weight:var(--fw-heading);margin-bottom:8px}
   .result-cta p{font-size:var(--fs-body-sm);color:var(--muted);margin-bottom:16px}
   .result-cta .primary{display:inline-block;text-decoration:none;font-family:var(--font-display);font-size:var(--fs-body-sm)}
@@ -281,7 +292,7 @@
   .slop-cloud{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 22px;padding:52px 0 40px;text-align:center}
   .slop-cloud span{font-family:var(--font-display);line-height:1.05;letter-spacing:var(--ls-tight)}
   .slop-cloud .sc-strike{text-decoration:line-through;text-decoration-thickness:var(--bw-strike);text-decoration-skip-ink:none}
-  .learn-section{padding:44px 0;border-top:var(--border-thin)}
+  .learn-section{padding:44px 0;border-top:var(--rule-mid)}
   .learn-first{border-top:none;padding-top:8px}
   .learn-section h1{font-family:var(--font-display);font-weight:var(--fw-heading);font-size:var(--fs-section);letter-spacing:var(--ls-heading);margin-bottom:16px}
   .learn-section h2{font-family:var(--font-display);font-weight:var(--fw-heading);font-size:var(--fs-section-sm);letter-spacing:var(--ls-tight);margin-bottom:16px}
@@ -360,7 +371,18 @@
   .ba-after{font-family:var(--font-body);font-size:var(--fs-editor);line-height:var(--lh-editor);color:var(--ink);padding-left:14px;border-left:var(--bw-strike) solid var(--ink);margin-bottom:14px}
   .ba-caught .tell{font-style:normal;font-size:var(--fs-caption);color:var(--muted)}
 
-  .ba-home,.home-block{margin-top:48px;padding-top:28px;border-top:var(--border-thin)}
+  /* Before & after — carousel (one card at a time, auto-advancing) */
+  .ba-carousel{margin-top:14px}
+  .ba-carousel .ba{min-height:196px}
+  .ba-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:18px}
+  .ba-arrow{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:var(--card);border:var(--border-thin);border-radius:var(--radius);color:var(--ink);font-size:16px;line-height:1}
+  .ba-arrow:hover{border-color:var(--ink)}
+  .ba-dots{display:flex;gap:9px}
+  .ba-dot{width:8px;height:8px;padding:0;border:none;border-radius:var(--radius-pill);background:var(--line)}
+  .ba-dot:hover{background:var(--muted)}
+  .ba-dot.on{background:var(--red)}
+
+  .ba-home,.home-block{margin-top:48px;padding-top:28px;border-top:var(--rule-mid)}
   .ba-home-title,.home-block-title{font-family:var(--font-display);font-weight:var(--fw-heading);font-size:var(--fs-stage-title);letter-spacing:var(--ls-tight);margin-bottom:16px}
   .home-block-title{margin-bottom:8px}
   .home-block-sub{font-size:var(--fs-ui);color:var(--muted);margin-bottom:16px}
@@ -371,6 +393,23 @@
   .home-tax-list li{font-size:var(--fs-ui);line-height:1.4}
   .home-tax-list li a{font-family:var(--font-display);font-weight:var(--fw-heading);color:var(--ink);text-decoration:none}
   .home-tax-list li a:hover{text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:3px}
+
+  /* Homepage taxonomy — sharp editorial table (№ · Category · Example tells) */
+  .tax-table{width:100%;border-collapse:collapse;margin-top:20px}
+  .tax-table th{text-align:left;font-family:var(--font-mono);font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:var(--fw-body);padding:0 16px 9px 0;border-bottom:var(--rule-mid)}
+  .tax-table td{padding:12px 16px 12px 0;border-bottom:var(--border-thin);vertical-align:baseline}
+  .tax-table tr:last-child td{border-bottom:none}
+  .tax-table tr:hover td{background:var(--card)}
+  .tt-n{width:38px;font-family:var(--font-mono);font-size:var(--fs-caption);color:var(--red);white-space:nowrap}
+  .tt-cat{width:32%}
+  .tt-cat a{font-family:var(--font-display);font-weight:var(--fw-heading);font-size:var(--fs-editor);letter-spacing:var(--ls-tight);color:var(--ink);text-decoration:none}
+  .tt-cat a:hover{text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:3px}
+  .tt-tells{font-family:var(--font-mono);font-size:11.5px;line-height:1.5;color:var(--muted)}
+  @media(max-width:600px){
+    .tax-table td.tt-tells,.tax-table th.tt-tells{display:none}
+  }
+  .tax-toggle{margin-top:16px;background:none;border:none;padding:0;font-family:var(--font-mono);font-size:var(--fs-meta);letter-spacing:.04em;text-transform:uppercase;color:var(--red);cursor:pointer}
+  .tax-toggle:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 
   .learn-cta{padding:44px 0 16px}
   .learn-cta .primary{display:inline-block;text-decoration:none;font-family:var(--font-display);font-size:var(--fs-editor)}
