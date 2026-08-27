@@ -218,7 +218,7 @@ export default function Humanize() {
             more often than in anything people write unassisted. I keep a running
             list in{" "}
             <a className="inline-link" href="/learn/detector-bait">
-              detector-bait vocabulary
+              ChatGPT / Claude speak
             </a>
             , grouped by what each word usually means, so you can swap them
             easily. Second, the{" "}
