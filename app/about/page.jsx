@@ -80,6 +80,14 @@ export default function About() {
           {TAXONOMY_BUILT.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
+          <p>
+            When I cite a figure — the share of new pages that are AI, the
+            reader-trust surveys — I keep the full sourcing in one place:{" "}
+            <a className="inline-link" href="/slop-equation">
+              the SLOP Equation
+            </a>
+            , where every number links to its primary source.
+          </p>
 
           <h3>What data is collected?</h3>
           <p>{DATA_COLLECTED}</p>

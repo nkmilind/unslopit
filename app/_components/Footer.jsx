@@ -6,6 +6,7 @@ export default function Footer() {
         UnSlopIt.ai · <a href="/">Home</a> ·{" "}
         <a href="/learn">What is AI slop?</a> ·{" "}
         <a href="/humanize-ai-text">How to humanize AI text</a> ·{" "}
+        <a href="/slop-equation">The SLOP Equation</a> ·{" "}
         <a href="/about">About</a>
       </div>
     </footer>
