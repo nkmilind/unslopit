@@ -22,6 +22,7 @@ export function GET() {
 - [Home](${SITE}/): Paste an AI draft and get a de-slopped version. Choose edit strength (light, medium, full), optionally add a natural human typo, and see both a redline and a clean result with a change list.
 - [What is AI slop?](${SITE}/learn): Defines AI slop and links to a page for each of the ${TAXONOMY.length} taxonomy categories.
 - [How to humanize AI text](${SITE}/humanize-ai-text): A 5-step method to edit an AI draft into human writing — cut empty claims, add specifics only you know, fix the rhythm, strip the tells, read it aloud — with a before/after worked example.
+- [The SLOP Equation](${SITE}/slop-equation): An interactive, sourced estimate of how much unedited AI text is published every day — SLOP = S × L × O × P (sources, length, AI output share, and the human-review pass rate). Embeddable at ${SITE}/slop-equation/embed; published under CC BY 4.0.
 - [About](${SITE}/about): What UnSlopIt does, how the free tier works, who maintains the taxonomy, and an FAQ.
 
 ## The AI slop taxonomy — one page per category
