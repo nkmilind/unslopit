@@ -34,26 +34,76 @@ function Term({ t }) {
   );
 }
 
-// Slop dripping from under the number: a wet source line and drops that swell
-// at the edge, then detach and fall.
-function DripField() {
-  const drips = Array.from({ length: 13 });
-  const n = drips.length;
+// Slop dripping like wet paint: a gooey filter fuses the edge and the blobs
+// into one liquid mass. Each blob swells at the edge, detaches, and falls off
+// the bottom (fading as it goes); it never rises back up. Big blobs.
+const BLOBS = [
+  { cx: 60, r: 19, dur: "3.4s", begin: "0s" },
+  { cx: 155, r: 22, dur: "4.2s", begin: "1.5s" },
+  { cx: 250, r: 17, dur: "3.7s", begin: "2.7s" },
+  { cx: 340, r: 23, dur: "4.0s", begin: "0.8s" },
+  { cx: 430, r: 18, dur: "4.4s", begin: "2.1s" },
+  { cx: 510, r: 20, dur: "3.6s", begin: "1.1s" },
+];
+
+function SlopDrip() {
   return (
-    <div className="drip-field" aria-hidden="true">
-      <span className="drip-edge" />
-      {drips.map((_, i) => (
-        <span
-          key={i}
-          className="drip"
-          style={{
-            left: `${8 + (i / (n - 1)) * 84}%`,
-            animationDelay: `${(i * 0.41) % 2.9}s`,
-            animationDuration: `${2.2 + ((i * 5) % 6) * 0.28}s`,
-          }}
-        />
-      ))}
-    </div>
+    <svg
+      className="slop-drip"
+      viewBox="0 0 560 96"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <defs>
+        <filter id="slopgoo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="b" />
+          <feColorMatrix
+            in="b"
+            mode="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -12"
+          />
+        </filter>
+        <linearGradient id="slopfill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#615b4a" />
+          <stop offset="1" stopColor="#35312a" />
+        </linearGradient>
+      </defs>
+      <g filter="url(#slopgoo)" fill="url(#slopfill)">
+        <rect x="6" y="0" width="548" height="16" />
+        {BLOBS.map((b, i) => (
+          <circle key={i} cx={b.cx} cy="16" r={b.r}>
+            {/* swell at the edge, then accelerate downward off the bottom */}
+            <animate
+              attributeName="cy"
+              values="16;26;110"
+              keyTimes="0;0.18;1"
+              calcMode="spline"
+              keySplines="0.3 0 0.7 1;0.45 0 0.9 0.55"
+              dur={b.dur}
+              begin={b.begin}
+              repeatCount="indefinite"
+            />
+            {/* invisible at the moment it resets to the top — no visible rise */}
+            <animate
+              attributeName="opacity"
+              values="1;1;1;0"
+              keyTimes="0;0.18;0.72;1"
+              dur={b.dur}
+              begin={b.begin}
+              repeatCount="indefinite"
+            />
+            <animate
+              attributeName="r"
+              values={`${b.r};${b.r};${(b.r * 0.55).toFixed(1)}`}
+              keyTimes="0;0.5;1"
+              dur={b.dur}
+              begin={b.begin}
+              repeatCount="indefinite"
+            />
+          </circle>
+        ))}
+      </g>
+    </svg>
   );
 }
 
@@ -85,6 +135,18 @@ export default function SlopCalculator({ embed = false }) {
 
   const core = (
     <>
+      <div className="eq-result">
+        <div className="eq-result-num">{fmt(perDay)}</div>
+        <SlopDrip />
+        <div className="eq-result-label">
+          unedited AI words published per day
+        </div>
+        <p className="eq-ticker">
+          Since you opened this page, <strong>{fmt(count)}</strong> unedited AI
+          words have gone out — about {fmt(perSecond)} a second.
+        </p>
+      </div>
+
       <div className="eq-formula">
         <span className="eq-lhs">SLOP</span>
         <span className="eq-eq">=</span>
@@ -96,7 +158,6 @@ export default function SlopCalculator({ embed = false }) {
         <span className="eq-op">×</span>
         <span className="eq-var eq-var-p">P</span>
       </div>
-      <p className="eq-legend">Unedited AI words published per day.</p>
 
       <div className="eq-terms">
         <Term t={SLOP.S} />
@@ -123,24 +184,10 @@ export default function SlopCalculator({ embed = false }) {
             aria-label="Pass rate — fraction published with no human review"
           />
           <p className="eq-slider-note">
-            The one term nobody measures. Drag it.
+            The term that publishers are too embarrassed to report. Drag it.
           </p>
         </div>
       </div>
-
-      <div className="eq-result">
-        <div className="eq-result-num">{fmt(perDay)}</div>
-        <div className="eq-result-label">
-          unedited AI words published per day
-        </div>
-        <DripField />
-      </div>
-
-      <p className="eq-ticker">
-        Since you opened this page,{" "}
-        <strong>{fmt(count)}</strong> unedited AI words have gone out — about{" "}
-        {fmt(perSecond)} a second.
-      </p>
     </>
   );
 

@@ -79,9 +79,11 @@ export default function SlopEquation() {
             Nobody knows exactly how much unedited AI text gets published every
             day, because no one measures it directly. So we estimated it. The
             SLOP Equation multiplies four numbers — how many pages go up, how
-            long they run, the share that&rsquo;s AI, and the share nobody
-            reviewed — into one figure. Three of the four are sourced; one is a
-            guess. This page is about text: not images, music, or video.
+            long they run, the share that&rsquo;s AI, and the share that got
+            published without any human review — into one figure. Three of the
+            four are sourced; one is a guess. There is plenty of slop imagery,
+            music, and video created, but this page is about slop of the text
+            variety.
           </p>
         </section>
 
@@ -92,35 +94,40 @@ export default function SlopEquation() {
         <section className="learn-section">
           <h2>How honest is this number?</h2>
           <p>
-            A figure this large and this round should make you suspicious, so
-            here is the honest version. This is an estimate, not a measurement.
-            S, L, and O rest on published figures; P — the share that goes out
-            with no human review — is the slider you just moved, because no one
-            publishes it. At the conservative 10% default the equation lands
-            near 814 million words a day. Drag P to 50% and it clears four
-            billion. Treat the shape as real and the last digit as decoration.
+            A figure this large and this round should make you suspicious. This
+            is an estimate, not a measurement. S, L, and O rest on published
+            figures; P — the share that goes out with no human review — is the
+            slider that lets you use your own factor because no one publishes
+            it. At the conservative 10% default the equation lands near 814
+            million words a day. At 50% it clears four billion. Treat it as an
+            estimate, as you would the Drake equation that estimates
+            extraterrestrial civilizations.
           </p>
         </section>
 
         <section className="learn-section">
           <h2>The factor nobody can measure</h2>
           <p>
-            Every term but one has a source. P — the fraction of AI text that
-            ships without a human ever reading it — has none, and it is the term
-            the whole result hinges on. Move it from 10% to 30% and the daily
-            total triples; nothing else in the equation swings the answer as
-            hard.
+            P — the fraction of AI text that ships without a human ever reading
+            it — is a difficult one to measure. One survey by{" "}
+            {ext(
+              "https://blog.hubspot.com/marketing/ai-in-content-marketing",
+              "HubSpot"
+            )}{" "}
+            found marketers published 7% of their content without review, albeit
+            self-reported. Move it from 10% to 30% and the daily total triples,
+            so the final estimate is very sensitive to this factor.
           </p>
           <p>
-            That is the point of the exercise, not a flaw in it. It is the
-            Drake-equation move: you build the formula less to get a number than
-            to find out which number is missing. Here the missing number is also
-            the thesis. Slop is not an AI problem; it is a review problem. The
-            tells that give AI writing away — the buzzwords, the hedging, the
-            restated conclusions — are what&rsquo;s left when no one edits. A
-            model can produce a clean draft. What it can&rsquo;t do is decide the
-            draft is done. Only a person does that, and P measures how often
-            nobody did.
+            That is the point of the exercise. It is the Drake-equation move: you
+            build the formula less to get an exact number than to find out which
+            number is missing or most sensitive to the estimate. Here the
+            variable P is also the thesis: slop is not merely a generative-AI
+            problem; it is a human-review problem. The tells that give AI writing
+            away — the buzzwords, the hedging — are what&rsquo;s left when no one
+            edits the writing. Only a human who cares about craft and quality can
+            decide when a draft is complete and edited for publication. P
+            measures how often nobody did that.
           </p>
         </section>
 
@@ -128,18 +135,34 @@ export default function SlopEquation() {
           <h2>Where the numbers come from</h2>
           <h3>S and L: the open web</h3>
           <p>
-            The web&rsquo;s daily output is easier to bound than to pin down. Wix
+            The web&rsquo;s daily output is best estimated as a range.{" "}
+            {ext("https://www.wix.com/blog/blogging-statistics-and-facts", "Wix")}{" "}
             alone reports on the order of 7.5 million new blog posts a day, each
-            its own page; global domain registrations add several hundred
-            thousand fresh homepages; and platform pages — product listings,
-            forum replies, localized news — run into the millions more. We use
-            ten million indexable pages a day as a deliberately round, defensible
-            S. For length, we weight three page types — long-form posts near
-            1,380 words (Orbit Media&rsquo;s survey and Digital Applied&rsquo;s
-            trackers put the average at 1,333&ndash;1,427), thin dynamic pages
-            near 250 (Yoast and WordPress VIP treat 200&ndash;300 as the floor),
-            and new homepages near 400 — into a blended 1,100. The AI share, O,
-            is the one hard number of the three:{" "}
+            its own page;{" "}
+            {ext(
+              "https://www.forbes.com/advisor/business/software/website-statistics/",
+              "global domain registrations"
+            )}{" "}
+            add several hundred thousand fresh homepages; and platform pages —
+            product listings, forum replies, localized news — run into the
+            millions more. We use ten million indexable pages a day as a
+            deliberately round, defensible S. For length, we weight three page
+            types — long-form posts near 1,380 words (
+            {ext(
+              "https://colorlib.com/wp/blogging-statistics/",
+              "Orbit Media’s survey"
+            )}{" "}
+            and{" "}
+            {ext(
+              "https://www.digitalapplied.com/blog/blogging-statistics-2026-data-points",
+              "Digital Applied’s trackers"
+            )}{" "}
+            put the average at 1,333&ndash;1,427), thin dynamic pages near 250 (
+            {ext("https://yoast.com/blog-post-word-count-seo/", "Yoast")} and{" "}
+            {ext("https://wpvip.com/blog/ideal-word-count/", "WordPress VIP")}{" "}
+            treat 200&ndash;300 as the floor), and new homepages near 400 — into
+            a blended 1,100. The AI share, O, is the one hard number of the
+            three:{" "}
             {ext(
               "https://ahrefs.com/blog/what-percentage-of-new-content-is-ai-generated/",
               "Ahrefs found in 2025"
@@ -160,7 +183,8 @@ export default function SlopEquation() {
               "https://www.economist.com/business/2025/10/16/sloponomics-who-wins-and-loses-in-the-ai-content-flood",
               "the Economist"
             )}
-            . The market is absorbing the volume and quietly penalizing the slop.
+            . The market is absorbing the volume and appears to be penalizing
+            the slop.
           </p>
 
           <h3>Academic writing</h3>
@@ -178,13 +202,13 @@ export default function SlopEquation() {
 
           <h3>Business and professional writing</h3>
           <p>
-            This is your daily reality and our thinnest evidence. LinkedIn posts,
-            cold emails, internal memos, marketing copy — the writing most likely
-            to be generated and least likely to be tracked. Public per-day
-            figures barely exist here, which is exactly why P matters: the
+            This is our daily reality. However, LinkedIn posts, cold emails,
+            internal memos, and marketing copy are the writing most likely to be
+            generated and least likely to be tracked. Public per-day figures
+            barely exist here, which is why it&rsquo;s best to estimate P: the
             professional web is where &ldquo;no one reviewed it&rdquo; is most
-            plausible and least documented. It&rsquo;s the section we most want
-            to strengthen — see the corrections route below.
+            plausible. It&rsquo;s the section we most want to strengthen — and one
+            of the reasons we built UnSlopIt.ai.
           </p>
 
           <h3>Reader trust</h3>
