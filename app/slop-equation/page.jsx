@@ -76,8 +76,10 @@ export default function SlopEquation() {
 
         <section className="learn-section learn-first">
           <p>
-            Nobody knows exactly how much unedited AI text gets published every
-            day, because no one measures it directly. So we estimated it. The
+            Plop! That&rsquo;s the sound of text slop hitting the internet every
+            second. Nobody knows exactly how much unedited AI text gets published
+            every day, because no one measures it directly. So we estimated it.
+            The
             SLOP Equation multiplies four numbers — how many pages go up, how
             long they run, the share that&rsquo;s AI, and the share that got
             published without any human review — into one figure. Three of the

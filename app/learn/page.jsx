@@ -48,11 +48,8 @@ const INTRO = [
   "This page is about AI slop in text. The same word gets used for AI images and video; the tells there are different.",
   <>
     Of course we’re all using these tools. They have certainly helped me
-    personally get past the dreaded blinking cursor on a blank page. A{" "}
-    <Src href="https://ahrefs.com/blog/what-percentage-of-new-content-is-ai-generated/">
-      2025 Ahrefs study
-    </Src>{" "}
-    found{" "}
+    personally get past the dreaded blinking cursor on a blank page. A 2025
+    Ahrefs study found{" "}
     <a className="inline-link" href="/slop-equation">
       74%
     </a>{" "}
@@ -95,11 +92,8 @@ const SECTIONS = [
       <>
         Everyone expects you to use AI. For your LinkedIn posts, for your
         important emails, for internal memos. And even for sales and marketing
-        materials.{" "}
-        <Src href="https://www.prnewswire.com/news-releases/consumers-assume-brand-content-is-ai-generated-new-cashew-research-reveals-what-builds-trust-instead-302843128.html">
-          Cashew
-        </Src>
-        , a market research company, found in their survey of 2,149 North
+        materials. Cashew, a market research company, found in their survey of
+        2,149 North
         American consumers that{" "}
         <a className="inline-link" href="/slop-equation">
           87%
@@ -115,11 +109,7 @@ const SECTIONS = [
     h: "What does AI slop cost you?",
     paras: [
       <>
-        A{" "}
-        <Src href="https://www.gartner.com/en/newsroom/press-releases/2026-03-16-gartner-marketing-survey-finds-50-percent-of-consumers-prefer-brands-that-avoid-using-genai-in-consumer-facing-content0">
-          Gartner survey
-        </Src>{" "}
-        of 1,539 US consumers in October 2025 found that{" "}
+        A Gartner survey of 1,539 US consumers in October 2025 found that{" "}
         <a className="inline-link" href="/slop-equation">
           50%
         </a>{" "}
