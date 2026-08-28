@@ -263,6 +263,9 @@ export default function Home() {
             <a className="head-nav-link" href="/humanize-ai-text">
               Guide
             </a>
+            <a className="head-nav-link" href="/slop-equation">
+              Data
+            </a>
             {user && (
               <div className="head-note">
                 <span className="auth-state">

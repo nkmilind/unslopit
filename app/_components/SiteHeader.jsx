@@ -15,6 +15,9 @@ export default function SiteHeader({ action = { href: "/", label: "Try it →" }
           <a className="head-nav-link" href="/humanize-ai-text">
             Guide
           </a>
+          <a className="head-nav-link" href="/slop-equation">
+            Data
+          </a>
           <a className="head-link" href={action.href}>
             {action.label}
           </a>

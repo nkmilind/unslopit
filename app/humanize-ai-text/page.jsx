@@ -116,7 +116,11 @@ export default function Humanize() {
             helped us fix the rest. Now we have Large Language Models that
             generate typo-free, grammatically correct writing in seconds. The
             only problem: it’s sterile. It smells AI-generated. And it is making
-            us suspicious of everything we read online.
+            us suspicious of everything we read online — understandably, when{" "}
+            <a className="inline-link" href="/slop-equation">
+              most new web pages now contain AI text
+            </a>
+            .
           </p>
           <p>
             Which model produced the draft barely matters. ChatGPT, Claude, and
