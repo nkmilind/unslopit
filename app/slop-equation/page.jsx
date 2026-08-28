@@ -76,7 +76,7 @@ export default function SlopEquation() {
 
         <section className="learn-section learn-first">
           <p>
-            Plop! That&rsquo;s the sound of text slop hitting the internet every
+            PLOP! That&rsquo;s the sound of text slop hitting the internet every
             second. Nobody knows exactly how much unedited AI text gets published
             every day, because no one measures it directly. So we estimated it.
             The
@@ -98,10 +98,11 @@ export default function SlopEquation() {
           <p>
             A figure this large and this round should make you suspicious. This
             is an estimate, not a measurement. S, L, and O rest on published
-            figures; P — the share that goes out with no human review — is the
+            figures; P — the share that goes out with no human review — has a
             slider that lets you use your own factor because no one publishes
-            it. At the conservative 10% default the equation lands near 814
-            million words a day. At 50% it clears four billion. Treat it as an
+            it. At the conservative 10% default the equation estimates 814
+            million unedited AI-generated words a day. At 50% it spikes to four
+            billion. Treat it as an
             estimate, as you would the Drake equation that estimates
             extraterrestrial civilizations.
           </p>
