@@ -219,5 +219,5 @@ function DetectorBaitArticle() {
 
 // Registry: category id -> article component.
 export const ARTICLES = {
-  "detector-bait": DetectorBaitArticle,
+  "chatgpt-words": DetectorBaitArticle,
 };
