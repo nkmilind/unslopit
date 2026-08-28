@@ -51,17 +51,26 @@ export default function About() {
           <h1>Text that sounds human.</h1>
           <p className="lede">
             UnSlopIt takes anything an AI drafted and strips the tells that give
-            it away: the buzzwords, the stock framings, the fake balance. Your
-            facts and meaning stay intact. Paste a draft, pick how aggressively
-            to edit, and get back a clean version plus a red-pen list of every
-            change and why it was made. The method behind it is written up in
-            full:{" "}
+            it away. Things we remove without remorse:
+          </p>
+          <ul className="about-strip">
+            <li>&ldquo;In today&rsquo;s fast-paced world&hellip;&rdquo;</li>
+            <li>&ldquo;It&rsquo;s not just X. It&rsquo;s Y.&rdquo;</li>
+            <li>&ldquo;The key takeaway?&rdquo;</li>
+            <li>&ldquo;Here&rsquo;s the thing&hellip;&rdquo;</li>
+          </ul>
+          <p className="lede">
+            If you used all four today, we&rsquo;re not judging. Too much.
+          </p>
+          <p className="lede">
+            Paste a draft, pick how aggressively to edit, and get back a clean
+            version plus a red-pen list of every change and why it was made. The
+            method behind it is written up in full:{" "}
             <a className="inline-link" href="/humanize-ai-text">
               how to humanize AI text
             </a>
-            . The first three edits are free, with
-            three more once you register your email. Curious what actually
-            counts as slop?{" "}
+            . The first three edits are free, with three more once you register
+            your email. Curious what actually counts as slop?{" "}
             <a className="inline-link" href="/learn">
               Read the field guide &rarr;
             </a>

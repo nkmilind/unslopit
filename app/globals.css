@@ -289,6 +289,9 @@
   .learn-hero{padding:56px 0 8px}
   .learn-hero h1{font-family:var(--font-display);font-weight:var(--fw-display);font-size:var(--fs-h1-learn);line-height:1.02;letter-spacing:-.02em;font-variation-settings:var(--fraunces-display)}
   .learn .lede{margin-top:20px;font-size:var(--fs-lede);line-height:var(--lh-body);color:var(--ink)}
+  /* /about — the "things we remove" list, struck through in proofreader's red */
+  .about-strip{list-style:none;display:grid;gap:9px;margin:14px 0 20px;max-width:52ch}
+  .about-strip li{font-family:var(--font-body);font-size:18px;line-height:1.4;color:var(--muted);text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;text-decoration-skip-ink:none}
   .slop-cloud{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 22px;padding:52px 0 40px;text-align:center}
   .slop-cloud span{font-family:var(--font-display);line-height:1.05;letter-spacing:var(--ls-tight)}
   .slop-cloud .sc-strike{text-decoration:line-through;text-decoration-thickness:var(--bw-strike);text-decoration-skip-ink:none}
