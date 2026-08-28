@@ -221,7 +221,7 @@ export default function Humanize() {
             seamless, tapestry — the vocabulary that shows up in AI output far
             more often than in anything people write unassisted. I keep a running
             list in{" "}
-            <a className="inline-link" href="/learn/detector-bait">
+            <a className="inline-link" href="/learn/chatgpt-words">
               ChatGPT / Claude speak
             </a>
             , grouped by what each word usually means, so you can swap them
