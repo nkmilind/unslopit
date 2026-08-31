@@ -6,18 +6,61 @@ import { trackConversion } from "../../lib/analytics";
 import SiteHeader from "../_components/SiteHeader";
 import Footer from "../_components/Footer";
 
-function renderWithTypo(text, typo) {
-  if (!typo || typeof typo.index !== "number" || typo.index < 0) return text;
-  const end = typo.index + (typo.word ? typo.word.length : 0);
-  return (
-    <>
-      {text.slice(0, typo.index)}
-      <span className="typo-mark" title="A human typo we slipped in">
-        {text.slice(typo.index, end)}
-      </span>
-      {text.slice(end)}
-    </>
-  );
+// Render the rewritten text with the human typo marked and any "flagged" tells
+// highlighted in yellow — tells the editor detected but left in place because
+// removing them would have changed the author's meaning.
+function renderMarked(text, typo, flagged) {
+  const marks = [];
+  (Array.isArray(flagged) ? flagged : []).forEach((f) => {
+    if (!f || typeof f.text !== "string" || !f.text) return;
+    const start = text.indexOf(f.text);
+    if (start >= 0) {
+      marks.push({ start, end: start + f.text.length, type: "flag", why: f.why });
+    }
+  });
+  if (typo && typeof typo.index === "number" && typo.index >= 0) {
+    const end = typo.index + (typo.word ? typo.word.length : 0);
+    marks.push({ start: typo.index, end, type: "typo" });
+  }
+  if (marks.length === 0) return text;
+
+  // Sort by position and drop any overlaps (keep the earlier mark).
+  marks.sort((a, b) => a.start - b.start);
+  const kept = [];
+  let lastEnd = 0;
+  for (const m of marks) {
+    if (m.start >= lastEnd) {
+      kept.push(m);
+      lastEnd = m.end;
+    }
+  }
+
+  const out = [];
+  let cursor = 0;
+  kept.forEach((m, i) => {
+    if (m.start > cursor) out.push(text.slice(cursor, m.start));
+    const seg = text.slice(m.start, m.end);
+    if (m.type === "flag") {
+      out.push(
+        <mark
+          className="flag-mark"
+          key={`f${i}`}
+          title={m.why || "Flagged tell — left to preserve your meaning"}
+        >
+          {seg}
+        </mark>
+      );
+    } else {
+      out.push(
+        <span className="typo-mark" key={`t${i}`} title="A human typo we slipped in">
+          {seg}
+        </span>
+      );
+    }
+    cursor = m.end;
+  });
+  if (cursor < text.length) out.push(text.slice(cursor));
+  return <>{out}</>;
 }
 
 export default function ResultPage() {
@@ -33,7 +76,8 @@ export default function ResultPage() {
         const d = JSON.parse(raw);
         setData(d);
         setStatus("ready");
-        if (d.typo) setViewMode("clean");
+        if (d.typo || (Array.isArray(d.flagged) && d.flagged.length))
+          setViewMode("clean");
         trackConversion("edit"); // the "edit completed" micro-conversion
       } else {
         setStatus("empty");
@@ -135,7 +179,7 @@ export default function ResultPage() {
                     </div>
                   ) : (
                     <div className="out-body">
-                      {renderWithTypo(data.rewritten, data.typo)}
+                      {renderMarked(data.rewritten, data.typo, data.flagged)}
                     </div>
                   )}
                 </div>
@@ -158,6 +202,14 @@ export default function ResultPage() {
                   </div>
                 )}
               </div>
+
+              {data.flagged?.length > 0 && (
+                <p className="flag-legend">
+                  <mark className="flag-mark">Highlighted</mark> tells were
+                  flagged but left in place — removing them would change your
+                  meaning. Edit these by hand if you want them gone.
+                </p>
+              )}
 
               <p className="result-guide-note">
                 Want to do this yourself?{" "}

@@ -228,6 +228,10 @@
   .out-panel{background:var(--card);border:var(--border-thin);border-radius:var(--radius)}
   .out-body{padding:20px;font-family:var(--font-body);font-size:var(--fs-editor);line-height:var(--lh-output);white-space:pre-wrap}
   .typo-mark{text-decoration:underline wavy var(--red);text-decoration-skip-ink:none;text-underline-offset:3px;cursor:help}
+  /* a tell the editor detected but left in place (removing it would change meaning) */
+  .flag-mark{background:var(--hi);color:var(--ink);padding:0 2px;border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone;cursor:help}
+  .flag-legend{margin-top:16px;font-size:var(--fs-ui-sm);line-height:1.6;color:var(--muted)}
+  .flag-legend .flag-mark{color:var(--ink)}
   .changes{list-style:none}
   .changes li{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border-bottom:var(--border-thin);font-size:var(--fs-ui-sm)}
   .changes li:last-child{border-bottom:none}
