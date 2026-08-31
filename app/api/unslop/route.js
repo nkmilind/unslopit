@@ -194,6 +194,7 @@ export async function POST(request) {
     return Response.json({
       rewritten,
       changes: Array.isArray(result.changes) ? result.changes.slice(0, 8) : [],
+      flagged: Array.isArray(result.flagged) ? result.flagged.slice(0, 8) : [],
       words,
       tier,
       used: bypass ? 0 : newUsed,
