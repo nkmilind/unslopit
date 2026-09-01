@@ -63,11 +63,12 @@ function renderMarked(text, typo, flagged) {
   return <>{out}</>;
 }
 
-// Render the word-diff redline, highlighting flagged tells in yellow. Works at
-// the token level so a flag stays highlighted even when the diff splits it
-// across a change/line boundary. `flaggedSet` holds the indices, in the
-// rewritten token stream (same + ins tokens), that fall inside a flagged phrase.
-function renderRedline(ops, flaggedSet) {
+// Render the word-diff redline, highlighting flagged tells in yellow and the
+// injected human typo with a wavy underline. Works at the token level over the
+// rewritten token stream (same + ins tokens): `flaggedSet` holds the indices
+// inside a flagged phrase, `typoIdx` the single token that carries the typo —
+// so both survive even when the diff splits or shifts text.
+function renderRedline(ops, flaggedSet, typoIdx) {
   const out = [];
   let idx = 0; // position in the rewritten token stream
   ops.forEach((op, oi) => {
@@ -83,28 +84,32 @@ function renderRedline(ops, flaggedSet) {
       );
       return; // deleted tokens aren't in the rewrite — don't advance idx
     }
-    const cls = op.type === "ins" ? "rl-ins" : "";
+    const insCls = op.type === "ins" ? "rl-ins" : "";
     const tokens = op.text.split(" ").filter(Boolean);
-    const start = idx;
-    let g = 0;
-    while (g < tokens.length) {
-      const on = flaggedSet.has(start + g);
-      let j = g + 1;
-      while (j < tokens.length && flaggedSet.has(start + j) === on) j++;
-      const chunk = tokens.slice(g, j).join(" ") + " ";
-      const inner = cls ? <span className={cls}>{chunk}</span> : chunk;
+    tokens.forEach((t, ti) => {
+      const isFlag = flaggedSet.has(idx);
+      const isTypo = idx === typoIdx;
+      idx++;
+      const key = `${oi}-${ti}`;
+      const txt = t + " ";
+      let inner = insCls ? <span className={insCls}>{txt}</span> : txt;
+      if (isTypo) {
+        inner = (
+          <span className="typo-mark" title="A human typo we slipped in">
+            {inner}
+          </span>
+        );
+      }
       out.push(
-        on ? (
-          <mark className="flag-mark" key={`${oi}-${g}`}>
+        isFlag ? (
+          <mark className="flag-mark" key={key}>
             {inner}
           </mark>
         ) : (
-          <span key={`${oi}-${g}`}>{inner}</span>
+          <span key={key}>{inner}</span>
         )
       );
-      g = j;
-    }
-    idx = start + tokens.length;
+    });
   });
   return out;
 }
@@ -172,6 +177,19 @@ export default function ResultPage() {
     }
     return set;
   }, [data, diffOps]);
+
+  // The single rewritten-token index that carries the injected typo (or -1),
+  // derived from its character position — so the redline can mark it too.
+  const typoTokenIdx = useMemo(() => {
+    const t = data?.typo;
+    if (!t || typeof t.index !== "number" || t.index < 0) return -1;
+    const before = (data.rewritten || "").slice(0, t.index);
+    return before
+      .replace(/\r/g, "")
+      .replace(/\n/g, " ⏎ ")
+      .split(/[ \t]+/)
+      .filter((x) => x && x !== "⏎").length;
+  }, [data]);
 
   async function copyResult() {
     try {
@@ -241,7 +259,7 @@ export default function ResultPage() {
                   </div>
                   {viewMode === "redline" ? (
                     <div className="out-body">
-                      {renderRedline(diffOps, flaggedTokenSet)}
+                      {renderRedline(diffOps, flaggedTokenSet, typoTokenIdx)}
                     </div>
                   ) : (
                     <div className="out-body">
