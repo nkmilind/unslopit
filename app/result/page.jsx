@@ -63,6 +63,52 @@ function renderMarked(text, typo, flagged) {
   return <>{out}</>;
 }
 
+// Render the word-diff redline, highlighting flagged tells in yellow. Works at
+// the token level so a flag stays highlighted even when the diff splits it
+// across a change/line boundary. `flaggedSet` holds the indices, in the
+// rewritten token stream (same + ins tokens), that fall inside a flagged phrase.
+function renderRedline(ops, flaggedSet) {
+  const out = [];
+  let idx = 0; // position in the rewritten token stream
+  ops.forEach((op, oi) => {
+    if (op.type === "break") {
+      out.push(<br key={`b${oi}`} />);
+      return;
+    }
+    if (op.type === "del") {
+      out.push(
+        <span key={`d${oi}`} className="rl-del">
+          {op.text}{" "}
+        </span>
+      );
+      return; // deleted tokens aren't in the rewrite — don't advance idx
+    }
+    const cls = op.type === "ins" ? "rl-ins" : "";
+    const tokens = op.text.split(" ").filter(Boolean);
+    const start = idx;
+    let g = 0;
+    while (g < tokens.length) {
+      const on = flaggedSet.has(start + g);
+      let j = g + 1;
+      while (j < tokens.length && flaggedSet.has(start + j) === on) j++;
+      const chunk = tokens.slice(g, j).join(" ") + " ";
+      const inner = cls ? <span className={cls}>{chunk}</span> : chunk;
+      out.push(
+        on ? (
+          <mark className="flag-mark" key={`${oi}-${g}`}>
+            {inner}
+          </mark>
+        ) : (
+          <span key={`${oi}-${g}`}>{inner}</span>
+        )
+      );
+      g = j;
+    }
+    idx = start + tokens.length;
+  });
+  return out;
+}
+
 export default function ResultPage() {
   const [data, setData] = useState(null); // { rewritten, changes, typo, draft }
   const [status, setStatus] = useState("loading"); // loading | ready | empty
@@ -91,6 +137,43 @@ export default function ResultPage() {
     () => (data ? wordDiff(data.draft, data.rewritten) : []),
     [data]
   );
+
+  // Which tokens in the rewritten stream fall inside a flagged phrase, so the
+  // redline can highlight flags the same way the clean view does.
+  const flaggedTokenSet = useMemo(() => {
+    const set = new Set();
+    if (!data?.flagged?.length) return set;
+    const toks = [];
+    for (const op of diffOps) {
+      if (op.type === "same" || op.type === "ins") {
+        for (const t of op.text.split(" ")) if (t) toks.push(t);
+      }
+    }
+    const tok = (s) =>
+      (s || "")
+        .replace(/\r/g, "")
+        .replace(/\n/g, " ")
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+    for (const f of data.flagged) {
+      const seq = tok(f && f.text);
+      if (!seq.length) continue;
+      for (let i = 0; i + seq.length <= toks.length; i++) {
+        let ok = true;
+        for (let k = 0; k < seq.length; k++)
+          if (toks[i + k] !== seq[k]) {
+            ok = false;
+            break;
+          }
+        if (ok) {
+          for (let k = 0; k < seq.length; k++) set.add(i + k);
+          break;
+        }
+      }
+    }
+    return set;
+  }, [data, diffOps]);
 
   async function copyResult() {
     try {
@@ -160,22 +243,7 @@ export default function ResultPage() {
                   </div>
                   {viewMode === "redline" ? (
                     <div className="out-body">
-                      {diffOps.map((op, i) => {
-                        if (op.type === "break") return <br key={i} />;
-                        if (op.type === "del")
-                          return (
-                            <span key={i} className="rl-del">
-                              {op.text}{" "}
-                            </span>
-                          );
-                        if (op.type === "ins")
-                          return (
-                            <span key={i} className="rl-ins">
-                              {op.text}{" "}
-                            </span>
-                          );
-                        return <span key={i}>{op.text} </span>;
-                      })}
+                      {renderRedline(diffOps, flaggedTokenSet)}
                     </div>
                   ) : (
                     <div className="out-body">
