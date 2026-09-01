@@ -122,8 +122,6 @@ export default function ResultPage() {
         const d = JSON.parse(raw);
         setData(d);
         setStatus("ready");
-        if (d.typo || (Array.isArray(d.flagged) && d.flagged.length))
-          setViewMode("clean");
         trackConversion("edit"); // the "edit completed" micro-conversion
       } else {
         setStatus("empty");
