@@ -12,7 +12,12 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { buildSystemPrompt, DEFAULT_LEVEL, LEVELS } from "../lib/slop-prompt.js";
+import {
+  buildSystemPrompt,
+  DEFAULT_LEVEL,
+  LEVELS,
+  UNSLOP_TOOL,
+} from "../lib/slop-prompt.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..");
@@ -41,26 +46,20 @@ async function unslop(text, system) {
       model: MODEL,
       max_tokens: 4000,
       system,
+      tools: [UNSLOP_TOOL],
+      tool_choice: { type: "tool", name: UNSLOP_TOOL.name },
       messages: [{ role: "user", content: `TEXT TO UNSLOP:\n\n${text}` }],
     }),
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data?.error?.message || `API ${res.status}`);
-  const raw = (data.content || [])
-    .filter((b) => b.type === "text")
-    .map((b) => b.text)
-    .join("\n");
-  const cleaned = raw.replace(/```json|```/g, "").trim();
-  try {
-    return JSON.parse(cleaned);
-  } catch {
-    // Model sometimes appends a note after the JSON (esp. on already-clean
-    // input) — extract the first {...} object. Mirrors the route's tolerance.
-    const s = cleaned.indexOf("{");
-    const e = cleaned.lastIndexOf("}");
-    if (s >= 0 && e > s) return JSON.parse(cleaned.slice(s, e + 1));
-    throw new Error("no JSON object in model response");
+  const call = (data.content || []).find(
+    (b) => b.type === "tool_use" && b.name === UNSLOP_TOOL.name
+  );
+  if (!call || typeof call.input !== "object") {
+    throw new Error("no unslop_result tool call in model response");
   }
+  return call.input;
 }
 
 async function pool(items, worker, n) {

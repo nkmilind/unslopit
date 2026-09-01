@@ -1,6 +1,6 @@
 import { NextResponse, after } from "next/server";
 import { cookies } from "next/headers";
-import { buildSystemPrompt } from "../../../lib/slop-prompt";
+import { buildSystemPrompt, UNSLOP_TOOL } from "../../../lib/slop-prompt";
 import { logPatternCounts } from "../../../lib/pattern-log";
 import { injectTypo } from "../../../lib/typo";
 import {
@@ -37,6 +37,8 @@ async function callClaude(text, system) {
       model: MODEL,
       max_tokens: 4000,
       system,
+      tools: [UNSLOP_TOOL],
+      tool_choice: { type: "tool", name: UNSLOP_TOOL.name },
       messages: [{ role: "user", content: `TEXT TO UNSLOP:\n\n${text}` }],
     }),
   });
@@ -46,12 +48,15 @@ async function callClaude(text, system) {
     throw new Error(data?.error?.message || `Anthropic API error (${res.status})`);
   }
 
-  const raw = (data.content || [])
-    .filter((b) => b.type === "text")
-    .map((b) => b.text)
-    .join("\n");
-
-  return JSON.parse(raw.replace(/```json|```/g, "").trim());
+  // Forced tool_choice guarantees a tool_use block whose `input` the API has
+  // already parsed and validated against the schema — no JSON.parse of free text.
+  const call = (data.content || []).find(
+    (b) => b.type === "tool_use" && b.name === UNSLOP_TOOL.name
+  );
+  if (!call || typeof call.input !== "object" || call.input === null) {
+    throw new Error("Model did not return the unslop_result tool call.");
+  }
+  return call.input;
 }
 
 export async function POST(request) {
@@ -147,12 +152,9 @@ export async function POST(request) {
     let result;
     try {
       result = await callClaude(text, system);
-    } catch (firstErr) {
-      if (firstErr instanceof SyntaxError) {
-        result = await callClaude(text, system);
-      } else {
-        throw firstErr;
-      }
+    } catch {
+      // One retry for a transient failure (5xx / overload, or a missing tool call).
+      result = await callClaude(text, system);
     }
 
     if (typeof result?.rewritten !== "string") {
