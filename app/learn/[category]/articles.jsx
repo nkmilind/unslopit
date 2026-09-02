@@ -229,8 +229,40 @@ const EMOJI_WHY = [
 ];
 
 const EMOJI_GUILTIEST =
-  "The repeat offenders are a narrow, recognizable set — the ChatGPT / Claude / Gemini shortlist:";
-const EMOJI_GUILTIEST_ROW = "🚀 💡 📊 ✅ ✨ 📌";
+  "The most recognizable ChatGPT | Claude | Gemini emojis list:";
+const EMOJI_GUILT_ROWS = [
+  [
+    "🚀",
+    "Launch and announcement headings — “🚀 Introducing,” “🚀 Getting Started,” any release note",
+  ],
+  [
+    "✨",
+    "Anything framed as new or improved — feature lists, “✨ What’s New,” quality claims",
+  ],
+  ["✅", "Used as a bullet marker on lists of features, benefits, or completed items"],
+  [
+    "💡",
+    "Tips, insights, and “pro tip” callouts — the visual form of insight announcement",
+  ],
+  [
+    "📊",
+    "Any mention of data, metrics, analytics, or results, regardless of whether a number follows",
+  ],
+  ["🎯", "Goals, objectives, target audiences — “🎯 Who this is for”"],
+  [
+    "🔑",
+    "“Key takeaways,” key points, key benefits — a pun the model reaches for constantly",
+  ],
+  ["📌", "Pinned or important items; summary boxes at the top or bottom of a post"],
+  [
+    "🔥",
+    "Trending, popular, or high-performing things; heavy in LinkedIn and marketing copy",
+  ],
+  [
+    "🙌",
+    "Sign-offs and celebratory closings, often paired with chatbot residue (“Hope this helps! 🙌”)",
+  ],
+];
 
 const EMOJI_WORST =
   "Emoji inflation isn’t uniform — it concentrates in headings, list markers, LinkedIn posts, release notes, and README files. The exhibit above is a README, and that’s typical: these are walls of text, so the model takes it upon itself to “improve readability” with emoji instead of real formatting and sectioning.";
@@ -299,9 +331,24 @@ function EmojiInflationArticle({ c }) {
       </section>
 
       <section className="learn-section">
-        <h2>The guiltiest emoji</h2>
+        <h2>The guiltiest emojis</h2>
         <p>{EMOJI_GUILTIEST}</p>
-        <p className="emoji-exhibit">{EMOJI_GUILTIEST_ROW}</p>
+        <table className="emoji-table">
+          <thead>
+            <tr>
+              <th>Emoji</th>
+              <th>Where it shows up</th>
+            </tr>
+          </thead>
+          <tbody>
+            {EMOJI_GUILT_ROWS.map(([e, d], i) => (
+              <tr key={i}>
+                <td className="emoji-cell">{e}</td>
+                <td>{d}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </section>
 
       <section className="learn-section">
