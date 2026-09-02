@@ -319,6 +319,9 @@
   .art-ba-after{color:var(--red)}
   .art-ba-col p{font-size:var(--fs-body);line-height:1.6;color:var(--ink);margin:0}
   .art-ba-note{font-size:var(--fs-ui-sm);color:var(--muted);font-style:italic;margin:0 2px 8px}
+  .ba-multiline{white-space:pre-line}
+  /* Emoji-inflation exhibit: the offending emoji shown large, as a specimen row */
+  .emoji-exhibit{font-size:26px;line-height:1.7;letter-spacing:.14em;margin:12px 0 2px}
   .art-habits{margin:8px 0 0;padding-left:22px;display:grid;gap:14px}
   .art-habits li{font-size:var(--fs-prose);line-height:var(--lh-output);color:var(--muted)}
   /* Evolving-draft snippets in the humanize guide's worked example */

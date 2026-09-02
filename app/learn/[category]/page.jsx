@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { TAXONOMY } from "../../../lib/taxonomy";
-import { ARTICLES } from "./articles";
+import { ARTICLES, ARTICLE_HAS_OWN_EXAMPLE } from "./articles";
 import SiteHeader from "../../_components/SiteHeader";
 import Footer from "../../_components/Footer";
 
@@ -166,8 +166,8 @@ export default async function Spoke({ params }) {
 
         {Article ? (
           <>
-            {exampleSection}
-            <Article />
+            {ARTICLE_HAS_OWN_EXAMPLE.has(c.id) ? null : exampleSection}
+            <Article c={c} />
           </>
         ) : (
           <>

@@ -217,7 +217,127 @@ function DetectorBaitArticle() {
   );
 }
 
+// ── Emoji inflation ──────────────────────────────────────────────────────
+
+const EMOJI_WILD =
+  "Asked to reformat a README, GitHub Copilot expanded it from 13 lines to 163 and added twelve emoji — one per section. In its own pull-request description it filed them under the heading “Enhanced Visual Appeal,” explaining that they make sections easy to identify. That’s the AI describing its own emoji inflation — a better exhibit than any human example.";
+const EMOJI_WILD_ROW = "📋 🎯 ✨ 🛠 📦 🚀 ⚙️ 🏃 📚 🏗 🤝 📄";
+
+const EMOJI_WHY = [
+  "Chat and social interfaces taught the models that emoji read as energy and structure, so they get stapled onto headings, bullets, and announcements by default. Reinforcement learning from human feedback (RLHF) rewards output that reads as “friendly, enthusiastic, and clear,” which nudges models to overcompensate with icons like 🚀, 💡, and 📊 — and raters skimming quickly may have scored scannable-looking text higher. It’s not quite ALL CAPS, but it’s close: the visual cousin of exclamation inflation, with the same effect of making your message sound unserious or over-decorated.",
+  "Taste aside, there’s an accessibility argument too. Screen readers announce every emoji aloud. A bulleted list that uses ✅ as its markers reads as “white heavy check mark” before every item; the 🚀 in a heading becomes “rocket.” That turns emoji inflation from a style quibble into a usability defect — a much harder thing to wave off.",
+];
+
+const EMOJI_GUILTIEST =
+  "The repeat offenders are a narrow, recognizable set — the ChatGPT / Claude / Gemini shortlist:";
+const EMOJI_GUILTIEST_ROW = "🚀 💡 📊 ✅ ✨ 📌";
+
+const EMOJI_WORST =
+  "Emoji inflation isn’t uniform — it concentrates in headings, list markers, LinkedIn posts, release notes, and README files. The exhibit above is a README, and that’s typical: these are walls of text, so the model takes it upon itself to “improve readability” with emoji instead of real formatting and sectioning.";
+
+const EMOJI_WHEN_FINE =
+  "We’re not arguing for a total ban. Emoji are fine in a personal text or a Slack message — a genuine form of expression that does its job in the right context. But drop them into a serious memo, or pile too many into an email, and you lose the reader. The test we apply when editing: does the emoji carry meaning the words don’t, or is it just decorating text that already says the thing? If it’s the latter, cut it.";
+
+const EMOJI_HANDLES =
+  "UnSlopIt flags emoji inflation and rewrites around it — cutting the decorative and per-item emoji, and the scaffolding they prop up, while keeping your meaning, facts, and voice. You see exactly what changed, as a redline plus a clean version.";
+
+const EMOJI_BEFORE = `Meet IdeaWeaver, your new AI agent for content creation.
+Just type: ⌨️ ideaweaver agent linkedin_post --topic "AI trends in 2025"
+📌 That's it. One command, and a high-quality, engaging post is ready for LinkedIn.
+✅ Completely free
+✅ First tries your local LLM via Ollama
+✅ Falls back to OpenAI if needed
+No brainstorming. No writer's block. Just results.
+💡 Whether you're a founder, developer, or content creator, IdeaWeaver makes it ridiculously easy to build a personal brand with AI. Try it out today. It doesn't get simpler than this.`;
+
+const EMOJI_AFTER = `Meet IdeaWeaver, an AI agent for content creation.
+Type: ideaweaver agent linkedin_post --topic "AI trends in 2025"
+One command and a post is ready for LinkedIn. It's free — it tries your local LLM via Ollama first, then falls back to OpenAI if needed. No brainstorming, no writer's block.
+IdeaWeaver makes it easy to build a personal brand with AI. Try it today.`;
+
+function EmojiInflationArticle({ c }) {
+  return (
+    <div className="article">
+      <section className="learn-section">
+        <h2>What it looks like</h2>
+        <p>The patterns that give it away:</p>
+        <p className="tax-tells">
+          {c.tells.map((t, j) => (
+            <span className="tell" key={j}>
+              {t}
+            </span>
+          ))}
+        </p>
+      </section>
+
+      <section className="learn-section example">
+        <h2>In the wild</h2>
+        <p>{EMOJI_WILD}</p>
+        <p
+          className="emoji-exhibit"
+          aria-label="Twelve section-heading emoji from the README"
+        >
+          {EMOJI_WILD_ROW}
+        </p>
+        <p className="ex-cite">
+          <a
+            href="https://github.blog/news-insights/product-news/universe-2024-previews-releases/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub ↗
+          </a>{" "}
+          — product-news blog post
+        </p>
+      </section>
+
+      <section className="learn-section">
+        <h2>Why AI produces it</h2>
+        {EMOJI_WHY.map((p, k) => (
+          <p key={k}>{p}</p>
+        ))}
+      </section>
+
+      <section className="learn-section">
+        <h2>The guiltiest emoji</h2>
+        <p>{EMOJI_GUILTIEST}</p>
+        <p className="emoji-exhibit">{EMOJI_GUILTIEST_ROW}</p>
+      </section>
+
+      <section className="learn-section">
+        <h2>Where it’s worst</h2>
+        <p>{EMOJI_WORST}</p>
+      </section>
+
+      <section className="learn-section">
+        <h2>When emoji are fine</h2>
+        <p>{EMOJI_WHEN_FINE}</p>
+      </section>
+
+      <section className="learn-section">
+        <h2>How UnSlopIt handles it</h2>
+        <p>{EMOJI_HANDLES}</p>
+        <div className="art-ba">
+          <div className="art-ba-col">
+            <span className="art-ba-label art-ba-before">Before</span>
+            <p className="ba-multiline">{EMOJI_BEFORE}</p>
+          </div>
+          <div className="art-ba-col">
+            <span className="art-ba-label art-ba-after">After</span>
+            <p className="ba-multiline">{EMOJI_AFTER}</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 // Registry: category id -> article component.
 export const ARTICLES = {
   "chatgpt-words": DetectorBaitArticle,
+  "emoji-inflation": EmojiInflationArticle,
 };
+
+// Categories whose article renders its own "In the wild" exhibit, so the spoke
+// template skips the default example section for them.
+export const ARTICLE_HAS_OWN_EXAMPLE = new Set(["emoji-inflation"]);
