@@ -409,5 +409,32 @@
       "agent"
     ],
     "note": "Rewrite the colon-reveal as a plain sentence; keep the substance."
+  },
+  {
+    "id": "mannered-prose",
+    "type": "slop",
+    "label": "mannered · flourish for statement",
+    "input": "Trust is a garden worth tending, and honest status updates earn their keep every sprint.",
+    "mustCut": [
+      "garden worth tending",
+      "earn their keep"
+    ],
+    "mustKeep": [
+      "trust",
+      "status updates"
+    ],
+    "note": "Decorative metaphors flattened to literal claims; the point (trust, honest updates) survives."
+  },
+  {
+    "id": "clean-live-metaphor",
+    "type": "clean",
+    "label": "FP · load-bearing metaphor stays",
+    "input": "The codebase is a haunted house — every fix wakes a bug two rooms over.",
+    "mustCut": [],
+    "mustKeep": [
+      "haunted house",
+      "bug"
+    ],
+    "note": "Vivid metaphor doing real work in the author's voice. Keep it; REVIEW if flattened to 'the code is fragile' (auto-check is weak — eyeball it)."
   }
 ]
