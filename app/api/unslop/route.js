@@ -45,7 +45,13 @@ async function callClaude(text, system) {
 
   const data = await res.json();
   if (!res.ok) {
-    throw new Error(data?.error?.message || `Anthropic API error (${res.status})`);
+    // Carry the HTTP status so the caller can tell an auth failure (expired /
+    // invalid / revoked key → 401, or a permission problem → 403) apart from a
+    // transient blip. The Anthropic error type is kept for the server log.
+    const err = new Error(data?.error?.message || `Anthropic API error (${res.status})`);
+    err.status = res.status;
+    err.anthropicType = data?.error?.type;
+    throw err;
   }
 
   // Forced tool_choice guarantees a tool_use block whose `input` the API has
@@ -152,7 +158,10 @@ export async function POST(request) {
     let result;
     try {
       result = await callClaude(text, system);
-    } catch {
+    } catch (e) {
+      // Don't retry an auth/permission failure — an expired or invalid key won't
+      // fix itself, and it's not the transient kind of error a retry is for.
+      if (e?.status === 401 || e?.status === 403) throw e;
       // One retry for a transient failure (5xx / overload, or a missing tool call).
       result = await callClaude(text, system);
     }
@@ -206,6 +215,19 @@ export async function POST(request) {
     });
   } catch (err) {
     console.error("unslop error:", err);
+    // An expired / invalid / revoked API key (or a permission problem) is a
+    // server-side configuration issue, NOT the user's free-edit limit. Return a
+    // distinct status + message so the UI never misreports it as "out of free
+    // edits." The real cause (err.message / anthropicType) is in the log above.
+    if (err?.status === 401 || err?.status === 403) {
+      return Response.json(
+        {
+          error:
+            "The editor is temporarily unavailable — a problem on our end, not your free-edit limit. Please try again later.",
+        },
+        { status: 503 }
+      );
+    }
     return Response.json(
       { error: "The edit didn't come back. Try again or shorten the draft." },
       { status: 502 }
