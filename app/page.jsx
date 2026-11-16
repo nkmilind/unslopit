@@ -541,9 +541,7 @@ export default function Home() {
                 <span>Applying the red pen…</span>
               </div>
             )}
-            {error && (
-              <div className="error-box">The edit didn&apos;t come back: {error}</div>
-            )}
+            {error && <div className="error-box">{error}</div>}
           </section>
         )}
 
